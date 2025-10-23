@@ -171,7 +171,7 @@ export default function RouteComponent({
               name="role"
               label="Role"
               isDisabled={!canManageInvitations}
-              defaultSelectedKey={"member"}
+              defaultValue={"member"}
               items={[
                 { id: "member", name: "Member" },
                 { id: "admin", name: "Admin" },

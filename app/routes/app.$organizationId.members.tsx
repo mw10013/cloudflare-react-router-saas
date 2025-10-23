@@ -165,13 +165,13 @@ function MemberItem({
         {member.role !== "owner" && canEdit ? (
           <Oui.SelectEx
             name="role"
-            defaultSelectedKey={member.role}
+            defaultValue={member.role}
             aria-label={`Change role for ${member.user.email}`}
             items={[
               { id: "member", name: "Member" },
               { id: "admin", name: "Admin" },
             ]}
-            onSelectionChange={(key) =>
+            onChange={(key) =>
               void fetcher.submit(
                 { intent: "changeRole", memberId: member.id, role: key },
                 { method: "post" }
