@@ -62,7 +62,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {/* <Toaster /> */}
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <RouterProvider navigate={navigate} useHref={useHrefEx}>
-          <Oui.DialogEx1AlertProvider>{children}</Oui.DialogEx1AlertProvider>
+          <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
           <ScrollRestoration />
           <Scripts />
         </RouterProvider>
