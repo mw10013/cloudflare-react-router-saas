@@ -1,0 +1,21 @@
+{
+  "files.associations": {
+    "wrangler.json": "jsonc"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // https://github.com/tailwindlabs/tailwindcss-intellisense?tab=readme-ov-file#tailwind-css-v4x-css-entrypoints
+  // "tailwindCSS.experimental.configFile": {
+  // },
+  "tailwindCSS.classFunctions": [
+    "tw",
+    "twMerge",
+    "twJoin",
+    "composeTailwindRenderProps",
+    "cva",
+    "cn"
+  ]
+  // "tailwindCSS.experimental.classRegex": [
+  //   // https://www.tailwind-variants.org/docs/getting-started#intellisense-setup-optional
+  //   ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  // ]
+}

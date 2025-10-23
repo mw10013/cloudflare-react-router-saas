@@ -13,6 +13,7 @@
     "preview": "pnpm run build && vite preview",
     "typecheck": "npm run cf-typegen && react-router typegen && tsc -b",
     "typecheck:test": "tsc -p test/tsconfig.json",
+    "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
     "clean": "pnpm clean:node && pnpm clean:wrangler && pnpm clean:etc",

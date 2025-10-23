@@ -27,7 +27,8 @@ export function SwitchEx({
   containerClassName,
   ...props
 }: SwitchExProps) {
-  const descriptionId = description ? React.useId() : undefined;
+  const _descriptionId = React.useId();
+  const descriptionId = description ? _descriptionId : undefined;
   return (
     // Derived fromshadcn FormDemo div
     <div className={twMerge("flex flex-col gap-0.5", containerClassName)}>

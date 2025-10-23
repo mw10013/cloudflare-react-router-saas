@@ -43,32 +43,12 @@ const config = {
       },
     },
     // https://github.com/tailwindlabs/prettier-plugin-tailwindcss/issues/281
-    {
-      files: ["./functions/o/**"],
-      options: {
-        tailwindStylesheet: "./functions/o/app/app.css",
-      },
-    },
-    {
-      files: ["./functions/oui/**"], // Files within the oui library project
-      options: {
-        // For Tailwind v4, specify a representative stylesheet
-        // Using project 'o's stylesheet as context for oui's own source files
-        tailwindStylesheet: "./functions/o/app/app.css",
-      },
-    },
-    {
-      files: ["./functions/s/**"],
-      options: {
-        tailwindStylesheet: "./functions/s/app/app.css",
-      },
-    },
-    {
-      files: ["./functions/x/**"],
-      options: {
-        tailwindStylesheet: "./functions/x/app/app.css",
-      },
-    },
+    // {
+    //   files: ["./**"],
+    //   options: {
+    //     tailwindStylesheet: "./app/app.css",
+    //   },
+    // },
     {
       files: ["*.jsonc"],
       options: {
