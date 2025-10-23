@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    // Use incremental builds with project references.
+    "incremental": true,
+    "composite": true,
+    // Target modern JavaScript (ES2023+) whilst staying closely compatible with the Node.js module system.
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleDetection": "force", // Treat every non-declaration file as a module.
+    "esModuleInterop": false, // Do not fiddle with import/export statements
+    "verbatimModuleSyntax": true, // Only transform/eliminate type-only import/export statements.
+    "allowJs": false, // If you touch this, a puppy dies.
+    "erasableSyntaxOnly": true, // Allows to run directly with node and type removal
+    // Emit source- & declaration maps.
+    // "declarationMap": true,
+    // "sourceMap": true,
+    "strict": true,
+    // "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    // Miscellaneoaus
+    "skipLibCheck": true, // Skip type checking of third party libraries.
+    "noErrorTruncation": true, // Do not truncate error messages.
+    "noEmit": true, // Prevent emitting files, for type-checking only.
+    "types": [] // Disable automatic loading of `@types/*` packages.
+  }
+}

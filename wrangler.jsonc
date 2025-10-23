@@ -1,0 +1,94 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "crrs",
+  "main": "./workers/app.ts",
+  "compatibility_date": "2025-07-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ENVIRONMENT": "local",
+    "COMPANY_EMAIL": "motio@mail.com",
+    "BETTER_AUTH_URL": "http://localhost:5173",
+    "AWS_SES_ENDPOINT": "https://email.us-east-1.amazonaws.com/v2/email/outbound-emails",
+    "AWS_SES_REGION": "us-east-1"
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "invocation_logs": true,
+      "head_sampling_rate": 1
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "D1",
+      "database_name": "d1-local",
+      "database_id": "d1-local"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "kv-local"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "DOMAIN_DO",
+        "class_name": "DomainDo"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["DomainDo"]
+    }
+  ],
+
+  "env": {
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production",
+        "COMPANY_EMAIL": "motio@mail.com",
+        "BETTER_AUTH_URL": "https://saas-production.devxo.workers.dev",
+        "AWS_SES_ENDPOINT": "https://email.us-east-1.amazonaws.com/v2/email/outbound-emails",
+        "AWS_SES_REGION": "us-east-1"
+      },
+      "observability": {
+        "enabled": true,
+        "logs": {
+          "invocation_logs": true,
+          "head_sampling_rate": 1
+        }
+      },
+      "d1_databases": [
+        {
+          "binding": "D1",
+          "database_name": "saas-d1-production",
+          "database_id": "a442eacf-41f9-4e71-a290-44746f71b670" // saas-d1-production
+        }
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "KV",
+          "id": "d3d0d87fecbf47c19230137e7a14ec97" // saas-kv-production
+        }
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "DOMAIN_DO",
+            "class_name": "DomainDo"
+          }
+        ]
+      },
+      "migrations": [
+        {
+          "tag": "v1",
+          "new_sqlite_classes": ["DomainDo"]
+        }
+      ]
+    }
+  }
+}

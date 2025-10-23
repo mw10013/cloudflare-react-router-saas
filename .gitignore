@@ -1,0 +1,36 @@
+# https://git-scm.com/docs/gitignore#_pattern_format
+
+# Package Managers
+node_modules/
+
+# Build Outputs
+out/
+build
+dist
+build.log
+
+# Cloudflare
+.wrangler/
+.dev.vars
+.env*
+!.env.example
+
+# React Router
+.react-router/
+
+
+# Miscellaneous
+.local/
+.cache/
+.DS_Store
+.tmp/
+.nc
+*.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+saas/
