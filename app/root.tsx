@@ -1,7 +1,6 @@
 import type { NavigateOptions } from "react-router";
 import type { Route } from "./+types/root";
 import * as Oui from "@/components/ui/oui-index";
-import { RouterProvider } from "react-aria-components";
 import {
   isRouteErrorResponse,
   Links,
@@ -9,10 +8,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useHref,
-  useNavigate,
 } from "react-router";
 import "@/app/app.css";
+import { ReactRouterProvider } from "@/components/oui-react-router-provider";
 
 declare module "react-aria-components" {
   interface RouterConfig {
@@ -33,22 +31,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-// https://github.com/adobe/react-spectrum/issues/6397
-// https://github.com/argos-ci/argos/blob/4822931b05c78e1b4a79e15cf4437fb0297369a6/apps/frontend/src/router.tsx#L21-L31
-function useHrefEx(href: string) {
-  const resolvedHref = useHref(href);
-  if (
-    href.startsWith("https://") ||
-    href.startsWith("http://") ||
-    href.startsWith("mailto:")
-  ) {
-    return href;
-  }
-  return resolvedHref;
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
   return (
     <html lang="en" className="dark">
       <head>
@@ -61,11 +44,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className="background font-sans antialiased">
         {/* <Toaster /> */}
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <RouterProvider navigate={navigate} useHref={useHrefEx}>
+        <ReactRouterProvider>
           <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
           <ScrollRestoration />
           <Scripts />
-        </RouterProvider>
+        </ReactRouterProvider>
       </body>
     </html>
   );
