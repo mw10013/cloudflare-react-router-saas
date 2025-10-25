@@ -1,4 +1,5 @@
 import type { Route } from "./+types/_mkt";
+import ReactRouterThemeToggleButton from "@/components/oui-react-router-theme-toggle-button";
 import * as Oui from "@/components/ui/oui-index";
 import * as Rac from "react-aria-components";
 import { Outlet, useRouteLoaderData } from "react-router";
@@ -65,6 +66,7 @@ function SiteHeader() {
               <CommandMenu />
             </div> */}
             <nav className="flex items-center gap-0.5">
+              {/* <ReactRouterThemeToggleButton /> */}
               {routeLoaderData?.sessionUser ? (
                 <Rac.Form
                   action="/signout"

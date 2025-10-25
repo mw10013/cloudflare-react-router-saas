@@ -40,10 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      {/* shadcn app/layout RootLayout */}
       <body className="background font-sans antialiased">
-        {/* <Toaster /> */}
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <ReactRouterProvider>
           <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
           <ScrollRestoration />
