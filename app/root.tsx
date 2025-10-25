@@ -8,9 +8,17 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  unstable_useRoute,
 } from "react-router";
+import {
+  PreventFlashOnWrongTheme,
+  ThemeProvider,
+  useTheme,
+} from "remix-themes";
+import { themeSessionResolver } from "./lib/theme.server";
 import "@/app/app.css";
 import { ReactRouterProvider } from "@/components/oui-react-router-provider";
+import { env } from "cloudflare:workers";
 
 declare module "react-aria-components" {
   interface RouterConfig {
@@ -29,15 +37,33 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
+  {
+    rel: "icon",
+    href: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+    type: "image/png",
+  },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export async function loader({ request }: Route.LoaderArgs) {
+  const { getTheme } = await themeSessionResolver(request);
+  return { theme: getTheme(), environment: env.ENVIRONMENT };
+}
+
+function Html({
+  children,
+  ssrTheme,
+}: {
+  children: React.ReactNode;
+  ssrTheme: boolean;
+}) {
+  const [theme] = useTheme();
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={theme ?? ""}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
+        <PreventFlashOnWrongTheme ssrTheme={ssrTheme} />
         <Links />
       </head>
       <body className="background font-sans antialiased">
@@ -48,6 +74,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </ReactRouterProvider>
       </body>
     </html>
+  );
+}
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  const data = unstable_useRoute("root");
+  return (
+    <ThemeProvider
+      specifiedTheme={data.loaderData?.theme ?? null}
+      themeAction="/action/set-theme"
+      disableTransitionOnThemeChange
+    >
+      <Html ssrTheme={Boolean(data.loaderData?.theme)}>{children}</Html>
+    </ThemeProvider>
   );
 }
 

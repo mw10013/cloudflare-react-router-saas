@@ -66,7 +66,7 @@ function SiteHeader() {
               <CommandMenu />
             </div> */}
             <nav className="flex items-center gap-0.5">
-              {/* <ReactRouterThemeToggleButton /> */}
+              <ReactRouterThemeToggleButton />
               {routeLoaderData?.sessionUser ? (
                 <Rac.Form
                   action="/signout"
