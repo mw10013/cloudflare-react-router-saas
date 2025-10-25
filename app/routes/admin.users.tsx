@@ -1,10 +1,10 @@
 import type { Route } from "./+types/admin.users";
 import { useCallback, useEffect, useState } from "react";
-import { invariant } from "@epic-web/invariant";
+import { FormAlert } from "@/components/form-alert";
 import * as Oui from "@/components/ui/oui-index";
+import { invariant } from "@epic-web/invariant";
 import { redirect, useFetcher, useNavigate } from "react-router";
 import * as z from "zod";
-import { FormAlert } from "~/components/FormAlert";
 import { RequestContext } from "~/lib/request-context";
 import * as TechnicalDomain from "~/lib/technical-domain";
 
@@ -63,7 +63,7 @@ export async function action({
     z.object({ intent: z.literal("impersonate"), userId: z.string() }),
   ]);
   const parseResult = schema.safeParse(
-    Object.fromEntries(await request.formData())
+    Object.fromEntries(await request.formData()),
   );
   if (!parseResult.success) {
     const { formErrors: details, fieldErrors: validationErrors } =
@@ -116,11 +116,11 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
         prev.isOpen === isOpen
           ? prev
           : isOpen
-          ? { ...prev, isOpen }
-          : { isOpen: false, userId: undefined }
+            ? { ...prev, isOpen }
+            : { isOpen: false, userId: undefined },
       );
     },
-    [setBanDialog]
+    [setBanDialog],
   );
   const fetcher = useFetcher(); // Caution: shared fetcher for simplicity.
 
@@ -191,7 +191,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
                             intent: "unban",
                             userId: user.id,
                           },
-                          { method: "post" }
+                          { method: "post" },
                         );
                       }}
                     >
@@ -217,7 +217,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
                           intent: "impersonate",
                           userId: user.id,
                         },
-                        { method: "post" }
+                        { method: "post" },
                       );
                     }}
                   >
@@ -235,7 +235,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
           <Oui.ListBoxItemExPagination
             id="prev"
             href={`/admin/users?page=${String(
-              loaderData.page > 1 ? loaderData.page - 1 : 1
+              loaderData.page > 1 ? loaderData.page - 1 : 1,
             )}${
               loaderData.filter
                 ? `&filter=${encodeURIComponent(loaderData.filter)}`
@@ -263,7 +263,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
             href={`/admin/users?page=${String(
               loaderData.page < loaderData.pageCount
                 ? loaderData.page + 1
-                : loaderData.pageCount
+                : loaderData.pageCount,
             )}${
               loaderData.filter
                 ? `&filter=${encodeURIComponent(loaderData.filter)}`

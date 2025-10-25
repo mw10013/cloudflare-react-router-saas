@@ -1,6 +1,5 @@
 import type { Route } from "./+types/forgot-password";
-import { invariant } from "@epic-web/invariant";
-import * as Oui from "@/components/ui/oui-index";
+import { FormAlert } from "@/components/form-alert";
 import {
   Card,
   CardContent,
@@ -8,9 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import * as Oui from "@/components/ui/oui-index";
+import { invariant } from "@epic-web/invariant";
 import { useSubmit } from "react-router";
 import * as z from "zod";
-import { FormAlert } from "~/components/FormAlert";
 import { RequestContext } from "~/lib/request-context";
 import * as TechnicalDomain from "~/lib/technical-domain";
 
@@ -22,7 +22,7 @@ export async function action({
     email: z.email(),
   });
   const parseResult = schema.safeParse(
-    Object.fromEntries(await request.formData())
+    Object.fromEntries(await request.formData()),
   );
   if (!parseResult.success) {
     const { formErrors: details, fieldErrors: validationErrors } =

@@ -2,7 +2,7 @@ import type { Organization } from "better-auth/plugins";
 import type { User } from "better-auth/types";
 import type { Route } from "./+types/app.$organizationId";
 import React from "react";
-import { invariant } from "@epic-web/invariant";
+import { AppLogoIcon } from "@/components/app-logo-icon";
 import * as Oui from "@/components/ui/oui-index";
 import {
   Sidebar,
@@ -12,10 +12,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { invariant } from "@epic-web/invariant";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import * as Rac from "react-aria-components";
 import { Outlet, useNavigate, useSubmit } from "react-router";
-import { AppLogoIcon } from "~/components/AppLogoIcon";
 import { RequestContext } from "~/lib/request-context";
 
 const organizationMiddleware: Route.MiddlewareFunction = async ({
