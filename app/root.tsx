@@ -15,7 +15,7 @@ import {
   ThemeProvider,
   useTheme,
 } from "remix-themes";
-import { themeSessionResolver } from "./lib/theme.server";
+import { themeSessionResolver } from "@/lib/theme.server";
 import "@/app/app.css";
 import { ReactRouterProvider } from "@/components/oui-react-router-provider";
 import { env } from "cloudflare:workers";
