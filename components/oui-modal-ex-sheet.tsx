@@ -1,10 +1,7 @@
 "use client";
 
 import type { VariantProps } from "class-variance-authority";
-import { Label } from "@/components/ui/oui-label";
-import { Link } from "@/components/ui/oui-link";
 import { Modal, ModalOverlay } from "@/components/ui/oui-modal";
-import { Text } from "@/components/ui/oui-text";
 import { cva } from "class-variance-authority";
 import * as Rac from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -64,30 +61,5 @@ export function ModalExSheet({
         {children}
       </Modal>
     </ModalOverlay>
-  );
-}
-
-export default function Component() {
-  return (
-    <div className="grid gap-2">
-      <Label>ModalExSheet</Label>
-      <Text slot="description">
-        A reusable wrapper that extends{" "}
-        <Link
-          href="https://react-spectrum.adobe.com/react-aria/Modal.html"
-          underline="always"
-        >
-          Modal
-        </Link>{" "}
-        to display content that complements the main content of the screen — see{" "}
-        <Link
-          href="https://oui.mw10013.workers.dev/filter?tags=modal-ex-sheet"
-          underline="always"
-        >
-          Uses
-        </Link>
-        .
-      </Text>
-    </div>
   );
 }

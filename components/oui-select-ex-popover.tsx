@@ -2,7 +2,6 @@
 
 import { FieldError } from "@/components/ui/oui-field-error";
 import { Label } from "@/components/ui/oui-label";
-import { Link } from "@/components/ui/oui-link";
 import { Popover } from "@/components/ui/oui-popover";
 import {
   Select,
@@ -74,32 +73,4 @@ export function SelectExPopover<T extends object>({
       <Popover>{children}</Popover>
     </Select>
   );
-}
-
-export default function Component() {
-  return (
-    <div className="grid gap-2">
-      <Label>SelectExPopover</Label>
-      <Text slot="description">
-        A reusable wrapper for{" "}
-        <Link
-          href="https://react-spectrum.adobe.com/react-aria/Select.html"
-          underline="always"
-        >
-          Select
-        </Link>{" "}
-        that renders children in a popover for complex dropdown content like
-        autocomplete — see{" "}
-        <Link
-          href="https://oui.mw10013.workers.dev/filter?tags=select-ex-popover"
-          underline="always"
-        >
-          Uses
-        </Link>
-        .
-      </Text>
-    </div>
-  );
-
-  return <div className="p-4">SelectExPopover</div>;
 }

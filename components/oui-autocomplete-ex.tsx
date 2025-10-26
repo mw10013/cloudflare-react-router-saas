@@ -1,9 +1,6 @@
 "use client";
 
 import { SearchFieldEx } from "@/components/oui-search-field-ex";
-import { Label } from "@/components/ui/oui-label";
-import { Link } from "@/components/ui/oui-link";
-import { Text } from "@/components/ui/oui-text";
 import * as Rac from "react-aria-components";
 
 export interface AutocompleteExProps
@@ -42,30 +39,5 @@ export function AutocompleteEx({
       />
       {children}
     </Rac.Autocomplete>
-  );
-}
-
-export default function Component() {
-  return (
-    <div className="grid gap-2">
-      <Label>AutocompleteEx</Label>
-      <Text slot="description">
-        A reusable wrapper for{" "}
-        <Link
-          href="https://react-spectrum.adobe.com/react-aria/Autocomplete.html"
-          underline="always"
-        >
-          Autocomplete
-        </Link>{" "}
-        — see{" "}
-        <Link
-          href="https://oui.mw10013.workers.dev/filter?tags=autocomplete-ex"
-          underline="always"
-        >
-          Uses
-        </Link>
-        .
-      </Text>
-    </div>
   );
 }

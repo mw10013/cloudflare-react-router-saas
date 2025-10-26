@@ -3,7 +3,6 @@
 import type { SelectionMode } from "@/components/ui/oui-select";
 import { FieldError } from "@/components/ui/oui-field-error";
 import { Label } from "@/components/ui/oui-label";
-import { Link } from "@/components/ui/oui-link";
 import { Popover } from "@/components/ui/oui-popover";
 import {
   Select,
@@ -71,30 +70,5 @@ export function SelectEx<T extends object, M extends SelectionMode = "single">({
         <Rac.ListBox items={items}>{children}</Rac.ListBox>
       </Popover>
     </Select>
-  );
-}
-
-export default function Component() {
-  return (
-    <div className="grid gap-2">
-      <Label>SelectEx</Label>
-      <Text slot="description">
-        A reusable wrapper for{" "}
-        <Link
-          href="https://react-spectrum.adobe.com/react-aria/Select.html"
-          underline="always"
-        >
-          Select
-        </Link>{" "}
-        — see{" "}
-        <Link
-          href="https://oui.mw10013.workers.dev/filter?tags=select-ex"
-          underline="always"
-        >
-          Uses
-        </Link>
-        .
-      </Text>
-    </div>
   );
 }

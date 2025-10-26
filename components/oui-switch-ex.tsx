@@ -2,8 +2,6 @@
 
 import React from "react";
 import { composeTailwindRenderProps } from "@/components/ui/oui-base";
-import { Label } from "@/components/ui/oui-label";
-import { Link } from "@/components/ui/oui-link";
 import { Switch, SwitchIndicator } from "@/components/ui/oui-switch";
 import { Text } from "@/components/ui/oui-text";
 import * as Rac from "react-aria-components";
@@ -64,31 +62,6 @@ export function SwitchEx({
           {description}
         </Text>
       )}
-    </div>
-  );
-}
-
-export default function Component() {
-  return (
-    <div className="grid gap-2">
-      <Label>SwitchEx</Label>
-      <Text slot="description">
-        A reusable wrapper for{" "}
-        <Link
-          href="https://react-spectrum.adobe.com/react-aria/Switch.html"
-          underline="always"
-        >
-          Switch
-        </Link>{" "}
-        — see{" "}
-        <Link
-          href="https://oui.mw10013.workers.dev/filter?tags=switch-ex"
-          underline="always"
-        >
-          Uses
-        </Link>
-        .
-      </Text>
     </div>
   );
 }
