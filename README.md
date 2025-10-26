@@ -55,10 +55,10 @@ pnpm test --project d1 auth
 ```
 pnpm dlx shadcn@latest add --all
 pnpm dlx shadcn@latest migrate radix
-pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/oui-index.json
-pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/oui-react-router-provider.json
-pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/oui-react-router-theme-toggle-button.json
-pnpm dlx shadcn@latest add @oui/oui-react-router-provider.json
+pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/index.json
+pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/react-router-provider.json
+pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/react-router-theme-toggle-button.json
+pnpm dlx shadcn@latest add @oui/react-router-provider.json
 ```
 
 ## Better-Auth
