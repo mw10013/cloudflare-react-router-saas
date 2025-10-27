@@ -1,7 +1,7 @@
 import type { APIRequestContext, Page } from "@playwright/test";
 import { invariant } from "@epic-web/invariant";
 import { expect, test } from "@playwright/test";
-import { planData } from "../app/lib/domain";
+import { planData } from "../lib/domain";
 
 const emailPrefix = "stripe-";
 
@@ -223,7 +223,9 @@ class StripePom {
   async verifyNoSubscription() {
     await expect(async () => {
       await this.page.reload();
-      await expect(this.page.getByText("No active subscription for")).toBeVisible({
+      await expect(
+        this.page.getByText("No active subscription for"),
+      ).toBeVisible({
         timeout: 100,
       });
     }).toPass({ timeout: 60_000 });

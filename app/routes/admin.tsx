@@ -1,13 +1,13 @@
 import type { Route } from "./+types/admin";
-import { invariant } from "@epic-web/invariant";
 import * as Oui from "@/components/ui/oui-index";
 import {
   Sidebar,
   SidebarContent,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import { RequestContext } from "@/lib/request-context";
+import { invariant } from "@epic-web/invariant";
 import { Outlet, redirect } from "react-router";
-import { RequestContext } from "~/lib/request-context";
 
 export const adminMiddleware: Route.MiddlewareFunction = ({ context }) => {
   const requestContext = context.get(RequestContext);

@@ -1,5 +1,5 @@
-import type { Repository } from "~/lib/repository";
-import type { StripeService } from "~/lib/stripe-service";
+import type { Repository } from "@/lib/repository";
+import type { StripeService } from "@/lib/stripe-service";
 import { env } from "cloudflare:workers";
 import * as Hono from "hono";
 
@@ -72,7 +72,9 @@ delete from Organization where organizationId in (select organizationId from t)
         .bind(user.userId),
     ]);
     const deletedCount = results[1].results.length;
-    console.log(`e2e deleted user ${email} (deletedCount: ${String(deletedCount)})`);
+    console.log(
+      `e2e deleted user ${email} (deletedCount: ${String(deletedCount)})`,
+    );
     return c.json({
       success: true,
       message: `Deleted user ${email} (deletedCount: ${String(deletedCount)}).`,

@@ -6,7 +6,7 @@
     "vitest.config.ts",
     "playwright.config.ts",
     "e2e/**/*",
-    "app/lib/domain.ts",
+    "lib/domain.ts",
     "scripts/*.ts"
   ],
   "compilerOptions": {

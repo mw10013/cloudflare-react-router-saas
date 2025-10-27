@@ -1,7 +1,7 @@
 import type { Route } from "./+types/magic-link";
+import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import { redirect } from "react-router";
-import { RequestContext } from "~/lib/request-context";
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const url = new URL(request.url);

@@ -1,7 +1,7 @@
-import { invariant } from "@epic-web/invariant";
 import type { Route } from "./+types/signout";
+import { RequestContext } from "@/lib/request-context";
+import { invariant } from "@epic-web/invariant";
 import { redirect } from "react-router";
-import { RequestContext } from "~/lib/request-context";
 
 export async function action({ request, context }: Route.ActionArgs) {
   const requestContext = context.get(RequestContext);

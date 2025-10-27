@@ -1,12 +1,12 @@
-import type { StripeService } from "~/lib/stripe-service";
+import type { StripeService } from "@/lib/stripe-service";
 import type { BetterAuthOptions } from "better-auth";
 import type { createSes } from "./ses";
+import { d1Adapter } from "@/lib/d1-adapter";
 import { stripe } from "@better-auth/stripe";
 import { betterAuth } from "better-auth";
 import { createAuthMiddleware } from "better-auth/api";
 import { admin, magicLink, organization } from "better-auth/plugins";
 import { env } from "cloudflare:workers";
-import { d1Adapter } from "~/lib/d1-adapter";
 
 export type Auth = ReturnType<typeof createAuth>;
 

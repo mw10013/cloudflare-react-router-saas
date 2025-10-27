@@ -1,6 +1,4 @@
 import type { Route } from "./+types/app.$organizationId.members";
-import { invariant } from "@epic-web/invariant";
-import * as Oui from "@/components/ui/oui-index";
 import {
   Card,
   CardContent,
@@ -8,9 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import * as Oui from "@/components/ui/oui-index";
+import { RequestContext } from "@/lib/request-context";
+import { invariant } from "@epic-web/invariant";
 import { redirect, useFetcher } from "react-router";
 import * as z from "zod";
-import { RequestContext } from "~/lib/request-context";
 
 export async function loader({
   request,
@@ -70,7 +70,7 @@ export async function action({
     }),
   ]);
   const parseResult = schema.parse(
-    Object.fromEntries(await request.formData())
+    Object.fromEntries(await request.formData()),
   );
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
@@ -174,7 +174,7 @@ function MemberItem({
             onChange={(key) =>
               void fetcher.submit(
                 { intent: "changeRole", memberId: member.id, role: key },
-                { method: "post" }
+                { method: "post" },
               )
             }
             className="mt-2"

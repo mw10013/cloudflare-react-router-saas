@@ -12,11 +12,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import * as Rac from "react-aria-components";
 import { Outlet, useNavigate, useSubmit } from "react-router";
-import { RequestContext } from "~/lib/request-context";
 
 const organizationMiddleware: Route.MiddlewareFunction = async ({
   request,

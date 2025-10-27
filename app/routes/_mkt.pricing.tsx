@@ -1,12 +1,12 @@
 import type { Route } from "./+types/_mkt.pricing";
-import { invariant } from "@epic-web/invariant";
-import * as Oui from "@/components/ui/oui-index";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import * as Oui from "@/components/ui/oui-index";
+import { RequestContext } from "@/lib/request-context";
+import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
 import * as Rac from "react-aria-components";
 import { redirect } from "react-router";
 import * as z from "zod";
-import { RequestContext } from "~/lib/request-context";
 
 export async function loader({ context }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
@@ -19,7 +19,7 @@ export async function loader({ context }: Route.LoaderArgs) {
 select u.email as email, u.stripeCustomerId as userStripeCustomerId, s.*, o.name as organizationName from Subscription s 
 inner join Organization o on o.organizationId = s.referenceId
 inner join Member m on m.organizationId = o.organizationId and m.role = 'owner'
-inner join User u on u.userId = m.userId`
+inner join User u on u.userId = m.userId`,
     ).all()
   ).results;
   return { plans, subscriptions };
@@ -43,7 +43,7 @@ export async function action({ request, context }: Route.ActionArgs) {
   const plans = await stripeService.getPlans();
   const plan = plans.find(
     (p) =>
-      p.monthlyPriceLookupKey === intent || p.annualPriceLookupKey === intent
+      p.monthlyPriceLookupKey === intent || p.annualPriceLookupKey === intent,
   );
   invariant(plan, `Missing plan for intent ${intent}`);
 

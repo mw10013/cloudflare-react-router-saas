@@ -1,6 +1,4 @@
 import type { Route } from "./+types/app.$organizationId._index";
-import { invariant } from "@epic-web/invariant";
-import * as Oui from "@/components/ui/oui-index";
 import {
   Card,
   CardContent,
@@ -8,8 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import * as Oui from "@/components/ui/oui-index";
+import { RequestContext } from "@/lib/request-context";
+import { invariant } from "@epic-web/invariant";
 import { useFetcher } from "react-router";
-import { RequestContext } from "~/lib/request-context";
 
 export async function loader({
   request,
@@ -30,7 +30,8 @@ export async function loader({
         query: { email: session.user.email },
       })
     ).filter(
-      (v) => v.status === "pending" && v.expiresAt.getTime() - now >= MIN_TTL_MS
+      (v) =>
+        v.status === "pending" && v.expiresAt.getTime() - now >= MIN_TTL_MS,
     ),
     subscriptions: await auth.api.listActiveSubscriptions({
       headers: request.headers,
@@ -47,7 +48,7 @@ export async function action({ request, context }: Route.ActionArgs) {
   const invitationId = formData.get("invitationId");
   invariant(
     typeof invitationId === "string" && invitationId.length > 0,
-    "Missing invitationId"
+    "Missing invitationId",
   );
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");

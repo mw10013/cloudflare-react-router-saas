@@ -1,10 +1,10 @@
 import type { User } from "better-auth/types";
 import type { Route } from "./+types/seed";
+import { createAuth } from "@/lib/auth";
+import { createRepository } from "@/lib/repository";
+import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import { RouterContextProvider } from "react-router";
-import { createAuth } from "~/lib/auth";
-import { createRepository } from "~/lib/repository";
-import { RequestContext } from "~/lib/request-context";
 
 function createSeedContext({
   env,

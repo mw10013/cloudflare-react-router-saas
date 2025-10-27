@@ -4,8 +4,9 @@
   "include": [
     "test/**/*.ts",
     "worker-configuration.d.ts",
-    ".react-router/types/**/*"
-, "test/do/cloudflare-test.d.ts"  ],
+    ".react-router/types/**/*",
+    "test/do/cloudflare-test.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.cloudflare.json" }],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
@@ -16,6 +17,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./*"],
       "~/*": ["./app/*"],
       "~workers/*": ["./workers/*"]
     },

@@ -1,10 +1,10 @@
-import type { Plan } from "~/lib/domain";
+import type { Plan } from "@/lib/domain";
 import type { Stripe as StripeType } from "stripe";
+import { planData, Plan as PlanSchema } from "@/lib/domain";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
 import Stripe from "stripe";
 import * as z from "zod";
-import { planData, Plan as PlanSchema } from "~/lib/domain";
 
 type Price = StripeType.Price;
 type PriceWithLookupKey = Price & { lookup_key: string };

@@ -1,11 +1,11 @@
 import type { User } from "better-auth/types";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
+import { RequestContext } from "lib/request-context";
+import { createStripeService } from "lib/stripe-service";
 import { RouterContextProvider } from "react-router";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
-import { createAuth } from "~/lib/auth";
-import { RequestContext } from "~/lib/request-context";
-import { createStripeService } from "~/lib/stripe-service";
+import { createAuth } from "@/lib/auth";
 import {
   action as acceptInvitationAction,
   loader as acceptInvitationLoader,

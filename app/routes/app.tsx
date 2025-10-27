@@ -1,7 +1,7 @@
 import type { Route } from "./+types/app";
+import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import { Outlet, redirect } from "react-router";
-import { RequestContext } from "~/lib/request-context";
 
 const appMiddleware: Route.MiddlewareFunction = async ({
   request,

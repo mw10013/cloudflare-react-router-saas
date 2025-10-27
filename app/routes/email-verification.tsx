@@ -1,6 +1,6 @@
 import type { Route } from "./+types/email-verification";
+import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import { RequestContext } from "~/lib/request-context";
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const url = new URL(request.url);

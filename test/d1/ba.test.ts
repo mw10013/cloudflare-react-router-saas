@@ -1,8 +1,8 @@
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
+import { createStripeService } from "@/lib/stripe-service";
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { createAuth } from "~/lib/auth";
-import { createStripeService } from "~/lib/stripe-service";
+import { createAuth } from "@/lib/auth";
 import { resetDb } from "../test-utils";
 
 describe("better-auth sign up flow", () => {

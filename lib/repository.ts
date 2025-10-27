@@ -1,5 +1,5 @@
+import * as Domain from "@/lib/domain";
 import { env } from "cloudflare:workers";
-import * as Domain from "~/lib/domain";
 
 /**
  * The repository provides data access methods for the application's domain entities.

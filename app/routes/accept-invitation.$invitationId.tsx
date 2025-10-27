@@ -1,6 +1,4 @@
 import type { Route } from "./+types/accept-invitation.$invitationId";
-import { invariant } from "@epic-web/invariant";
-import * as Oui from "@/components/ui/oui-index";
 import {
   Card,
   CardContent,
@@ -8,10 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import * as Oui from "@/components/ui/oui-index";
+import { RequestContext } from "@/lib/request-context";
+import { invariant } from "@epic-web/invariant";
 import * as Rac from "react-aria-components";
 import { redirect } from "react-router";
 import * as z from "zod";
-import { RequestContext } from "~/lib/request-context";
 
 export function loader({
   context,
