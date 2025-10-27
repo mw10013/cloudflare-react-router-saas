@@ -13,7 +13,8 @@
     "composeTailwindRenderProps",
     "cva",
     "cn"
-  ]
+  ],
+  "tailwindCSS.files.exclude": ["**/components/ui/sidebar.tsx"]
   // "tailwindCSS.experimental.classRegex": [
   //   // https://www.tailwind-variants.org/docs/getting-started#intellisense-setup-optional
   //   ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
