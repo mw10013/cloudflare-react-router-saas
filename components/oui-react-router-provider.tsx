@@ -17,9 +17,10 @@ const isExternal = (href: string) =>
   href.startsWith("http://") ||
   href.startsWith("mailto:");
 
-const useHref = (href: string) =>
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  isExternal(href) ? href : ReactRouter.useHref(href);
+const useHref = (href: string) => {
+  const reactRouterHref = ReactRouter.useHref(href);
+  return isExternal(href) ? href : reactRouterHref;
+};
 
 export function ReactRouterProvider({
   children,

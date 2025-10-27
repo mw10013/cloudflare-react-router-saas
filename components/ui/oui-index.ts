@@ -40,6 +40,7 @@ export * from "@/components/oui-dialog-ex-alert";
 export * from "@/components/oui-dialog-ex-sheet";
 export * from "@/components/oui-dialog-ex";
 export * from "@/components/oui-disclosure-ex";
+export * from "@/components/oui-form-alert";
 export * from "@/components/oui-list-box-ex-pagination"; // experimental
 export * from "@/components/oui-menu-ex";
 export * from "@/components/oui-modal-ex-sheet";
