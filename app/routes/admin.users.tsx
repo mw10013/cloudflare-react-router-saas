@@ -1,12 +1,11 @@
 import type { Route } from "./+types/admin.users";
 import { useCallback, useEffect, useState } from "react";
-import { FormAlert } from "@/components/form-alert";
 import * as Oui from "@/components/ui/oui-index";
 import { invariant } from "@epic-web/invariant";
 import { redirect, useFetcher, useNavigate } from "react-router";
 import * as z from "zod";
 import { RequestContext } from "~/lib/request-context";
-import * as TechnicalDomain from "~/lib/technical-domain";
+import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const LIMIT = 5;
@@ -52,7 +51,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 export async function action({
   request,
   context,
-}: Route.ActionArgs): Promise<TechnicalDomain.FormActionResult> {
+}: Route.ActionArgs): Promise<Oui.FormActionResult> {
   const schema = z.discriminatedUnion("intent", [
     z.object({
       intent: z.literal("ban"),
@@ -323,9 +322,9 @@ function BanDialog({
       <Oui.Form
         validationBehavior="aria"
         validationErrors={fetcher.data?.validationErrors}
-        onSubmit={TechnicalDomain.onSubmit(fetcher.submit)}
+        onSubmit={onSubmitReactRouter(fetcher.submit)}
       >
-        <FormAlert
+        <Oui.FormAlert
           success={fetcher.data?.success}
           message={fetcher.data?.message}
           details={fetcher.data?.details}

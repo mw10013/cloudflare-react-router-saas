@@ -1,5 +1,4 @@
 import type { Route } from "./+types/signup";
-import { FormAlert } from "@/components/form-alert";
 import {
   Card,
   CardContent,
@@ -8,16 +7,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import * as Oui from "@/components/ui/oui-index";
+import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { invariant } from "@epic-web/invariant";
 import { redirect, useSubmit } from "react-router";
 import * as z from "zod";
 import { RequestContext } from "~/lib/request-context";
-import * as TechnicalDomain from "~/lib/technical-domain";
 
 export async function action({
   request,
   context,
-}: Route.ActionArgs): Promise<TechnicalDomain.FormActionResult> {
+}: Route.ActionArgs): Promise<Oui.FormActionResult> {
   const schema = z.object({
     email: z.email(),
     password: z.string().min(6),
@@ -71,9 +70,9 @@ export default function RouteComponent({ actionData }: Route.ComponentProps) {
             method="post"
             validationBehavior="aria"
             validationErrors={actionData?.validationErrors}
-            onSubmit={TechnicalDomain.onSubmit(submit)}
+            onSubmit={onSubmitReactRouter(submit)}
           >
-            <FormAlert
+            <Oui.FormAlert
               success={actionData?.success}
               message={actionData?.message}
               details={actionData?.details}

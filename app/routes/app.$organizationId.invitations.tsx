@@ -1,7 +1,5 @@
 import type { Route } from "./+types/app.$organizationId.invitations";
 import { useEffect, useRef } from "react";
-import { invariant } from "@epic-web/invariant";
-import * as Oui from "@/components/ui/oui-index";
 import {
   Card,
   CardContent,
@@ -9,11 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import * as Oui from "@/components/ui/oui-index";
+import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
+import { invariant } from "@epic-web/invariant";
 import { useFetcher, useSubmit } from "react-router";
 import * as z from "zod";
 import * as Domain from "~/lib/domain";
 import { RequestContext } from "~/lib/request-context";
-import * as TechnicalDomain from "~/lib/technical-domain";
 
 export async function loader({
   request,
@@ -49,7 +49,7 @@ export async function action({
   request,
   context,
   params: { organizationId },
-}: Route.ActionArgs): Promise<TechnicalDomain.FormActionResult> {
+}: Route.ActionArgs): Promise<Oui.FormActionResult> {
   const schema = z.discriminatedUnion("intent", [
     z.object({
       intent: z.literal("cancel"),
@@ -63,22 +63,22 @@ export async function action({
           v
             .split(",")
             .map((i) => i.trim())
-            .filter(Boolean)
+            .filter(Boolean),
         )
         .pipe(
           z
             .array(z.email("Please provide valid email addresses."))
-            .min(1, "At least one email is required")
+            .min(1, "At least one email is required"),
         ),
       role: Domain.MemberRole.extract(
         ["member", "admin"],
-        "Role must be Member or Admin."
+        "Role must be Member or Admin.",
       ),
     }),
   ]);
 
   const parseResult = schema.safeParse(
-    Object.fromEntries(await request.formData())
+    Object.fromEntries(await request.formData()),
   );
   if (!parseResult.success) {
     const { formErrors: details, fieldErrors: validationErrors } =
@@ -109,7 +109,7 @@ export async function action({
         // Workaround for better-auth createInvitation role bug
         if (result.role !== parseResult.data.role) {
           await env.D1.prepare(
-            "update Invitation set role = ? where invitationId = ?"
+            "update Invitation set role = ? where invitationId = ?",
           )
             .bind(parseResult.data.role, Number(result.id))
             .run();
@@ -157,7 +157,7 @@ export default function RouteComponent({
             id="invite-form"
             method="post"
             validationErrors={actionData?.validationErrors}
-            onSubmit={TechnicalDomain.onSubmit(submit)}
+            onSubmit={onSubmitReactRouter(submit)}
             className="grid"
           >
             <Oui.TextFieldEx

@@ -58,6 +58,7 @@ pnpm dlx shadcn@latest migrate radix
 pnpm dlx shadcn@latest add --overwrite https://oui.mw10013.workers.dev/r/index.json
 pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/react-router-provider.json
 pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/react-router-theme-toggle-button.json
+pnpm dlx shadcn@latest add https://oui.mw10013.workers.dev/r/on-submit-react-router.json
 pnpm dlx shadcn@latest add @oui/react-router-provider.json
 ```
 

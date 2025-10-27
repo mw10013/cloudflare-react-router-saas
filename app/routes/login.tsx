@@ -1,5 +1,4 @@
 import type { Route } from "./+types/login";
-import { FormAlert } from "@/components/form-alert";
 import {
   Card,
   CardContent,
@@ -8,18 +7,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import * as Oui from "@/components/ui/oui-index";
+import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { invariant } from "@epic-web/invariant";
 import { useSubmit } from "react-router";
 import * as z from "zod";
 import { RequestContext } from "~/lib/request-context";
-import * as TechnicalDomain from "~/lib/technical-domain";
 
 export async function action({
   request,
   context,
-}: Route.ActionArgs): Promise<
-  TechnicalDomain.FormActionResult & { magicLink?: string }
-> {
+}: Route.ActionArgs): Promise<Oui.FormActionResult & { magicLink?: string }> {
   const schema = z.object({
     email: z.email(),
   });
@@ -33,7 +30,7 @@ export async function action({
       success: false,
       details,
       validationErrors,
-    } satisfies TechnicalDomain.FormActionResult;
+    } satisfies Oui.FormActionResult;
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
@@ -93,9 +90,9 @@ export default function RouteComponent({ actionData }: Route.ComponentProps) {
             method="post"
             validationBehavior="aria"
             validationErrors={actionData?.validationErrors}
-            onSubmit={TechnicalDomain.onSubmit(submit)}
+            onSubmit={onSubmitReactRouter(submit)}
           >
-            <FormAlert
+            <Oui.FormAlert
               success={actionData?.success}
               message={actionData?.message}
               details={actionData?.details}

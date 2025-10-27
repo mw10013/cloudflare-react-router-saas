@@ -1,5 +1,4 @@
 import type { Route } from "./+types/reset-password";
-import { FormAlert } from "@/components/form-alert";
 import {
   Card,
   CardContent,
@@ -11,7 +10,6 @@ import * as Oui from "@/components/ui/oui-index";
 import { invariant } from "@epic-web/invariant";
 import * as z from "zod";
 import { RequestContext } from "~/lib/request-context";
-import * as TechnicalDomain from "~/lib/technical-domain";
 
 export function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
@@ -23,7 +21,7 @@ export function loader({ request }: Route.LoaderArgs) {
 export async function action({
   request,
   context,
-}: Route.ActionArgs): Promise<TechnicalDomain.FormActionResult> {
+}: Route.ActionArgs): Promise<Oui.FormActionResult> {
   const schema = z.object({
     password: z.string().min(8),
     token: z.string().min(1),
@@ -81,7 +79,7 @@ export default function RouteComponent({
             validationBehavior="aria"
             validationErrors={actionData?.validationErrors}
           >
-            <FormAlert
+            <Oui.FormAlert
               success={actionData?.success}
               message={actionData?.message}
               details={actionData?.details}
