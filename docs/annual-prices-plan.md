@@ -9,13 +9,11 @@ Key changes include updating lookup keys for clarity, modifying the Stripe servi
 ## Step-by-Step Plan
 
 1. **Update Lookup Keys Convention**
-
-   - Change existing monthly prices from `"basic"` and `"pro"` to `"basicMonthly"` and `"proMonthly"`.
-   - Add new annual prices with keys `"basicAnnual"` and `"proAnnual"`.
+   - Change existing monthly prices from `"basic"` and `"pro"` to `"basic-monthly"` and `"pro-monthly"`.
+   - Add new annual prices with keys `"basic-annual"` and `"pro-annual"`.
    - This ensures consistent naming and easier sorting/grouping.
 
 2. **Modify `stripe-service.ts`**
-
    - Update `priceData` array to include both monthly and annual prices for each product.
    - Adjust `getPrices` function to create/fetch 4 prices instead of 2.
    - Update sorting logic: Sort by product (basic/pro), then by interval (monthly before annual).
@@ -23,7 +21,6 @@ Key changes include updating lookup keys for clarity, modifying the Stripe servi
    - Ensure caching and KV storage handle the increased count.
 
 3. **Update `auth.ts` (Better-Auth Configuration)**
-
    - Keep 2 plans (basic and pro) in the `plans` function.
    - Add `annualDiscountPriceId` property to each plan for annual pricing.
    - Each plan should have unique `priceId` (monthly) and `annualDiscountPriceId` (annual).
@@ -31,26 +28,22 @@ Key changes include updating lookup keys for clarity, modifying the Stripe servi
    - Work around known bugs (e.g., #3537) by using `priceId` directly.
 
 4. **Enhance `_mkt.pricing.tsx`**
-
    - Group prices by product (one card per product).
    - Display monthly and annual options side-by-side within each card for easy comparison.
    - Add savings indicator for annual (e.g., "Save 20% with annual").
-   - Use separate buttons for monthly/annual with combined intent-based form submission (e.g., button name="intent" value="basicMonthly", "basicAnnual", "proMonthly", "proAnnual").
+   - Use separate buttons for monthly/annual with combined intent-based form submission (e.g., button name="intent" value="basic-monthly", "basic-annual", "pro-monthly", "pro-annual").
    - Ensure loader fetches and passes all 4 prices.
 
 5. **Update Billing Portal Configuration**
-
    - Modify `ensureBillingPortalConfiguration` to include all 4 prices in the `products` array for subscription updates.
    - Test that customers can switch between monthly and annual plans.
 
 6. **Improve `stripe.spec.ts`**
-
-   - Replace brittle `getStartedIndex` with robust selectors (e.g., `data-testid` attributes like `"basicMonthly"`).
+   - Replace brittle `getStartedIndex` with robust selectors (e.g., `data-testid` attributes like `"basic-monthly"`).
    - Update test data to cover both monthly and annual options.
    - Ensure tests validate the correct price selection during checkout.
 
 7. **Testing and Validation**
-
    - Run e2e tests in a sandbox environment to verify checkout flows for both intervals.
    - Test subscription creation, upgrades, and billing portal interactions.
    - Validate that existing subscriptions remain unaffected.

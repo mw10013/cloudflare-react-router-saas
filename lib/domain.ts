@@ -69,18 +69,18 @@ export const planData = [
     name: "basic", // lowercase to accomodate better-auth
     displayName: "Basic",
     monthlyPriceInCents: 5000,
-    monthlyPriceLookupKey: "basicMonthly",
+    monthlyPriceLookupKey: "basic-monthly",
     annualPriceInCents: Math.round(5000 * 12 * 0.8), // 20% discount for annual,
-    annualPriceLookupKey: "basicAnnual",
+    annualPriceLookupKey: "basic-annual",
     freeTrialDays: 7,
   },
   {
     name: "pro",
     displayName: "Pro",
     monthlyPriceInCents: 10000,
-    monthlyPriceLookupKey: "proMonthly",
+    monthlyPriceLookupKey: "pro-monthly",
     annualPriceInCents: Math.round(10000 * 12 * 0.8),
-    annualPriceLookupKey: "proAnnual",
+    annualPriceLookupKey: "pro-annual",
     freeTrialDays: 14,
   },
 ] as const;
