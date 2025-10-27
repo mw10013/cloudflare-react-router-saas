@@ -1,10 +1,10 @@
+import { d1Adapter } from "@/lib/d1-adapter";
 import {
   runAdapterTest,
   runNumberIdAdapterTest,
 } from "better-auth/adapters/test";
 import { env } from "cloudflare:test";
 import { beforeAll, describe } from "vitest";
-import { d1Adapter } from "@/lib/d1-adapter";
 import { resetDb } from "../test-utils";
 
 describe("better-auth d1Adapter", async () => {

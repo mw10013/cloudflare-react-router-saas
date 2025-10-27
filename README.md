@@ -2,6 +2,9 @@
 
 ## TODO
 
+- kebob-case: intent, stripe
+- deploy
+- read replica
 - stripe
   - cancel -> subscribe -> another free trial!
   - referenceId -> organizationId
@@ -25,6 +28,7 @@
 ```
 http://localhost:5173/
 pnpm test --project d1 auth
+pnpm test test/d1/d1-adapter.test.ts
 ```
 
 ## Local Dev
