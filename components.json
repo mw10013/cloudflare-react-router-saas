@@ -10,12 +10,15 @@
     "cssVariables": true,
     "prefix": ""
   },
+  "iconLibrary": "lucide",
   "aliases": {
     "components": "@/components",
-    "ui": "@/components/ui",
     "utils": "@/lib/utils",
+    "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "iconLibrary": "lucide"
+  "registries": {
+    "@oui": "https://oui.mw10013.workers.dev/r/{name}.json"
+  }
 }
