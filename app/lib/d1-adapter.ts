@@ -1,6 +1,7 @@
-import type { CleanedWhere, CreateCustomAdapter } from "better-auth/adapters";
+import type { CustomAdapter } from "@better-auth/core/db/adapter";
+import type { CleanedWhere } from "better-auth/adapters";
 import type { Where } from "better-auth/types";
-import { createAdapter } from "better-auth/adapters";
+import { createAdapterFactory } from "better-auth/adapters";
 
 /**
  * Better-Auth options allow you to specify model names and we do so to align with our
@@ -33,8 +34,6 @@ import { createAdapter } from "better-auth/adapters";
  * The Organization plugin works with `activeOrganizationId` as a string, but the SQLite schema has it typed as a number.
  * We handle this by transforming `activeOrganizationId` in the `customTransformOutput` function.
  */
-
-type CustomAdapter = ReturnType<CreateCustomAdapter>;
 
 function adapt({
   model: rawModel,
@@ -151,7 +150,7 @@ function adaptWhere({ where, modelId }: { where?: Where[]; modelId: string }): {
 }
 
 export const d1Adapter = (db: D1Database) =>
-  createAdapter({
+  createAdapterFactory({
     config: {
       adapterId: "d1-adapter",
       adapterName: "D1 Adapter",
