@@ -64,7 +64,7 @@ export async function action({
       intent: z.literal("leave"),
     }),
     z.object({
-      intent: z.literal("changeRole"),
+      intent: z.literal("change-role"),
       memberId: z.string().min(1, "Missing memberId"),
       role: z.enum(["member", "admin"]),
     }),
@@ -88,7 +88,7 @@ export async function action({
         body: { organizationId },
       });
       return redirect("/app");
-    case "changeRole":
+    case "change-role":
       await auth.api.updateMemberRole({
         headers: request.headers,
         body: {
@@ -173,7 +173,7 @@ function MemberItem({
             ]}
             onChange={(key) =>
               void fetcher.submit(
-                { intent: "changeRole", memberId: member.id, role: key },
+                { intent: "change-role", memberId: member.id, role: key },
                 { method: "post" },
               )
             }
