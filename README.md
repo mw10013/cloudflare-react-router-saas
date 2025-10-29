@@ -2,7 +2,6 @@
 
 ## TODO
 
-- deploy
 - read replica
 - stripe
   - cancel -> subscribe -> another free trial!
