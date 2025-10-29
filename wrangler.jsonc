@@ -1,5 +1,5 @@
 {
-  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "crrs",
   "main": "./workers/app.ts",
   "compatibility_date": "2025-07-12",
