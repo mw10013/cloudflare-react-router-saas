@@ -2,7 +2,6 @@
 
 ## TODO
 
-- kebob-case: intent, stripe
 - deploy
 - read replica
 - stripe
@@ -34,25 +33,23 @@ pnpm test test/d1/d1-adapter.test.ts
 ## Local Dev
 
 - pnpm i
-- cp functions/<PACKAGE_NAME>/.env.example functions/<PACKAGE_NAME>/.env
-- pnpm -F <PACKAGE_NAME> d1:reset
-- pnpm -F <PACKAGE_NAME> dev
+- cp .env.example .env
+- pnpm d1:reset
+- pnpm dev
 
 ## Deploy
 
-- pnpm -F <PACKAGE_NAME> exec wrangler kv namespace create <WRANGLER_NAME>-kv-production
-- pnpm -F <PACKAGE_NAME> exec wrangler queues create <WRANGLER_NAME>-q-production
+- pnpm exec wrangler kv namespace create <WRANGLER_NAME>-kv-production
+- pnpm exec wrangler queues create <WRANGLER_NAME>-q-production
 - Update wrangler.jsonc production kv_namespaces and queues
-- pnpm -F <PACKAGE_NAME> d1:reset:PRODUCTION
-- pnpm -F <PACKAGE_NAME> deploy:PRODUCTION
-- pnpm -F <PACKAGE_NAME> exec wrangler secret put <SECRET> --env production
+- pnpm d1:reset:PRODUCTION
+- pnpm deploy:PRODUCTION
+- pnpm exec wrangler secret put <SECRET> --env production
 - Workers & Pages Settings: <WRANGLER_NAME>-production
   - Git repository: connect to git repo
   - Build configuration
-    - Build command: CLOUDFLARE_ENV=production pnpm -F <PACKAGE_NAME> build
-    - Deploy command: pnpm -F <PACKAGE_NAME> exec wrangler deploy
-  - Build watch paths
-    - Include paths: functions/<PACKAGE_NAME>/\* functions/oui/\* functions/ui/\*
+    - Build command: CLOUDFLARE_ENV=production pnpm build
+    - Deploy command: pnpm exec wrangler deploy
 
 ## Shadcn
 
@@ -60,12 +57,11 @@ pnpm test test/d1/d1-adapter.test.ts
 pnpm dlx shadcn@latest add --all
 pnpm dlx shadcn@latest migrate radix
 
-pnpm dlx shadcn@latest add @oui/index
-pnpm dlx shadcn@latest add @oui/react-router-provider
-pnpm dlx shadcn@latest add @oui/react-router-theme-toggle-button
-pnpm dlx shadcn@latest add @oui/react-router-provider
-
-pnpm dlx shadcn@latest add --overwrite https://oui.mw10013.workers.dev/r/index.json
+pnpm dlx shadcn@latest add @oui/oui-index
+pnpm dlx shadcn@latest add @oui/oui-react-router-provider
+pnpm dlx shadcn@latest add @oui/oui-react-router-theme-toggle-button
+pnpm dlx shadcn@latest add @oui/oui-react-router-provider
+pnpm dlx shadcn@latest add @oui/oui-sidebar-ex
 
 ```
 
