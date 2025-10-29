@@ -64,7 +64,7 @@ export function SelectExPopover<T extends object>({
 }: SelectExPopoverProps<T>) {
   return (
     <Select {...props}>
-      {label && <Label>{label}</Label>}
+      {label && typeof label === "string" ? <Label>{label}</Label> : label}
       <SelectButton className={buttonClassName}>
         <SelectValue>{renderSelectValue}</SelectValue>
       </SelectButton>

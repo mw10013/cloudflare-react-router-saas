@@ -24,7 +24,7 @@ export function SearchFieldEx({
 }: SearchFieldExProps) {
   return (
     <SearchField {...rest}>
-      {label && <Label>{label}</Label>}
+      {label && typeof label === "string" ? <Label>{label}</Label> : label}
       <Input
         placeholder={placeholder}
         className="[&::-webkit-search-cancel-button]:hidden"

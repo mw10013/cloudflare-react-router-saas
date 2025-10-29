@@ -6,6 +6,7 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig(
   globalIgnores([
+    "build/",
     ".wrangler/",
     "worker-configuration.d.ts",
     ".react-router/",
@@ -18,7 +19,6 @@ export default defineConfig(
     "components/ui/sidebar.tsx",
     "components/ui/toggle-group.tsx",
     "hooks/use-mobile.ts",
-    "saas/",
   ]),
 
   eslint.configs.recommended,

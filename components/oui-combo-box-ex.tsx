@@ -32,7 +32,7 @@ export function ComboBoxEx<T extends object>({
 }: ComboBoxExProps<T>) {
   return (
     <ComboBox {...props}>
-      {label && <Label>{label}</Label>}
+      {label && typeof label === "string" ? <Label>{label}</Label> : label}
       <Group>
         <Input variant="ghost" placeholder={placeholder} />
         <Button variant="ghost" size="icon">

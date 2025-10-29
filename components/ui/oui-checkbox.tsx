@@ -38,7 +38,7 @@ export function Checkbox({
             className={twMerge(
               [
                 groupFocusVisibleStyles,
-                "size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow dark:bg-input/30",
+                "size-4 shrink-0 rounded-lg border border-input shadow-xs transition-shadow dark:bg-input/30",
                 "group-data-selected:border-primary group-data-selected:bg-primary group-data-selected:text-primary-foreground dark:group-data-selected:bg-primary",
                 "group-data-interminate:border-primary group-data-interminate:bg-primary group-data-interminate:text-primary-foreground dark:group-data-interminate:bg-primary",
                 "group-data-invalid:border-destructive group-data-invalid:ring-destructive/20 group-data-invalid:dark:ring-destructive/40",

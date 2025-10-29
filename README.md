@@ -56,11 +56,11 @@ pnpm test test/d1/d1-adapter.test.ts
 pnpm dlx shadcn@latest add --all
 pnpm dlx shadcn@latest migrate radix
 
-pnpm dlx shadcn@latest add @oui/oui-index
-pnpm dlx shadcn@latest add @oui/oui-react-router-provider
-pnpm dlx shadcn@latest add @oui/oui-react-router-theme-toggle-button
-pnpm dlx shadcn@latest add @oui/oui-react-router-provider
-pnpm dlx shadcn@latest add @oui/oui-sidebar-ex
+pnpm dlx shadcn@latest add --overwrite @oui/oui-index
+pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
+pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-theme-toggle-button
+pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
+pnpm dlx shadcn@latest add --overwrite @oui/oui-sidebar-ex
 
 ```
 

@@ -1,5 +1,5 @@
 import type { Route } from "./+types/admin";
-import * as Oui from "@/components/ui/oui-index";
+import { SidebarExTree, SidebarExTrigger } from "@/components/oui-sidebar-ex";
 import {
   Sidebar,
   SidebarContent,
@@ -41,7 +41,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        <Oui.SidebarExTree aria-label="Admin Navigation" items={items} />
+        <SidebarExTree aria-label="Admin Navigation" items={items} />
       </SidebarContent>
     </Sidebar>
   );
@@ -52,7 +52,7 @@ export default function RouteComponent() {
     <SidebarProvider>
       <AppSidebar />
       <main>
-        <Oui.SidebarExTrigger className="m-2" />
+        <SidebarExTrigger className="m-2" />
         <div className="flex flex-col gap-2 px-4">
           <Outlet />
         </div>

@@ -29,7 +29,7 @@ export function NumberFieldEx({
 }: NumberFieldExProps) {
   return (
     <NumberField {...props}>
-      {label && <Label>{label}</Label>}
+      {label && typeof label === "string" ? <Label>{label}</Label> : label}
       <Group>
         <Input
           variant="ghost"

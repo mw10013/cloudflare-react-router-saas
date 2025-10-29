@@ -10,7 +10,7 @@ import { twMerge } from "tailwind-merge";
  * Derived from shadcn SheetContent.
  * Merges with modalStyles so resets zoom and positioning.
  */
-export const sheetModalVariants = cva(
+export const modalExSheetVariants = cva(
   [
     "fixed top-auto left-auto z-50 flex max-w-none translate-x-0 translate-y-0 flex-col gap-4 rounded-none bg-background shadow-lg transition ease-in-out sm:max-w-none",
     "data-entering:animate-in data-entering:duration-500 data-entering:zoom-in-100",
@@ -35,7 +35,7 @@ export const sheetModalVariants = cva(
 
 export interface ModalExSheetProps
   extends Rac.ModalOverlayProps,
-    Pick<VariantProps<typeof sheetModalVariants>, "side"> {
+    Pick<VariantProps<typeof modalExSheetVariants>, "side"> {
   overlayClassName?: Rac.ModalOverlayProps["className"];
 }
 
@@ -55,7 +55,7 @@ export function ModalExSheet({
     <ModalOverlay className={overlayClassName} {...props}>
       <Modal
         className={Rac.composeRenderProps(className, (className, renderProps) =>
-          twMerge(sheetModalVariants({ ...renderProps, side, className })),
+          twMerge(modalExSheetVariants({ ...renderProps, side, className })),
         )}
       >
         {children}
