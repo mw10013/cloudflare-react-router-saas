@@ -1,5 +1,8 @@
 # Cloudflare-React-Router-Saas (crrs)
 
+- https://crrs-production.devxo.workers.dev/
+- https://crrs-production.devxo.workers.dev/api/auth/stripe/webhook
+
 ## TODO
 
 - read replica
