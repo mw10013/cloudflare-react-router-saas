@@ -5,7 +5,7 @@ import { createSes } from "@/lib/ses";
 import { createStripeService } from "@/lib/stripe-service";
 import * as Hono from "hono";
 import { createRequestHandler, RouterContextProvider } from "react-router";
-import { DomainDo } from "./domain-do";
+// import { DomainDo } from "./domain-do";
 import { createE2eRoutes } from "./e2e";
 
 export default {
@@ -58,4 +58,4 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
-export { DomainDo };
+// export { DomainDo };
