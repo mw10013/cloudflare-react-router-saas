@@ -51,7 +51,7 @@
       "vars": {
         "ENVIRONMENT": "production",
         "COMPANY_EMAIL": "motio@mail.com",
-        "BETTER_AUTH_URL": "https://saas-production.devxo.workers.dev",
+        "BETTER_AUTH_URL": "https://crrs-production.devxo.workers.dev",
         "AWS_SES_ENDPOINT": "https://email.us-east-1.amazonaws.com/v2/email/outbound-emails",
         "AWS_SES_REGION": "us-east-1"
       },
@@ -65,14 +65,14 @@
       "d1_databases": [
         {
           "binding": "D1",
-          "database_name": "saas-d1-production",
-          "database_id": "a442eacf-41f9-4e71-a290-44746f71b670" // saas-d1-production
+          "database_name": "crrs-d1-production",
+          "database_id": "e65e0a2c-f8ef-4015-80c0-d2f5cacdf51e" // crrs-d1-production
         }
       ],
       "kv_namespaces": [
         {
           "binding": "KV",
-          "id": "d3d0d87fecbf47c19230137e7a14ec97" // saas-kv-production
+          "id": "7ab5e04f8036473d9266c214d48fdbc2" // crrs-kv-production
         }
       ],
       // "durable_objects": {
