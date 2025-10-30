@@ -27,7 +27,7 @@ import { env } from "cloudflare:workers";
 
 */
 
-export interface Ses {
+export interface SesService {
   sendEmail: ({
     to,
     from,
@@ -43,7 +43,7 @@ export interface Ses {
   }) => Promise<void>;
 }
 
-export function createSes(): Ses {
+export function createSesService(): SesService {
   invariant(env.AWS_SES_ACCESS_KEY_ID, "Missing AWS_SES_ACCESS_KEY_ID");
   invariant(env.AWS_SES_SECRET_ACCESS_KEY, "Missing AWS_SES_SECRET_ACCESS_KEY");
   invariant(env.AWS_SES_ENDPOINT, "Missing AWS_SES_ENDPOINT");

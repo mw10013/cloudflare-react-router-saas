@@ -1,7 +1,7 @@
 import { createAuth } from "@/lib/auth";
 import { createRepository } from "@/lib/repository";
 import { RequestContext } from "@/lib/request-context";
-import { createSes } from "@/lib/ses";
+import { createSesService } from "@/lib/ses-service";
 import { createStripeService } from "@/lib/stripe-service";
 import * as Hono from "hono";
 import { createRequestHandler, RouterContextProvider } from "react-router";
@@ -16,7 +16,7 @@ export default {
     const auth = createAuth({
       d1: env.D1,
       stripeService,
-      ses: createSes(),
+      sesService: createSesService(),
     });
 
     const authHandler = (c: Hono.Context) => {

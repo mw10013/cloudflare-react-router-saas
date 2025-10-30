@@ -1,6 +1,6 @@
-export type D1SessionMgr = ReturnType<typeof createD1SessionMgr>;
+export type D1SessionService = ReturnType<typeof createD1SessionService>;
 
-export function createD1SessionMgr(db: D1Database, request: Request) {
+export function createD1SessionService(db: D1Database, request: Request) {
   let session: D1DatabaseSession | null = null;
 
   const getBookmarkFromRequest = (): D1SessionBookmark | undefined => {

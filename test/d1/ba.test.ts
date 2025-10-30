@@ -1,8 +1,8 @@
+import { createAuth } from "@/lib/auth";
+import { createStripeService } from "@/lib/stripe-service";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
-import { createStripeService } from "@/lib/stripe-service";
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { createAuth } from "@/lib/auth";
 import { resetDb } from "../test-utils";
 
 describe("better-auth sign up flow", () => {
@@ -21,7 +21,7 @@ describe("better-auth sign up flow", () => {
     auth = createAuth({
       d1: env.D1,
       stripeService: createStripeService(),
-      ses: {
+      sesService: {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         async sendEmail() {},
       },

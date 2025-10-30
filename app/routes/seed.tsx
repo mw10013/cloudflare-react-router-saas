@@ -17,7 +17,7 @@ function createSeedContext({
   const auth = createAuth({
     d1: env.D1,
     stripeService,
-    ses: {
+    sesService: {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       async sendEmail() {},
     },

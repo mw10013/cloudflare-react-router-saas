@@ -1,6 +1,6 @@
 import type { StripeService } from "@/lib/stripe-service";
 import type { BetterAuthOptions } from "better-auth";
-import type { createSes } from "./ses";
+import type { createSesService } from "./ses-service";
 import { d1Adapter } from "@/lib/d1-adapter";
 import { stripe } from "@better-auth/stripe";
 import { betterAuth } from "better-auth";
@@ -17,7 +17,7 @@ export type Auth = ReturnType<typeof createAuth>;
 interface CreateAuthOptions {
   d1: D1Database;
   stripeService: StripeService;
-  ses: ReturnType<typeof createSes>;
+  sesService: ReturnType<typeof createSesService>;
   sendResetPassword?: NonNullable<
     BetterAuthOptions["emailAndPassword"]
   >["sendResetPassword"];
@@ -46,7 +46,7 @@ interface CreateAuthOptions {
 function createBetterAuthOptions({
   d1,
   stripeService,
-  ses,
+  sesService,
   sendResetPassword,
   sendVerificationEmail,
   afterEmailVerification,
@@ -75,7 +75,7 @@ function createBetterAuthOptions({
         sendResetPassword ??
         (async ({ user, url, token }) => {
           console.log("sendResetPassword", { to: user.email, url, token });
-          await ses.sendEmail({
+          await sesService.sendEmail({
             to: user.email,
             from: env.COMPANY_EMAIL,
             subject: "Reset your password",
@@ -92,7 +92,7 @@ function createBetterAuthOptions({
         sendVerificationEmail ??
         (async ({ user, url, token }) => {
           console.log("sendVerificationEmail", { to: user.email, url, token });
-          await ses.sendEmail({
+          await sesService.sendEmail({
             to: user.email,
             from: env.COMPANY_EMAIL,
             subject: "Please verify your email",
@@ -149,7 +149,7 @@ function createBetterAuthOptions({
                 expirationTtl: 60,
               });
             }
-            await ses.sendEmail({
+            await sesService.sendEmail({
               to: data.email,
               from: env.COMPANY_EMAIL,
               subject: "Your Magic Link",
@@ -173,7 +173,7 @@ function createBetterAuthOptions({
           (async (data) => {
             console.log("sendInvitationEmail", data);
             const url = `${env.BETTER_AUTH_URL}/accept-invitation/${data.id}`;
-            await ses.sendEmail({
+            await sesService.sendEmail({
               to: data.email,
               from: env.COMPANY_EMAIL,
               subject: "You're invited!",
