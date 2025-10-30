@@ -25,7 +25,7 @@
     "paths": {
       "@/*": ["./*"],
       "~/*": ["./app/*"],
-      "~workers/*": ["./workers/*"]
+      "/*": ["./workers/*"]
     },
     "noEmit": false,
     "outDir": "./node_modules/.tmp",

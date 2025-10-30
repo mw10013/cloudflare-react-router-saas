@@ -6,8 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "~/*": ["./app/*"],
-      "~workers/*": ["./workers/*"]
+      "~/*": ["./app/*"]
     }
   },
   "references": [

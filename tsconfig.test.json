@@ -18,8 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "~/*": ["./app/*"],
-      "~workers/*": ["./workers/*"]
+      "~/*": ["./app/*"]
     },
     "rootDirs": [".", "./.react-router/types"]
   }
