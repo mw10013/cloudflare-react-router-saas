@@ -31,7 +31,7 @@ export async function action({
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const response = await auth.api.signInEmail({
     body: {
       email: parseResult.data.email,

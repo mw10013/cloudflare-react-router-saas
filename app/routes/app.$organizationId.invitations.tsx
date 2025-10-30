@@ -22,7 +22,7 @@ export async function loader({
 }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
 
   const { success: canManageInvitations } = await auth.api.hasPermission({
     headers: request.headers,
@@ -87,7 +87,7 @@ export async function action({
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth, env } = requestContext;
+  const { authService: auth, env } = requestContext;
   switch (parseResult.data.intent) {
     case "cancel":
       await auth.api.cancelInvitation({

@@ -8,7 +8,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   if (error) return { error };
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const session = await auth.api.getSession({ headers: request.headers });
   return { verified: session?.user.emailVerified };
 }

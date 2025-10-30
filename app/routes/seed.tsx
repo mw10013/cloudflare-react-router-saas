@@ -1,6 +1,6 @@
 import type { User } from "better-auth/types";
 import type { Route } from "./+types/seed";
-import { createAuth } from "@/lib/auth";
+import { createAuthService } from "@/lib/auth-service";
 import { createRepository } from "@/lib/repository";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
@@ -14,7 +14,7 @@ function createSeedContext({
   stripeService: RequestContext["stripeService"];
 }) {
   const magicLinkTokens = new Map<string, string>();
-  const auth = createAuth({
+  const auth = createAuthService({
     d1: env.D1,
     stripeService,
     sesService: {
@@ -36,7 +36,7 @@ function createSeedContext({
     context.set(RequestContext, {
       env,
       repository: createRepository(),
-      auth,
+      authService: auth,
       stripeService: stripeService,
       session,
     });

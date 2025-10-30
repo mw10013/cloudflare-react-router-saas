@@ -34,7 +34,7 @@ export async function action({
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth, env } = requestContext;
+  const { authService: auth, env } = requestContext;
   const result = await auth.api.signInMagicLink({
     headers: request.headers,
     body: { email: parseResult.data.email, callbackURL: "/magic-link" },

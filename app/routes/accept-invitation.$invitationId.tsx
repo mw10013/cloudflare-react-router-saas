@@ -34,7 +34,7 @@ export async function action({
   const parseResult = schema.parse(Object.fromEntries(formData));
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   if (parseResult.intent === "accept") {
     await auth.api.acceptInvitation({
       body: { invitationId },

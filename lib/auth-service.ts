@@ -8,13 +8,13 @@ import { createAuthMiddleware } from "better-auth/api";
 import { admin, magicLink, organization } from "better-auth/plugins";
 import { env } from "cloudflare:workers";
 
-export type Auth = ReturnType<typeof createAuth>;
+export type AuthService = ReturnType<typeof createAuthService>;
 
 // [BUG]: Stripe plugin does not handle lookupKey and annualDiscountLookupKey in onCheckoutSessionCompleted: https://github.com/better-auth/better-auth/issues/3537
 // STRIPE. Duplicate customers are created when using createCustomerOnSignUp: true and and a customer with same email exists in stripe: https://github.com/better-auth/better-auth/issues/3670
 // TypeScript Error: "The inferred type of this node exceeds the maximum length the compiler will serialize" when using admin and organization plugins together. : https://github.com/better-auth/better-auth/issues/3067#issuecomment-2988246817
 
-interface CreateAuthOptions {
+interface CreateAuthServiceOptions {
   d1: D1Database;
   stripeService: StripeService;
   sesService: ReturnType<typeof createSesService>;
@@ -54,7 +54,7 @@ function createBetterAuthOptions({
   sendInvitationEmail,
   databaseHookUserCreateAfter,
   databaseHookSessionCreateBefore,
-}: CreateAuthOptions) {
+}: CreateAuthServiceOptions) {
   return {
     baseURL: env.BETTER_AUTH_URL,
     secret: env.BETTER_AUTH_SECRET,
@@ -282,8 +282,8 @@ function createBetterAuthOptions({
   } satisfies BetterAuthOptions;
 }
 
-export function createAuth(
-  options: CreateAuthOptions,
+export function createAuthService(
+  options: CreateAuthServiceOptions,
 ): ReturnType<typeof betterAuth<ReturnType<typeof createBetterAuthOptions>>> {
   const auth = betterAuth(
     createBetterAuthOptions({

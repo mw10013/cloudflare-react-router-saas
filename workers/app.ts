@@ -1,4 +1,4 @@
-import { createAuth } from "@/lib/auth";
+import { createAuthService } from "@/lib/auth-service";
 import { createRepository } from "@/lib/repository";
 import { RequestContext } from "@/lib/request-context";
 import { createSesService } from "@/lib/ses-service";
@@ -13,7 +13,7 @@ export default {
     const hono = new Hono.Hono();
     const repository = createRepository();
     const stripeService = createStripeService();
-    const auth = createAuth({
+    const authService = createAuthService({
       d1: env.D1,
       stripeService,
       sesService: createSesService(),
@@ -21,7 +21,7 @@ export default {
 
     const authHandler = (c: Hono.Context) => {
       console.log(`worker fetch: auth: ${c.req.raw.url}`);
-      return auth.handler(c.req.raw);
+      return authService.handler(c.req.raw);
     };
     hono.post("/api/auth/stripe/webhook", authHandler);
     hono.get("/api/auth/magic-link/verify", authHandler);
@@ -39,11 +39,11 @@ export default {
       const context = new RouterContextProvider();
       context.set(RequestContext, {
         env,
-        auth,
+        authService,
         repository,
         stripeService,
         session:
-          (await auth.api.getSession({ headers: c.req.raw.headers })) ??
+          (await authService.api.getSession({ headers: c.req.raw.headers })) ??
           undefined,
       });
       const requestHandler = createRequestHandler(

@@ -20,7 +20,7 @@ export async function loader({
 }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const subscriptions = await auth.api.listActiveSubscriptions({
     headers: request.headers,
     query: { referenceId: organizationId },
@@ -54,7 +54,7 @@ export async function action({
   );
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   switch (parseResult.intent) {
     case "manage": {
       const result = await auth.api.createBillingPortal({

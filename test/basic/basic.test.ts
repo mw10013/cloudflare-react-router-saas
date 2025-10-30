@@ -1,4 +1,4 @@
-import type { Auth } from "@/lib/auth";
+import type { AuthService } from "@/lib/auth-service";
 import type { Repository } from "@/lib/repository";
 import type { StripeService } from "@/lib/stripe-service";
 import {
@@ -41,7 +41,7 @@ describe("basic", () => {
     const context = new RouterContextProvider();
     context.set(RequestContext, {
       env,
-      auth: {} as Auth,
+      authService: {} as AuthService,
       repository: {} as Repository,
       stripeService: {} as StripeService,
     });

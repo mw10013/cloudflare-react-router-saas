@@ -36,7 +36,7 @@ export async function action({
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const result = await auth.api.resetPassword({
     body: {
       token: parseResult.data.token,

@@ -28,7 +28,7 @@ inner join User u on u.userId = m.userId`,
 export async function action({ request, context }: Route.ActionArgs) {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth, session, stripeService } = requestContext;
+  const { authService: auth, session, stripeService } = requestContext;
   if (!session) {
     return redirect("/login");
   }

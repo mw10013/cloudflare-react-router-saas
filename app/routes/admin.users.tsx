@@ -19,7 +19,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   const offset = (page - 1) * LIMIT;
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const result = await auth.api.listUsers({
     query: {
       limit: LIMIT,
@@ -71,7 +71,7 @@ export async function action({
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   switch (parseResult.data.intent) {
     case "ban":
       await auth.api.banUser({

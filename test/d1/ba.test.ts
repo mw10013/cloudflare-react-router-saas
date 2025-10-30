@@ -1,4 +1,4 @@
-import { createAuth } from "@/lib/auth";
+import { createAuthService } from "@/lib/auth-service";
 import { createStripeService } from "@/lib/stripe-service";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
@@ -13,12 +13,12 @@ describe("better-auth sign up flow", () => {
   const headers = new Headers();
   let emailVerificationUrl: string | undefined;
   let mockSendVerificationEmail: ReturnType<typeof vi.fn>;
-  let auth: ReturnType<typeof createAuth>;
+  let auth: ReturnType<typeof createAuthService>;
 
   beforeAll(async () => {
     await resetDb();
     mockSendVerificationEmail = vi.fn().mockResolvedValue(undefined);
-    auth = createAuth({
+    auth = createAuthService({
       d1: env.D1,
       stripeService: createStripeService(),
       sesService: {

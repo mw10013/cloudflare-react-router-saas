@@ -1,16 +1,16 @@
-import type { Auth } from "@/lib/auth";
+import type { AuthService } from "@/lib/auth-service";
 import type { Repository } from "@/lib/repository";
 import type { StripeService } from "@/lib/stripe-service";
 import { createContext } from "react-router";
 
 export interface RequestContext {
   env: Env;
-  auth: Auth;
+  authService: AuthService;
   repository: Repository;
   stripeService: StripeService;
-  session?: Auth["$Infer"]["Session"];
-  organization?: Auth["$Infer"]["Organization"];
-  organizations?: Auth["$Infer"]["Organization"][];
+  session?: AuthService["$Infer"]["Session"];
+  organization?: AuthService["$Infer"]["Organization"];
+  organizations?: AuthService["$Infer"]["Organization"][];
 }
 
 // RequestContext serves as both the context key (runtime) and type (TypeScript)

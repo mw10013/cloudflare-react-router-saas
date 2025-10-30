@@ -26,7 +26,7 @@ const organizationMiddleware: Route.MiddlewareFunction = async ({
 }) => {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const organizations = await requestContext.auth.api.listOrganizations({
+  const organizations = await requestContext.authService.api.listOrganizations({
     headers: request.headers,
   });
   const organization = organizations.find((org) => org.id === organizationId);

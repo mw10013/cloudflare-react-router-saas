@@ -9,7 +9,7 @@ const appMiddleware: Route.MiddlewareFunction = async ({
 }) => {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const session = await auth.api.getSession({ headers: request.headers });
   // eslint-disable-next-line @typescript-eslint/only-throw-error
   if (!session?.user) throw redirect("/login");

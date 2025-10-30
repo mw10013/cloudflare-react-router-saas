@@ -19,7 +19,7 @@ export async function loader({
   const MIN_TTL_MS = 5 * 60 * 1000;
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const session = await auth.api.getSession({ headers: request.headers });
   invariant(session, "Missing session");
   const now = Date.now();
@@ -52,7 +52,7 @@ export async function action({ request, context }: Route.ActionArgs) {
   );
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   if (intent === "accept")
     await auth.api.acceptInvitation({
       headers: request.headers,

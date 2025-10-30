@@ -19,7 +19,7 @@ export async function loader({
 }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   const session = await auth.api.getSession({ headers: request.headers });
   invariant(session, "Missing session");
   const members = (
@@ -74,7 +74,7 @@ export async function action({
   );
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { auth } = requestContext;
+  const { authService: auth } = requestContext;
   switch (parseResult.intent) {
     case "remove":
       await auth.api.removeMember({

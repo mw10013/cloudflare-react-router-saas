@@ -1,5 +1,5 @@
 import type { User } from "better-auth/types";
-import { createAuth } from "@/lib/auth";
+import { createAuthService } from "@/lib/auth-service";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
 import { RequestContext } from "lib/request-context";
@@ -28,7 +28,7 @@ async function createTestContext() {
   const mockSendVerificationEmail = vi.fn().mockResolvedValue(undefined);
   const mockSendMagicLink = vi.fn().mockResolvedValue(undefined);
   const mockSendInvitationEmail = vi.fn().mockResolvedValue(undefined);
-  const auth = createAuth({
+  const auth = createAuthService({
     d1: env.D1,
     stripeService: createStripeService(),
     sesService: {
@@ -47,7 +47,7 @@ async function createTestContext() {
     const context = new RouterContextProvider();
     context.set(RequestContext, {
       env,
-      auth,
+      authService: auth,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
       repository: {} as any,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
