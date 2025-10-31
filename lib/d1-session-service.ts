@@ -3,15 +3,24 @@ export type D1SessionService = ReturnType<typeof createD1SessionService>;
 export interface CreateD1SessionServiceConfig {
   d1: D1Database;
   request: Request;
-  defaultSessionConstraint?: D1SessionConstraint;
+  sessionConstraint?: D1SessionConstraint;
 }
 
 export function createD1SessionService({
   d1,
   request,
-  defaultSessionConstraint,
+  ...config
 }: CreateD1SessionServiceConfig) {
+  let sessionConstraint: D1SessionConstraint | undefined =
+    config.sessionConstraint;
   let session: D1DatabaseSession | null = null;
+
+  const setSessionContraint = (constraint: D1SessionConstraint) => {
+    sessionConstraint = constraint;
+    if (session) {
+      console.warn("D1 session constraint changed after session was created");
+    }
+  };
 
   const getBookmarkFromRequest = (): D1SessionBookmark | undefined => {
     const cookieHeader = request.headers.get("cookie");
@@ -22,15 +31,10 @@ export function createD1SessionService({
     return bookmarkCookie.split("=")[1];
   };
 
-  const getDbWithSession = (
-    // constraint: D1SessionConstraint = "first-unconstrained",
-    constraint?: D1SessionConstraint,
-  ): D1DatabaseSession => {
+  const getSession = (constraint?: D1SessionConstraint): D1DatabaseSession => {
     if (!session) {
       const bookmark = getBookmarkFromRequest();
-      session = d1.withSession(
-        bookmark ?? constraint ?? defaultSessionConstraint,
-      );
+      session = d1.withSession(bookmark ?? constraint ?? sessionConstraint);
     }
     return session;
   };
@@ -46,7 +50,8 @@ export function createD1SessionService({
   };
 
   return {
-    getDbWithSession,
+    setSessionContraint,
+    getSession,
     setSessionBookmarkCookie,
   };
 }

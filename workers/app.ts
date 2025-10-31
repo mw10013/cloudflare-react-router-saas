@@ -1,4 +1,5 @@
 import { createAuthService } from "@/lib/auth-service";
+import { createD1SessionService } from "@/lib/d1-session-service";
 import { createRepository } from "@/lib/repository";
 import { RequestContext } from "@/lib/request-context";
 import { createSesService } from "@/lib/ses-service";
@@ -11,7 +12,11 @@ import { createE2eRoutes } from "./e2e";
 export default {
   async fetch(request, env, ctx) {
     const hono = new Hono.Hono();
-    const repository = createRepository();
+    const d1SessionService = createD1SessionService({
+      d1: env.D1,
+      request,
+    });
+    const repository = createRepository({ d1SessionService });
     const stripeService = createStripeService();
     const authService = createAuthService({
       d1: env.D1,
@@ -53,6 +58,7 @@ export default {
       return requestHandler(c.req.raw, context);
     });
     const response = await hono.fetch(request, env, ctx);
+    d1SessionService.setSessionBookmarkCookie(response);
     // ctx.waitUntil(runtime.dispose());
     return response;
   },

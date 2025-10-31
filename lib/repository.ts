@@ -1,5 +1,5 @@
+import type { D1SessionService } from "@/lib/d1-session-service";
 import * as Domain from "@/lib/domain";
-import { env } from "cloudflare:workers";
 
 /**
  * The repository provides data access methods for the application's domain entities.
@@ -22,10 +22,13 @@ import { env } from "cloudflare:workers";
 
 export type Repository = ReturnType<typeof createRepository>;
 
-export function createRepository() {
-  const d1 = env.D1;
-
+export function createRepository({
+  d1SessionService,
+}: {
+  d1SessionService: D1SessionService;
+}) {
   const getUser = async ({ email }: { email: Domain.User["email"] }) => {
+    const d1 = d1SessionService.getSession();
     const result = await d1
       .prepare(`select * from User where email = ?`)
       .bind(email)
@@ -36,6 +39,7 @@ export function createRepository() {
   return {
     getUser,
     getUsers: async () => {
+      const d1 = d1SessionService.getSession();
       const result = await d1.prepare(`select * from User`).run();
       return Domain.User.array().parse(result.results);
     },
