@@ -1,6 +1,5 @@
 import type { User } from "better-auth/types";
 import { createAuthService } from "@/lib/auth-service";
-import { createD1SessionService } from "@/lib/d1-session-service";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
 import { RequestContext } from "lib/request-context";
@@ -25,16 +24,12 @@ type TestUser = Awaited<ReturnType<TestContext["createTestUser"]>>;
 async function createTestContext() {
   await resetDb();
 
-  const d1SessionService = createD1SessionService({
-    d1: env.D1,
-    request: new Request("http://test"),
-  });
   const mockSendResetPassword = vi.fn().mockResolvedValue(undefined);
   const mockSendVerificationEmail = vi.fn().mockResolvedValue(undefined);
   const mockSendMagicLink = vi.fn().mockResolvedValue(undefined);
   const mockSendInvitationEmail = vi.fn().mockResolvedValue(undefined);
   const auth = createAuthService({
-    db: d1SessionService.getSession(),
+    db: env.D1.withSession(),
     stripeService: createStripeService(),
     sesService: {
       // eslint-disable-next-line @typescript-eslint/no-empty-function

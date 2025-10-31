@@ -1,5 +1,4 @@
 import { d1Adapter } from "@/lib/d1-adapter";
-import { createD1SessionService } from "@/lib/d1-session-service";
 import {
   runAdapterTest,
   runNumberIdAdapterTest,
@@ -26,11 +25,7 @@ describe("better-auth d1Adapter", async () => {
 
   await runAdapterTest({
     getAdapter: (options = {}) => {
-      const service = createD1SessionService({
-        d1: env.D1,
-        request: new Request("http://test"),
-      });
-      return Promise.resolve(d1Adapter(service.getSession())(options));
+      return Promise.resolve(d1Adapter(env.D1.withSession())(options));
     },
     disableTests: {
       CREATE_MODEL: false,
@@ -78,11 +73,7 @@ describe("better-auth d1Adapter (number id)", async () => {
 
   await runNumberIdAdapterTest({
     getAdapter: async (options = {}) => {
-      const service = createD1SessionService({
-        d1: env.D1,
-        request: new Request("http://test"),
-      });
-      return Promise.resolve(d1Adapter(service.getSession())(options));
+      return Promise.resolve(d1Adapter(env.D1.withSession())(options));
     },
     disableTests: {
       SHOULD_RETURN_A_NUMBER_ID_AS_A_RESULT: false,

@@ -1,5 +1,4 @@
 import { createAuthService } from "@/lib/auth-service";
-import { createD1SessionService } from "@/lib/d1-session-service";
 import { createStripeService } from "@/lib/stripe-service";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
@@ -18,13 +17,9 @@ describe("better-auth sign up flow", () => {
 
   beforeAll(async () => {
     await resetDb();
-    const d1SessionService = createD1SessionService({
-      d1: env.D1,
-      request: new Request("http://test"),
-    });
     mockSendVerificationEmail = vi.fn().mockResolvedValue(undefined);
     auth = createAuthService({
-      db: d1SessionService.getSession(),
+      db: env.D1.withSession(),
       stripeService: createStripeService(),
       sesService: {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
