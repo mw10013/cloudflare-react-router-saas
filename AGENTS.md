@@ -26,5 +26,7 @@ import * as Oui from "@/components/ui/oui-index";
 import * as Rac from "react-aria-components";
 import * as z from "zod";
 import * as Domain from "@/lib/domain";
+import type { Stripe as StripeTypes } from "stripe";
+import * as Stripe from "stripe";
 
 ```

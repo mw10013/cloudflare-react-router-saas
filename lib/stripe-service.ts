@@ -1,12 +1,12 @@
 import type { Plan } from "@/lib/domain";
-import type { Stripe as StripeType } from "stripe";
+import type { Stripe as StripeTypes } from "stripe";
 import { planData, Plan as PlanSchema } from "@/lib/domain";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
-import Stripe from "stripe";
+import * as Stripe from "stripe";
 import * as z from "zod";
 
-type Price = StripeType.Price;
+type Price = StripeTypes.Price;
 type PriceWithLookupKey = Price & { lookup_key: string };
 const isPriceWithLookupKey = (p: Price): p is PriceWithLookupKey =>
   p.lookup_key !== null;
@@ -17,7 +17,7 @@ function assertPriceWithLookupKey(p: Price): asserts p is PriceWithLookupKey {
 export type StripeService = ReturnType<typeof createStripeService>;
 
 export function createStripeService() {
-  const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+  const stripe = new Stripe.Stripe(env.STRIPE_SECRET_KEY, {
     apiVersion: "2025-07-30.basil",
   });
 
