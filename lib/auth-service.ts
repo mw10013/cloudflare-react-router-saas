@@ -60,6 +60,7 @@ function createBetterAuthOptions({
     baseURL: env.BETTER_AUTH_URL,
     secret: env.BETTER_AUTH_SECRET,
     telemetry: { enabled: false },
+    rateLimit: { enabled: false },
     database: d1Adapter(d1SessionService),
     user: { modelName: "User" },
     session: { modelName: "Session", storeSessionInDatabase: true },
