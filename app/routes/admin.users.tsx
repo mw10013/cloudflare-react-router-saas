@@ -1,10 +1,10 @@
 import type { Route } from "./+types/admin.users";
-import { useCallback, useEffect, useState } from "react";
+import * as React from "react";
 import * as Oui from "@/components/ui/oui-index";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import { redirect, useFetcher, useNavigate } from "react-router";
+import * as ReactRouter from "react-router";
 import * as z from "zod";
 
 export async function loader({ request, context }: Route.LoaderArgs) {
@@ -37,7 +37,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   if (page > pageCount) {
     const u = new URL(request.url);
     u.searchParams.set("page", String(pageCount));
-    return redirect(u.toString());
+    return ReactRouter.redirect(u.toString());
   }
 
   return {
@@ -95,7 +95,7 @@ export async function action({
         body: { userId: parseResult.data.userId },
       });
       // eslint-disable-next-line @typescript-eslint/only-throw-error
-      throw redirect("/app", { headers });
+      throw ReactRouter.redirect("/app", { headers });
     }
     default:
       void (parseResult.data satisfies never);
@@ -104,12 +104,12 @@ export async function action({
 }
 
 export default function RouteComponent({ loaderData }: Route.ComponentProps) {
-  const navigate = useNavigate();
-  const [banDialog, setBanDialog] = useState<{
+  const navigate = ReactRouter.useNavigate();
+  const [banDialog, setBanDialog] = React.useState<{
     isOpen: boolean;
     userId?: string;
   }>({ isOpen: false });
-  const onOpenChangeBanDialog = useCallback(
+  const onOpenChangeBanDialog = React.useCallback(
     (isOpen: boolean) => {
       setBanDialog((prev) =>
         prev.isOpen === isOpen
@@ -121,7 +121,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
     },
     [setBanDialog],
   );
-  const fetcher = useFetcher(); // Caution: shared fetcher for simplicity.
+  const fetcher = ReactRouter.useFetcher(); // Caution: shared fetcher for simplicity.
 
   return (
     <div className="flex flex-col gap-8 p-6">
@@ -306,8 +306,8 @@ function BanDialog({
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
 }) {
-  const fetcher = useFetcher<Route.ComponentProps["actionData"]>();
-  useEffect(() => {
+  const fetcher = ReactRouter.useFetcher<Route.ComponentProps["actionData"]>();
+  React.useEffect(() => {
     if (fetcher.data?.success) {
       onOpenChange(false);
     }

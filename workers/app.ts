@@ -4,7 +4,7 @@ import { RequestContext } from "@/lib/request-context";
 import { createSesService } from "@/lib/ses-service";
 import { createStripeService } from "@/lib/stripe-service";
 import * as Hono from "hono";
-import { createRequestHandler, RouterContextProvider } from "react-router";
+import * as ReactRouter from "react-router";
 // import { DomainDo } from "./domain-do";
 import { createE2eRoutes } from "./e2e";
 
@@ -36,7 +36,7 @@ export default {
     }
 
     hono.all("*", async (c) => {
-      const context = new RouterContextProvider();
+      const context = new ReactRouter.RouterContextProvider();
       context.set(RequestContext, {
         env,
         authService,
@@ -46,7 +46,7 @@ export default {
           (await authService.api.getSession({ headers: c.req.raw.headers })) ??
           undefined,
       });
-      const requestHandler = createRequestHandler(
+      const requestHandler = ReactRouter.createRequestHandler(
         () => import("virtual:react-router/server-build"),
         import.meta.env.MODE,
       );

@@ -10,7 +10,7 @@ import * as Oui from "@/components/ui/oui-index";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import { redirect, useSubmit } from "react-router";
+import * as ReactRouter from "react-router";
 import * as z from "zod";
 
 export async function action({
@@ -42,17 +42,18 @@ export async function action({
   });
   // TODO: signin: handle 401: UNAUTHORIZED
   if (!response.ok) {
-    // eslint-disable-next-line @typescript-eslint/only-throw-error
-    if (response.status === 403) throw redirect("/email-verification");
+    if (response.status === 403)
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
+      throw ReactRouter.redirect("/email-verification");
     // eslint-disable-next-line @typescript-eslint/only-throw-error
     throw response;
   }
   // eslint-disable-next-line @typescript-eslint/only-throw-error
-  throw redirect("/", { headers: response.headers });
+  throw ReactRouter.redirect("/", { headers: response.headers });
 }
 
 export default function RouteComponent({ actionData }: Route.ComponentProps) {
-  const submit = useSubmit();
+  const submit = ReactRouter.useSubmit();
   return (
     <div className="flex min-h-screen items-center justify-center">
       <Card className="w-full max-w-sm">

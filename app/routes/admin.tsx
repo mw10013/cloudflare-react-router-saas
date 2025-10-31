@@ -7,14 +7,14 @@ import {
 } from "@/components/ui/sidebar";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import { Outlet, redirect } from "react-router";
+import * as ReactRouter from "react-router";
 
 export const adminMiddleware: Route.MiddlewareFunction = ({ context }) => {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
   const { session } = requestContext;
   // eslint-disable-next-line @typescript-eslint/only-throw-error
-  if (!session?.user) throw redirect("/login");
+  if (!session?.user) throw ReactRouter.redirect("/login");
   if (session.user.role !== "admin")
     // eslint-disable-next-line @typescript-eslint/only-throw-error
     throw new Response("Forbidden", { status: 403 });
@@ -54,7 +54,7 @@ export default function RouteComponent() {
       <main>
         <SidebarExTrigger className="m-2" />
         <div className="flex flex-col gap-2 px-4">
-          <Outlet />
+          <ReactRouter.Outlet />
         </div>
       </main>
     </SidebarProvider>

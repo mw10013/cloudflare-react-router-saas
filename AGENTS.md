@@ -21,12 +21,13 @@
 - Prefer namespace imports for large libraries.
 
 ```ts
+import type { Stripe as StripeTypes } from "stripe";
 import * as React from "react";
 import * as Oui from "@/components/ui/oui-index";
-import * as Rac from "react-aria-components";
-import * as z from "zod";
 import * as Domain from "@/lib/domain";
-import type { Stripe as StripeTypes } from "stripe";
+import * as Hono from "hono";
+import * as Rac from "react-aria-components";
+import * as ReactRouter from "react-router";
 import * as Stripe from "stripe";
-
+import * as z from "zod";
 ```

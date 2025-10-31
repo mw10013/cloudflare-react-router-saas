@@ -4,7 +4,7 @@ import ReactRouterThemeToggleButton from "@/components/oui-react-router-theme-to
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import * as Rac from "react-aria-components";
-import { Outlet, useRouteLoaderData } from "react-router";
+import * as ReactRouter from "react-router";
 
 export function loader({ context }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
@@ -22,7 +22,7 @@ export default function RouteComponent() {
     <div data-wrapper="" className="border-grid flex flex-1 flex-col">
       <SiteHeader />
       <main className="flex flex-1 flex-col">
-        <Outlet />
+        <ReactRouter.Outlet />
       </main>
       {/* <SiteFooter /> */}
     </div>
@@ -31,7 +31,9 @@ export default function RouteComponent() {
 
 function SiteHeader() {
   const routeLoaderData =
-    useRouteLoaderData<Route.ComponentProps["loaderData"]>("routes/_mkt");
+    ReactRouter.useRouteLoaderData<Route.ComponentProps["loaderData"]>(
+      "routes/_mkt",
+    );
   return (
     <header className="border-grid bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="container-wrapper">
