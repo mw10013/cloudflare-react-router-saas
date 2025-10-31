@@ -24,7 +24,7 @@ describe("better-auth sign up flow", () => {
     });
     mockSendVerificationEmail = vi.fn().mockResolvedValue(undefined);
     auth = createAuthService({
-      d1SessionService,
+      db: d1SessionService.getSession(),
       stripeService: createStripeService(),
       sesService: {
         // eslint-disable-next-line @typescript-eslint/no-empty-function

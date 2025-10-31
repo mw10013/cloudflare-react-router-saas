@@ -20,7 +20,7 @@ function createSeedContext({
     request: new Request("http://seed"),
   });
   const auth = createAuthService({
-    d1SessionService,
+    db: d1SessionService.getSession(),
     stripeService,
     sesService: {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -40,7 +40,7 @@ function createSeedContext({
     const context = new RouterContextProvider();
     context.set(RequestContext, {
       env,
-      repository: createRepository({ d1SessionService }),
+      repository: createRepository({ db: d1SessionService.getSession() }),
       authService: auth,
       stripeService: stripeService,
       session,

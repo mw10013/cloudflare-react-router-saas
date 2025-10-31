@@ -16,10 +16,10 @@ export default {
       d1: env.D1,
       request,
     });
-    const repository = createRepository({ d1SessionService });
+    const repository = createRepository({ db: d1SessionService.getSession() });
     const stripeService = createStripeService();
     const authService = createAuthService({
-      d1SessionService,
+      db: d1SessionService.getSession(),
       stripeService,
       sesService: createSesService(),
     });

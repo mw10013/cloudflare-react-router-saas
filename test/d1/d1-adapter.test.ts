@@ -30,7 +30,7 @@ describe("better-auth d1Adapter", async () => {
         d1: env.D1,
         request: new Request("http://test"),
       });
-      return Promise.resolve(d1Adapter(service)(options));
+      return Promise.resolve(d1Adapter(service.getSession())(options));
     },
     disableTests: {
       CREATE_MODEL: false,
@@ -82,7 +82,7 @@ describe("better-auth d1Adapter (number id)", async () => {
         d1: env.D1,
         request: new Request("http://test"),
       });
-      return Promise.resolve(d1Adapter(service)(options));
+      return Promise.resolve(d1Adapter(service.getSession())(options));
     },
     disableTests: {
       SHOULD_RETURN_A_NUMBER_ID_AS_A_RESULT: false,

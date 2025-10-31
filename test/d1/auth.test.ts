@@ -34,7 +34,7 @@ async function createTestContext() {
   const mockSendMagicLink = vi.fn().mockResolvedValue(undefined);
   const mockSendInvitationEmail = vi.fn().mockResolvedValue(undefined);
   const auth = createAuthService({
-    d1SessionService,
+    db: d1SessionService.getSession(),
     stripeService: createStripeService(),
     sesService: {
       // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -1,4 +1,3 @@
-import type { D1SessionService } from "@/lib/d1-session-service";
 import * as Domain from "@/lib/domain";
 
 /**
@@ -23,13 +22,12 @@ import * as Domain from "@/lib/domain";
 export type Repository = ReturnType<typeof createRepository>;
 
 export function createRepository({
-  d1SessionService,
+  db,
 }: {
-  d1SessionService: D1SessionService;
+  db: D1Database | D1DatabaseSession;
 }) {
   const getUser = async ({ email }: { email: Domain.User["email"] }) => {
-    const d1 = d1SessionService.getSession();
-    const result = await d1
+    const result = await db
       .prepare(`select * from User where email = ?`)
       .bind(email)
       .first();
@@ -39,8 +37,7 @@ export function createRepository({
   return {
     getUser,
     getUsers: async () => {
-      const d1 = d1SessionService.getSession();
-      const result = await d1.prepare(`select * from User`).run();
+      const result = await db.prepare(`select * from User`).run();
       return Domain.User.array().parse(result.results);
     },
   };

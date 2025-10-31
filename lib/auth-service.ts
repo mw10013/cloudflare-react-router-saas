@@ -1,4 +1,3 @@
-import type { D1SessionService } from "@/lib/d1-session-service";
 import type { StripeService } from "@/lib/stripe-service";
 import type { BetterAuthOptions } from "better-auth";
 import type { createSesService } from "./ses-service";
@@ -16,7 +15,7 @@ export type AuthService = ReturnType<typeof createAuthService>;
 // TypeScript Error: "The inferred type of this node exceeds the maximum length the compiler will serialize" when using admin and organization plugins together. : https://github.com/better-auth/better-auth/issues/3067#issuecomment-2988246817
 
 interface CreateAuthServiceOptions {
-  d1SessionService: D1SessionService;
+  db: D1Database | D1DatabaseSession;
   stripeService: StripeService;
   sesService: ReturnType<typeof createSesService>;
   sendResetPassword?: NonNullable<
@@ -45,7 +44,7 @@ interface CreateAuthServiceOptions {
 }
 
 function createBetterAuthOptions({
-  d1SessionService,
+  db,
   stripeService,
   sesService,
   sendResetPassword,
@@ -61,7 +60,7 @@ function createBetterAuthOptions({
     secret: env.BETTER_AUTH_SECRET,
     telemetry: { enabled: false },
     rateLimit: { enabled: false },
-    database: d1Adapter(d1SessionService),
+    database: d1Adapter(db),
     user: { modelName: "User" },
     session: { modelName: "Session", storeSessionInDatabase: true },
     account: {
@@ -225,8 +224,7 @@ function createBetterAuthOptions({
           },
           authorizeReference: async ({ user, referenceId, action }) => {
             const result = Boolean(
-              await d1SessionService
-                .getSession()
+              await db
                 .prepare(
                   "select 1 from Member where userId = ? and organizationId = ? and role = 'owner'",
                 )
@@ -303,8 +301,7 @@ export function createAuthService(
       },
       databaseHookSessionCreateBefore: async (session) => {
         const activeOrganizationId =
-          (await options.d1SessionService
-            .getSession()
+          (await options.db
             .prepare(
               "select organizationId from Member where userId = ? and role = 'owner'",
             )
