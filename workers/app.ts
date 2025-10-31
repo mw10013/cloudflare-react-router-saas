@@ -15,6 +15,9 @@ export default {
     const d1SessionService = createD1SessionService({
       d1: env.D1,
       request,
+      sessionConstraint: new URL(request.url).pathname.startsWith("/api/auth/")
+        ? "first-primary"
+        : undefined,
     });
     const repository = createRepository({ db: d1SessionService.getSession() });
     const stripeService = createStripeService();
@@ -26,7 +29,6 @@ export default {
 
     const authHandler = (c: Hono.Context) => {
       console.log(`worker fetch: auth: ${c.req.raw.url}`);
-      d1SessionService.setSessionContraint("first-primary");
       return authService.handler(c.req.raw);
     };
     hono.post("/api/auth/stripe/webhook", authHandler);
