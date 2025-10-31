@@ -18,7 +18,7 @@ export function createD1SessionService({
   const setSessionContraint = (constraint: D1SessionConstraint) => {
     sessionConstraint = constraint;
     if (session) {
-      console.warn("D1 session constraint changed after session was created");
+      console.warn("WARNING: D1 session constraint changed after session was created");
     }
   };
 

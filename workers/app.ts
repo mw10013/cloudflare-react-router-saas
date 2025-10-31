@@ -26,6 +26,7 @@ export default {
 
     const authHandler = (c: Hono.Context) => {
       console.log(`worker fetch: auth: ${c.req.raw.url}`);
+      d1SessionService.setSessionContraint("first-primary");
       return authService.handler(c.req.raw);
     };
     hono.post("/api/auth/stripe/webhook", authHandler);
