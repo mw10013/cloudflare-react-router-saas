@@ -1,3 +1,4 @@
+import type { D1SessionService } from "@/lib/d1-session-service";
 import type { CustomAdapter } from "@better-auth/core/db/adapter";
 import type { CleanedWhere } from "better-auth/adapters";
 import type { Where } from "better-auth/types";
@@ -149,8 +150,9 @@ function adaptWhere({ where, modelId }: { where?: Where[]; modelId: string }): {
   return { whereClause, whereValues };
 }
 
-export const d1Adapter = (db: D1Database) =>
-  createAdapterFactory({
+export const d1Adapter = (service: D1SessionService) => {
+  const db = service.getSession();
+  return createAdapterFactory({
     config: {
       adapterId: "d1-adapter",
       adapterName: "D1 Adapter",
@@ -332,3 +334,4 @@ export const d1Adapter = (db: D1Database) =>
       };
     },
   });
+};

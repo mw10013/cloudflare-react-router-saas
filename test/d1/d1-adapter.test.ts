@@ -1,4 +1,5 @@
 import { d1Adapter } from "@/lib/d1-adapter";
+import { createD1SessionService } from "@/lib/d1-session-service";
 import {
   runAdapterTest,
   runNumberIdAdapterTest,
@@ -24,7 +25,13 @@ describe("better-auth d1Adapter", async () => {
   });
 
   await runAdapterTest({
-    getAdapter: (options = {}) => Promise.resolve(d1Adapter(env.D1)(options)),
+    getAdapter: (options = {}) => {
+      const service = createD1SessionService({
+        d1: env.D1,
+        request: new Request("http://test"),
+      });
+      return Promise.resolve(d1Adapter(service)(options));
+    },
     disableTests: {
       CREATE_MODEL: false,
       CREATE_MODEL_SHOULD_ALWAYS_RETURN_AN_ID: false,
@@ -70,8 +77,13 @@ describe("better-auth d1Adapter (number id)", async () => {
   });
 
   await runNumberIdAdapterTest({
-    getAdapter: async (options = {}) =>
-      Promise.resolve(d1Adapter(env.D1)(options)),
+    getAdapter: async (options = {}) => {
+      const service = createD1SessionService({
+        d1: env.D1,
+        request: new Request("http://test"),
+      });
+      return Promise.resolve(d1Adapter(service)(options));
+    },
     disableTests: {
       SHOULD_RETURN_A_NUMBER_ID_AS_A_RESULT: false,
       SHOULD_INCREMENT_THE_ID_BY_1: false,

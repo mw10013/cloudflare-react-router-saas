@@ -20,7 +20,7 @@ function createSeedContext({
     request: new Request("http://seed"),
   });
   const auth = createAuthService({
-    d1: env.D1,
+    d1SessionService,
     stripeService,
     sesService: {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
