@@ -151,7 +151,6 @@ function adaptWhere({ where, modelId }: { where?: Where[]; modelId: string }): {
 }
 
 export const d1Adapter = (service: D1SessionService) => {
-  const db = service.getSession();
   return createAdapterFactory({
     config: {
       adapterId: "d1-adapter",
@@ -178,6 +177,7 @@ export const d1Adapter = (service: D1SessionService) => {
         data,
         select,
       }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, select });
         const keys = Object.keys(data);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -202,6 +202,7 @@ export const d1Adapter = (service: D1SessionService) => {
         where,
         select,
       }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, select, where });
         const sql = `select ${adapted.selectClause} from ${adapted.model} ${adapted.whereClause ? `where ${adapted.whereClause}` : ""} limit 1`;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -230,6 +231,7 @@ export const d1Adapter = (service: D1SessionService) => {
         };
         offset?: number;
       }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, where });
         let sql = `select * from ${adapted.model}`;
         if (adapted.whereClause) sql += ` where ${adapted.whereClause}`;
@@ -249,6 +251,7 @@ export const d1Adapter = (service: D1SessionService) => {
         where,
         update,
       }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, where });
         const set = Object.keys(update as object)
           .map((k) => `${k} = ?`)
@@ -273,6 +276,7 @@ export const d1Adapter = (service: D1SessionService) => {
         where,
         update,
       }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, where });
         const set = Object.keys(update)
           .map((k) => `${k} = ?`)
@@ -288,6 +292,7 @@ export const d1Adapter = (service: D1SessionService) => {
       };
 
       const del: CustomAdapter["delete"] = async ({ model, where }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, where });
         const sql = `delete from ${adapted.model} ${adapted.whereClause ? `where ${adapted.whereClause}` : ""}`;
         await db
@@ -300,6 +305,7 @@ export const d1Adapter = (service: D1SessionService) => {
         model,
         where,
       }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, where });
         const sql = `delete from ${adapted.model} ${adapted.whereClause ? `where ${adapted.whereClause}` : ""} returning *`;
         const result = await db
@@ -310,6 +316,7 @@ export const d1Adapter = (service: D1SessionService) => {
       };
 
       const count: CustomAdapter["count"] = async ({ model, where }) => {
+        const db = service.getSession();
         const adapted = adapt({ model, where });
         const sql = `select count(*) as count from ${adapted.model} ${adapted.whereClause ? `where ${adapted.whereClause}` : ""}`;
         const result = await db
