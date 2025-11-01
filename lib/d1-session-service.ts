@@ -14,26 +14,25 @@ export function createD1SessionService({
   let sessionConstraint: D1SessionConstraint | undefined =
     config.sessionConstraint;
   let session: D1DatabaseSession | null = null;
+  const BOOKMARK_COOKIE_NAME = "X-D1-Bookmark";
 
   const setSessionContraint = (constraint: D1SessionConstraint) => {
     sessionConstraint = constraint;
     if (session) {
-      console.warn("WARNING: D1 session constraint changed after session was created");
+      console.warn(
+        "WARNING: D1 session constraint changed after session was created",
+      );
     }
-  };
-
-  const getBookmarkFromRequest = (): D1SessionBookmark | undefined => {
-    const cookieHeader = request.headers.get("cookie");
-    if (!cookieHeader) return undefined;
-    const cookies = cookieHeader.split(";").map((c) => c.trim());
-    const bookmarkCookie = cookies.find((c) => c.startsWith("d1-bookmark="));
-    if (!bookmarkCookie) return undefined;
-    return bookmarkCookie.split("=")[1];
   };
 
   const getSession = (constraint?: D1SessionConstraint): D1DatabaseSession => {
     if (!session) {
-      const bookmark = getBookmarkFromRequest();
+      const cookie = request.headers.get("Cookie");
+      const bookmark = cookie
+        ?.split(";")
+        .find((c) => c.trim().startsWith(`${BOOKMARK_COOKIE_NAME}=`))
+        ?.split("=")[1];
+      console.log(`d1 session bookmark: ${String(bookmark)}`);
       session = d1.withSession(bookmark ?? constraint ?? sessionConstraint);
     }
     return session;
@@ -43,9 +42,10 @@ export function createD1SessionService({
     if (!session) return;
     const bookmark = session.getBookmark();
     if (!bookmark) return;
+    // https://github.com/cloudflare/cloudflare-docs/blob/81edf345c23d367e744f4adb1c45b1e19a693cfc/src/content/docs/d1/best-practices/read-replication.mdx
     response.headers.append(
       "Set-Cookie",
-      `d1-bookmark=${bookmark}; Path=/; HttpOnly; SameSite=Lax`,
+      `${BOOKMARK_COOKIE_NAME}=${bookmark}; Path=/; HttpOnly; SameSite=Strict; Secure`,
     );
   };
 
