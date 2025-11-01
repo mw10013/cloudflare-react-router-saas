@@ -9,6 +9,8 @@ import * as ReactRouter from "react-router";
 // import { DomainDo } from "./domain-do";
 import { createE2eRoutes } from "./e2e";
 
+const MAGIC_LINK_VERIFY_PATH = "/api/auth/magic-link/verify";
+
 /**
  * Rate limiting
  * @see https://github.com/better-auth/better-auth/blob/1881c33126ddd6385cc355dc6933133c3ce1d97f/packages/better-auth/src/plugins/magic-link/index.ts#L436-L447
@@ -32,6 +34,18 @@ import { createE2eRoutes } from "./e2e";
 
 export default {
   async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const isMagicLinkRequest =
+      (url.pathname === "/login" && request.method === "POST") ||
+      url.pathname === MAGIC_LINK_VERIFY_PATH;
+    if (isMagicLinkRequest) {
+      const ip = request.headers.get("cf-connecting-ip") ?? "unknown";
+      const { success } = await env.MAGIC_LINK_RATE_LIMITER.limit({ key: ip });
+      if (!success) {
+        return new Response("Rate limit exceeded", { status: 429 });
+      }
+    }
+
     const hono = new Hono.Hono();
     const d1SessionService = createD1SessionService({
       d1: env.D1,
@@ -53,14 +67,7 @@ export default {
       return authService.handler(c.req.raw);
     };
     hono.post("/api/auth/stripe/webhook", authHandler);
-    hono.get("/api/auth/magic-link/verify", async (c) => {
-      const ip = c.req.header("cf-connecting-ip") ?? "unknown";
-      const { success } = await env.MAGIC_LINK_RATE_LIMITER.limit({ key: ip });
-      if (!success) {
-        return c.text("Rate limit exceeded", 429);
-      }
-      return authHandler(c);
-    });
+    hono.get("/api/auth/magic-link/verify", authHandler);
     hono.get("/api/auth/subscription/*", authHandler);
 
     if (env.ENVIRONMENT === "local") {
