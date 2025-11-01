@@ -53,7 +53,14 @@ export default {
       return authService.handler(c.req.raw);
     };
     hono.post("/api/auth/stripe/webhook", authHandler);
-    hono.get("/api/auth/magic-link/verify", authHandler);
+    hono.get("/api/auth/magic-link/verify", async (c) => {
+      const ip = c.req.header("cf-connecting-ip") ?? "unknown";
+      const { success } = await env.MAGIC_LINK_RATE_LIMITER.limit({ key: ip });
+      if (!success) {
+        return c.text("Rate limit exceeded", 429);
+      }
+      return authHandler(c);
+    });
     hono.get("/api/auth/subscription/*", authHandler);
 
     if (env.ENVIRONMENT === "local") {

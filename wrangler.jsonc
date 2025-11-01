@@ -31,6 +31,16 @@
       "id": "kv-local"
     }
   ],
+  "ratelimits": [
+    {
+      "name": "MAGIC_LINK_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
   // "durable_objects": {
   //   "bindings": [
   //     {
@@ -73,6 +83,16 @@
         {
           "binding": "KV",
           "id": "7ab5e04f8036473d9266c214d48fdbc2" // crrs-kv-production
+        }
+      ],
+      "ratelimits": [
+        {
+          "name": "MAGIC_LINK_RATE_LIMITER",
+          "namespace_id": "1001",
+          "simple": {
+            "limit": 5,
+            "period": 60
+          }
         }
       ],
       // "durable_objects": {
