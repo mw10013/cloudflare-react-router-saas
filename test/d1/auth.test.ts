@@ -10,12 +10,9 @@ import {
   action as acceptInvitationAction,
   loader as acceptInvitationLoader,
 } from "~/routes/accept-invitation.$invitationId";
-import { action as forgotPasswordAction } from "~/routes/forgot-password";
 import { action as loginAction } from "~/routes/login";
-import { action as resetPasswordAction } from "~/routes/reset-password";
-import { action as signInAction } from "~/routes/signin";
+import { loader as magicLinkLoader } from "~/routes/magic-link";
 import { action as signOutAction } from "~/routes/signout";
-import { action as signUpAction } from "~/routes/signup";
 import { resetDb } from "../test-utils";
 
 type TestContext = Awaited<ReturnType<typeof createTestContext>>;
@@ -24,8 +21,6 @@ type TestUser = Awaited<ReturnType<TestContext["createTestUser"]>>;
 async function createTestContext() {
   await resetDb();
 
-  const mockSendResetPassword = vi.fn().mockResolvedValue(undefined);
-  const mockSendVerificationEmail = vi.fn().mockResolvedValue(undefined);
   const mockSendMagicLink = vi.fn().mockResolvedValue(undefined);
   const mockSendInvitationEmail = vi.fn().mockResolvedValue(undefined);
   const auth = createAuthService({
@@ -35,8 +30,6 @@ async function createTestContext() {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       async sendEmail() {},
     },
-    sendResetPassword: mockSendResetPassword,
-    sendVerificationEmail: mockSendVerificationEmail,
     sendMagicLink: mockSendMagicLink,
     sendInvitationEmail: mockSendInvitationEmail,
   });
@@ -105,8 +98,6 @@ async function createTestContext() {
     db: env.D1,
     auth,
     context,
-    mockSendVerificationEmail,
-    mockSendResetPassword,
     mockSendMagicLink,
     mockSendInvitationEmail,
     adminEmail: "a@a.com", // MUST align with admin in test database.
@@ -114,6 +105,139 @@ async function createTestContext() {
     sessionCookie,
   };
 }
+
+describe("user authentication flow", () => {
+  let c: TestContext;
+  let magicLinkUrl: string | undefined;
+  let testUser: TestUser;
+
+  beforeAll(async () => {
+    c = await createTestContext();
+    testUser = await c.createTestUser("regular-user@test.com");
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("logs in with email", async () => {
+    const form = new FormData();
+    form.append("email", testUser.email);
+    const request = new Request("http://localhost/login", {
+      method: "POST",
+      body: form,
+    });
+
+    await loginAction({
+      request,
+      context: await c.context(),
+      params: {},
+    });
+    expect(c.mockSendMagicLink).toHaveBeenCalledTimes(1);
+    magicLinkUrl = (c.mockSendMagicLink.mock.calls[0][0] as { url: string })
+      .url;
+  });
+
+  it("signs in with magic link", async () => {
+    invariant(magicLinkUrl, "Expected magicLinkUrl");
+    const request = new Request(magicLinkUrl);
+
+    const response = await c.auth.handler(request);
+
+    expect(response.status).toBe(302);
+    expect(response.headers.has("Set-Cookie")).toBe(true);
+  });
+
+  it("signs out successfully", async () => {
+    const form = new FormData();
+    const request = new Request("http://localhost/signout", {
+      method: "POST",
+      body: form,
+      headers: testUser.headers,
+    });
+
+    const response = await signOutAction({
+      request,
+      context: await testUser.context(),
+      params: {},
+    });
+
+    invariant(response instanceof Response, "Expected Response");
+    expect(response.status).toBe(302);
+    expect(response.headers.get("Location")).toBe("/");
+
+    // Verify session is cleared
+    const sessionAfterSignout = await c.auth.api.getSession({
+      headers: testUser.headers,
+    });
+    expect(sessionAfterSignout).toBeNull();
+  });
+
+  it("redirects user role to /app after magic link verification", async () => {
+    // Create a new magic link for the user
+    const form = new FormData();
+    form.append("email", testUser.email);
+    const loginRequest = new Request("http://localhost/login", {
+      method: "POST",
+      body: form,
+    });
+
+    await loginAction({
+      request: loginRequest,
+      context: await c.context(),
+      params: {},
+    });
+
+    const newMagicLinkUrl = (
+      c.mockSendMagicLink.mock.calls[0][0] as { url: string }
+    ).url;
+    invariant(newMagicLinkUrl, "Expected magicLinkUrl");
+
+    // Verify the magic link (this should establish the session)
+    const verifyRequest = new Request(newMagicLinkUrl);
+    const verifyResponse = await c.auth.handler(verifyRequest);
+
+    expect(verifyResponse.status).toBe(302);
+    expect(verifyResponse.headers.has("Set-Cookie")).toBe(true);
+
+    // Update testUser headers with the new session cookie
+    const sessionCookie = c.sessionCookie(verifyResponse);
+    testUser.headers.set("Cookie", sessionCookie);
+
+    // Now check that the loader would redirect user to /app
+    const loaderRequest = new Request("http://localhost/magic-link", {
+      headers: testUser.headers,
+    });
+    const loaderResult = await magicLinkLoader({
+      request: loaderRequest,
+      context: await testUser.context(),
+      params: {},
+    });
+
+    // The loader should redirect user to /app
+    invariant(loaderResult instanceof Response, "Expected Response");
+    expect(loaderResult.status).toBe(302);
+    expect(loaderResult.headers.get("Location")).toBe("/app");
+  });
+
+  it("handles invalid email format", async () => {
+    const form = new FormData();
+    form.append("email", "invalid-email");
+    const request = new Request("http://localhost/login", {
+      method: "POST",
+      body: form,
+    });
+
+    const result = await loginAction({
+      request,
+      context: await c.context(),
+      params: {},
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.validationErrors?.email).toBeDefined();
+  });
+});
 
 describe("accept invitation flow", () => {
   const inviteeEmail = "invitee@test.com";
@@ -301,272 +425,6 @@ describe("reject invitation flow", () => {
 
     invariant(response instanceof Response, "Expected Response");
     expect(response.status).toBe(302);
-  });
-});
-
-describe("auth sign up flow", () => {
-  const email = "email@test.com";
-  const password = "password";
-  const headers = new Headers();
-  let emailVerificationUrl: string | undefined;
-  let c: TestContext;
-
-  beforeAll(async () => {
-    c = await createTestContext();
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  it("signs up", async () => {
-    const form = new FormData();
-    form.append("email", email);
-    form.append("password", password);
-    const request = new Request("http://localhost/signup", {
-      method: "POST",
-      body: form,
-    });
-
-    await expect(
-      signUpAction({
-        request,
-        context: await c.context(),
-        params: {},
-      }),
-    ).rejects.toSatisfy(
-      (response: unknown) =>
-        response instanceof Response &&
-        response.status === 302 &&
-        response.headers.get("location") === "/",
-    );
-
-    expect(c.mockSendVerificationEmail).toHaveBeenCalledTimes(1);
-    emailVerificationUrl = (
-      c.mockSendVerificationEmail.mock.calls[0][0] as { url: string }
-    ).url;
-    expect(emailVerificationUrl).toBeDefined();
-  });
-
-  it("does not sign up when user already exists", async () => {
-    const form = new FormData();
-    form.append("email", email);
-    form.append("password", password);
-    const request = new Request("http://localhost/signup", {
-      method: "POST",
-      body: form,
-    });
-
-    await expect(
-      signUpAction({
-        request,
-        context: await c.context(),
-        params: {},
-      }),
-    ).rejects.toSatisfy(
-      (response: unknown) =>
-        response instanceof Response &&
-        response.status === 302 &&
-        response.headers.get("location") === "/signin",
-    );
-  });
-
-  it("does not sign in with unverified email", async () => {
-    const form = new FormData();
-    form.append("email", email);
-    form.append("password", password);
-    const request = new Request("http://localhost/signin", {
-      method: "POST",
-      body: form,
-    });
-
-    await expect(
-      signInAction({
-        request,
-        context: await c.context(),
-        params: {},
-      }),
-    ).rejects.toSatisfy(
-      (response: unknown) =>
-        response instanceof Response &&
-        response.status === 302 &&
-        response.headers.get("location") === "/email-verification",
-    );
-
-    expect(c.mockSendVerificationEmail).toHaveBeenCalledTimes(1);
-    emailVerificationUrl = (
-      c.mockSendVerificationEmail.mock.calls[0][0] as { url: string }
-    ).url;
-    expect(emailVerificationUrl).toBeDefined();
-  });
-
-  it("verifies email", async () => {
-    invariant(emailVerificationUrl, "Expected emailVerificationUrl");
-    const request = new Request(emailVerificationUrl);
-
-    const response = await c.auth.handler(request);
-
-    expect(response.status).toBe(302);
-    expect(response.headers.has("Set-Cookie")).toBe(true);
-    headers.set("Cookie", c.sessionCookie(response));
-  });
-
-  it("has valid session", async () => {
-    const session = await c.auth.api.getSession({ headers });
-    invariant(session, "Expected session");
-    expect(session.user.email).toBe(email);
-  });
-
-  it("signs out", async () => {
-    const request = new Request("http://localhost/signout", {
-      method: "POST",
-      headers,
-    });
-
-    const response = await signOutAction({
-      request,
-      context: await c.context(),
-      params: {},
-    });
-
-    expect(response.status).toBe(302);
-    expect(response.headers.has("Set-Cookie")).toBe(true);
-  });
-
-  it("does not sign in with invalid password", async () => {
-    const form = new FormData();
-    form.append("email", email);
-    form.append("password", "INVALID_PASSWORD");
-    const request = new Request("http://localhost/signin", {
-      method: "POST",
-      body: form,
-    });
-
-    await expect(
-      signInAction({ request, context: await c.context(), params: {} }),
-    ).rejects.toSatisfy(
-      (thrown: unknown) => thrown instanceof Response && thrown.status === 401,
-    );
-  });
-
-  it("signs in with valid password", async () => {
-    const form = new FormData();
-    form.append("email", email);
-    form.append("password", password);
-    const request = new Request("http://localhost/signin", {
-      method: "POST",
-      body: form,
-    });
-
-    await expect(
-      signInAction({
-        request,
-        context: await c.context(),
-        params: {},
-      }),
-    ).rejects.toSatisfy(
-      (response: unknown) =>
-        response instanceof Response &&
-        response.status === 302 &&
-        response.headers.get("location") === "/" &&
-        response.headers.has("Set-Cookie"),
-    );
-  });
-});
-
-describe("auth forgot password flow", () => {
-  const newPassword = "newpass123456";
-  let resetPasswordUrl: string | undefined;
-  let resetToken: string | undefined;
-  let c: TestContext;
-  let testUser: TestUser;
-
-  beforeAll(async () => {
-    c = await createTestContext();
-    testUser = await c.createTestUser("test@test.com");
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  it("sends reset password email", async () => {
-    const form = new FormData();
-    form.append("email", testUser.email);
-    const request = new Request("http://localhost/forgot-password", {
-      method: "POST",
-      body: form,
-    });
-
-    await forgotPasswordAction({
-      request,
-      context: await c.context(),
-      params: {},
-    });
-
-    expect(c.mockSendResetPassword).toHaveBeenCalledTimes(1);
-    resetPasswordUrl = (
-      c.mockSendResetPassword.mock.calls[0][0] as { url: string }
-    ).url;
-    expect(resetPasswordUrl).toBeDefined();
-    resetToken = (c.mockSendResetPassword.mock.calls[0][0] as { token: string })
-      .token;
-    expect(resetToken).toBeDefined();
-  });
-
-  it("allows reset password", async () => {
-    invariant(resetPasswordUrl, "Expected resetPasswordUrl");
-    const request = new Request(resetPasswordUrl);
-
-    const response = await c.auth.handler(request);
-
-    expect(response.status).toBe(302);
-    expect(response.headers.get("location")?.includes("/reset-password")).toBe(
-      true,
-    );
-  });
-
-  it("resets password", async () => {
-    const form = new FormData();
-    form.append("password", newPassword);
-    invariant(resetToken, "Expected resetToken");
-    form.append("token", resetToken);
-    const request = new Request("http://localhost/reset-password", {
-      method: "POST",
-      body: form,
-    });
-
-    const result = await resetPasswordAction({
-      request,
-      context: await c.context(),
-      params: {},
-    });
-
-    expect(result.success).toBe(true);
-  });
-
-  it("signs in with new password", async () => {
-    const form = new FormData();
-    form.append("email", testUser.email);
-    form.append("password", newPassword);
-    const request = new Request("http://localhost/signin", {
-      method: "POST",
-      body: form,
-    });
-
-    await expect(
-      signInAction({
-        request,
-        context: await c.context(),
-        params: {},
-      }),
-    ).rejects.toSatisfy(
-      (response: unknown) =>
-        response instanceof Response &&
-        response.status === 302 &&
-        response.headers.get("location") === "/" &&
-        response.headers.has("Set-Cookie"),
-    );
   });
 });
 
