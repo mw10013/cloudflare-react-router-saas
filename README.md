@@ -5,9 +5,6 @@
 
 ## TODO
 
-- read replica
-  - secure cookie
-  - https://github.com/mw10013/cloudflare-effect-react-router-saas/tree/f367c28d7f41b22676fe98f0d486a345cb969fdb
 - pricing page
 - rate limiting
 - stripe
@@ -24,7 +21,6 @@
   - invitations: pre overflow, main overflow, min-width-0?
   - buttons in pricing
 - d1
-  - read replica
   - strict tables: https://www.sqlite.org/stricttables.html, https://www.sqlite.org/stricttables.html
 - batch
   - scavenge expired verifications
