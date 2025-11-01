@@ -68,6 +68,8 @@ export const planData = [
   {
     name: "basic", // lowercase to accomodate better-auth
     displayName: "Basic",
+    description:
+      "Perfect for individuals and small teams getting started with our platform.",
     monthlyPriceInCents: 5000,
     monthlyPriceLookupKey: "basic-monthly",
     annualPriceInCents: Math.round(5000 * 12 * 0.8), // 20% discount for annual,
@@ -77,6 +79,8 @@ export const planData = [
   {
     name: "pro",
     displayName: "Pro",
+    description:
+      "Advanced features for growing businesses and professional teams.",
     monthlyPriceInCents: 10000,
     monthlyPriceLookupKey: "pro-monthly",
     annualPriceInCents: Math.round(10000 * 12 * 0.8),
@@ -88,6 +92,7 @@ export const planData = [
 export const Plan = z.object({
   name: z.string().nonempty(),
   displayName: z.string().nonempty(),
+  description: z.string().nonempty(),
   productId: z.string().nonempty(),
   monthlyPriceId: z.string().nonempty(),
   monthlyPriceLookupKey: z.string(),

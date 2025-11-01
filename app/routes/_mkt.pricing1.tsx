@@ -88,6 +88,10 @@ export async function action({ request, context }: Route.ActionArgs) {
   return ReactRouter.redirect(url);
 }
 
+/**
+ * @see https://www.shadcnblocks.com/block/pricing2
+ * @see https://github.com/shadcnblocks/shadcn-ui-blocks/blob/30a7540bf9fd9dd55a8b55fd53a4df1d2c098697/src/block/pricing2.tsx
+ */
 export default function RouteComponent({
   loaderData: { plans, subscriptions: _subscriptions },
 }: Route.ComponentProps) {
@@ -103,7 +107,11 @@ export default function RouteComponent({
         </p>
         <div className="flex items-center gap-3 text-lg">
           Monthly
-          <Oui.SwitchEx isSelected={isAnnual} onChange={setIsAnnual} />
+          <Oui.SwitchEx
+            isSelected={isAnnual}
+            onChange={setIsAnnual}
+            aria-label="Annual pricing"
+          />
           Annual
         </div>
         <div className="flex flex-col items-stretch gap-6 md:flex-row">
@@ -124,7 +132,7 @@ export default function RouteComponent({
                     <p>{plan.displayName}</p>
                   </CardTitle>
                   <p className="text-muted-foreground text-sm">
-                    {plan.name} plan
+                    {plan.description}
                   </p>
                   <div className="flex items-end">
                     <span className="text-4xl font-semibold">${price}</span>
