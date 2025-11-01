@@ -68,8 +68,7 @@ export const planData = [
   {
     name: "basic", // lowercase to accomodate better-auth
     displayName: "Basic",
-    description:
-      "Perfect for individuals and small teams getting started with our platform.",
+    description: "For personal use.",
     monthlyPriceInCents: 5000,
     monthlyPriceLookupKey: "basic-monthly",
     annualPriceInCents: Math.round(5000 * 12 * 0.8), // 20% discount for annual,
@@ -79,8 +78,7 @@ export const planData = [
   {
     name: "pro",
     displayName: "Pro",
-    description:
-      "Advanced features for growing businesses and professional teams.",
+    description: "For professionals.",
     monthlyPriceInCents: 10000,
     monthlyPriceLookupKey: "pro-monthly",
     annualPriceInCents: Math.round(10000 * 12 * 0.8),

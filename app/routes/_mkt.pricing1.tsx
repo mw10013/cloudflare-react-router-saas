@@ -143,7 +143,7 @@ export default function RouteComponent({
                 </CardHeader>
                 <CardContent>{/* Features would go here */}</CardContent>
                 <CardFooter className="mt-auto">
-                  <Rac.Form method="post">
+                  <Rac.Form method="post" className="w-full">
                     <Oui.Button
                       name="intent"
                       value={lookupKey}
