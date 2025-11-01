@@ -147,7 +147,24 @@ class StripePom {
   }
 
   async selectPlan({ intent }: { intent: string }) {
-    await this.page.getByTestId(intent).click();
+    // Find the plan that matches the intent (lookup key).
+    const plan = planData.find(
+      (p) =>
+        p.monthlyPriceLookupKey === intent || p.annualPriceLookupKey === intent,
+    );
+    if (!plan) throw new Error(`Plan not found for intent ${intent}`);
+    // Determine if the intent is for annual pricing.
+    const isAnnual = intent === plan.annualPriceLookupKey;
+    // Get the switch element and check its current state.
+    const switchElement = this.page.getByLabel("Annual pricing");
+    const isCurrentlyAnnual =
+      (await switchElement.getAttribute("aria-checked")) === "true";
+    // Toggle the switch only if it's not already in the desired state.
+    if (isAnnual !== isCurrentlyAnnual) {
+      await switchElement.dispatchEvent("click");
+    }
+    // Click the "Purchase" button for the plan.
+    await this.page.getByTestId(plan.name).click();
   }
 
   async fillPaymentForm({ email }: { email: string }) {

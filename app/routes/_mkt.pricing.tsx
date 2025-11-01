@@ -1,5 +1,14 @@
+"use client";
+
 import type { Route } from "./+types/_mkt.pricing";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
@@ -79,57 +88,78 @@ export async function action({ request, context }: Route.ActionArgs) {
   return ReactRouter.redirect(url);
 }
 
+/**
+ * @see https://www.shadcnblocks.com/block/pricing2
+ * @see https://github.com/shadcnblocks/shadcn-ui-blocks/blob/30a7540bf9fd9dd55a8b55fd53a4df1d2c098697/src/block/pricing2.tsx
+ */
 export default function RouteComponent({
-  loaderData: { plans, subscriptions },
+  loaderData: { plans, subscriptions: _subscriptions },
 }: Route.ComponentProps) {
+  const [isAnnual, setIsAnnual] = useState(false);
   return (
     <div className="p-6">
-      <div className="mx-auto grid max-w-xl gap-8 md:grid-cols-2">
-        {plans.map((plan) => {
-          return (
-            <Card key={plan.name}>
-              <CardHeader>
-                <CardTitle>{plan.displayName}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-2xl font-bold">
-                      Monthly: ${plan.monthlyPriceInCents / 100}
-                    </p>
-                    <Rac.Form method="post">
-                      <Oui.Button
-                        name="intent"
-                        value={plan.monthlyPriceLookupKey}
-                        type="submit"
-                        data-testid={plan.monthlyPriceLookupKey}
-                      >
-                        Get Started Monthly
-                      </Oui.Button>
-                    </Rac.Form>
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
+        <h2 className="text-4xl font-semibold text-pretty lg:text-6xl">
+          Pricing
+        </h2>
+        <p className="text-muted-foreground lg:text-xl">
+          Check out our pricing plans
+        </p>
+        <div className="flex items-center gap-3 text-lg">
+          Monthly
+          <Oui.SwitchEx
+            isSelected={isAnnual}
+            onChange={setIsAnnual}
+            aria-label="Annual pricing"
+          />
+          Annual
+        </div>
+        <div className="flex flex-col items-stretch gap-6 md:flex-row">
+          {plans.map((plan) => {
+            const price = isAnnual
+              ? plan.annualPriceInCents / 100
+              : plan.monthlyPriceInCents / 100;
+            const lookupKey = isAnnual
+              ? plan.annualPriceLookupKey
+              : plan.monthlyPriceLookupKey;
+            return (
+              <Card
+                key={plan.name}
+                className="flex w-80 flex-col justify-between text-left"
+              >
+                <CardHeader>
+                  <CardTitle>
+                    <p>{plan.displayName}</p>
+                  </CardTitle>
+                  <p className="text-muted-foreground text-sm">
+                    {plan.description}
+                  </p>
+                  <div className="flex items-end">
+                    <span className="text-4xl font-semibold">${price}</span>
+                    <span className="text-muted-foreground text-2xl font-semibold">
+                      {isAnnual ? "/yr" : "/mo"}
+                    </span>
                   </div>
-                  <div>
-                    <p className="text-2xl font-bold">
-                      Annual: ${plan.annualPriceInCents / 100}
-                    </p>
-                    <Rac.Form method="post">
-                      <Oui.Button
-                        name="intent"
-                        value={plan.annualPriceLookupKey}
-                        type="submit"
-                        data-testid={plan.annualPriceLookupKey}
-                      >
-                        Get Started Annual
-                      </Oui.Button>
-                    </Rac.Form>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+                </CardHeader>
+                <CardContent>{/* Features would go here */}</CardContent>
+                <CardFooter className="mt-auto">
+                  <Rac.Form method="post" className="w-full">
+                    <Oui.Button
+                      name="intent"
+                      value={lookupKey}
+                      type="submit"
+                      className="w-full"
+                      data-testid={plan.name}
+                    >
+                      Purchase
+                    </Oui.Button>
+                  </Rac.Form>
+                </CardFooter>
+              </Card>
+            );
+          })}
+        </div>
       </div>
-      <pre>{JSON.stringify({ subscriptions }, null, 2)}</pre>
     </div>
   );
 }
