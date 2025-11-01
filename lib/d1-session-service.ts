@@ -32,7 +32,7 @@ export function createD1SessionService({
         ?.split(";")
         .find((c) => c.trim().startsWith(`${BOOKMARK_COOKIE_NAME}=`))
         ?.split("=")[1];
-      console.log(`d1 session bookmark: ${String(bookmark)}`);
+      // console.log(`d1 session bookmark: ${String(bookmark)}`);
       session = d1.withSession(bookmark ?? constraint ?? sessionConstraint);
     }
     return session;
