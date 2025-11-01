@@ -6,7 +6,7 @@
 ## TODO
 
 - queries in repository
-- remove reset-password, forgot password, signin, signup.
+- remove seed.tsx?
 - stripe
   - cancel -> subscribe -> another free trial!
   - referenceId -> organizationId
