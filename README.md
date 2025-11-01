@@ -5,6 +5,8 @@
 
 ## TODO
 
+- queries in repository
+- remove reset-password, forgot password, signin, signup.
 - stripe
   - cancel -> subscribe -> another free trial!
   - referenceId -> organizationId
