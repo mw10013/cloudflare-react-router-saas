@@ -9,6 +9,27 @@ import * as ReactRouter from "react-router";
 // import { DomainDo } from "./domain-do";
 import { createE2eRoutes } from "./e2e";
 
+/**
+ * Rate limiting
+ * @see https://github.com/better-auth/better-auth/blob/1881c33126ddd6385cc355dc6933133c3ce1d97f/packages/better-auth/src/plugins/magic-link/index.ts#L436-L447
+ * 
+ * @example
+ * ```ts
+ * rateLimit: [
+			{
+				pathMatcher(path) {
+					return (
+						path.startsWith("/sign-in/magic-link") ||
+						path.startsWith("/magic-link/verify")
+					);
+				},
+				window: opts.rateLimit?.window || 60,
+				max: opts.rateLimit?.max || 5,
+			},
+		],
+ * ```
+ */
+
 export default {
   async fetch(request, env, ctx) {
     const hono = new Hono.Hono();
