@@ -5,7 +5,6 @@
 
 ## TODO
 
- - r2
 - stripe
   - cancel -> subscribe -> another free trial!
   - referenceId -> organizationId

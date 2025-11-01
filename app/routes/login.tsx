@@ -13,6 +13,14 @@ import { invariant } from "@epic-web/invariant";
 import { useSubmit } from "react-router";
 import * as z from "zod";
 
+export function loader({ context }: Route.LoaderArgs) {
+  const requestContext = context.get(RequestContext);
+  invariant(requestContext, "Missing request context.");
+  const { env } = requestContext;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  return { isDemoMode: env.DEMO_MODE === "true" };
+}
+
 export async function action({
   request,
   context,
@@ -44,14 +52,18 @@ export async function action({
     "Expected signInMagicLink to throw error on failure",
   );
   const magicLink =
-    env.ENVIRONMENT === "local"
-      ? ((await env.KV.get(`local:magicLink`)) ?? undefined)
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    env.DEMO_MODE === "true"
+      ? ((await env.KV.get(`demo:magicLink`)) ?? undefined)
       : undefined;
   console.log("magicLink", magicLink);
   return { success: true, magicLink };
 }
 
-export default function RouteComponent({ actionData }: Route.ComponentProps) {
+export default function RouteComponent({
+  loaderData: { isDemoMode },
+  actionData,
+}: Route.ComponentProps) {
   const submit = useSubmit();
   if (actionData?.success) {
     return (
@@ -82,7 +94,9 @@ export default function RouteComponent({ actionData }: Route.ComponentProps) {
         <CardHeader>
           <CardTitle>Sign in / Sign up</CardTitle>
           <CardDescription>
-            Enter your email to receive a magic sign-in link
+            {isDemoMode
+              ? "DEMO MODE: no transactional emails. Use fake email or a@a.com for admin."
+              : "Enter your email to receive a magic sign-in link"}
           </CardDescription>
         </CardHeader>
         <CardContent>

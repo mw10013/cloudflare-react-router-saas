@@ -145,8 +145,9 @@ function createBetterAuthOptions({
           sendMagicLink ??
           (async (data) => {
             console.log("sendMagicLink", data);
-            if (env.ENVIRONMENT === "local") {
-              await env.KV.put(`local:magicLink`, data.url, {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (env.DEMO_MODE === "true") {
+              await env.KV.put(`demo:magicLink`, data.url, {
                 expirationTtl: 60,
               });
             }
