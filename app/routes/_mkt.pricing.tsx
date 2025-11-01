@@ -5,7 +5,7 @@ import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import { env } from "cloudflare:workers";
 import * as Rac from "react-aria-components";
-import { redirect } from "react-router";
+import * as ReactRouter from "react-router";
 import * as z from "zod";
 
 export async function loader({ context }: Route.LoaderArgs) {
@@ -30,7 +30,7 @@ export async function action({ request, context }: Route.ActionArgs) {
   invariant(requestContext, "Missing request context.");
   const { authService: auth, session, stripeService } = requestContext;
   if (!session) {
-    return redirect("/login");
+    return ReactRouter.redirect("/login");
   }
   if (session.user.role !== "user")
     // eslint-disable-next-line @typescript-eslint/only-throw-error
@@ -76,7 +76,7 @@ export async function action({ request, context }: Route.ActionArgs) {
   console.log(`pricing: action`, { isRedirect, url });
   invariant(isRedirect, "isRedirect is not true");
   invariant(url, "Missing url");
-  return redirect(url);
+  return ReactRouter.redirect(url);
 }
 
 export default function RouteComponent({

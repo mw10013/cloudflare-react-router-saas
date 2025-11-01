@@ -5,7 +5,8 @@
 
 ## TODO
 
-- pricing page
+- pricing page: https://www.shadcnblocks.com/block/pricing2
+  - https://github.com/shadcnblocks/shadcn-ui-blocks/blob/master/src/block/pricing2.tsx
 - rate limiting
 - stripe
   - cancel -> subscribe -> another free trial!
