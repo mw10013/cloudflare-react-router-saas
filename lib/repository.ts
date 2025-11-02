@@ -35,12 +35,16 @@ export function createRepository({
   };
 
   const getSubscriptionsWithDetails = async () => {
-    const result = await db.prepare(`
+    const result = await db
+      .prepare(
+        `
 select u.email as email, u.stripeCustomerId as userStripeCustomerId, s.*, o.name as organizationName from Subscription s 
 inner join Organization o on o.organizationId = s.referenceId
 inner join Member m on m.organizationId = o.organizationId and m.role = 'owner'
 inner join User u on u.userId = m.userId
-    `).all();
+    `,
+      )
+      .all();
     return Domain.SubscriptionWithDetails.array().parse(result.results);
   };
 
