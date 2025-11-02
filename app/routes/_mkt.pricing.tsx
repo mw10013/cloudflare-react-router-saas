@@ -19,10 +19,9 @@ import * as z from "zod";
 export async function loader({ context }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { stripeService, repository } = requestContext;
+  const { stripeService } = requestContext;
   const plans = await stripeService.getPlans();
-  const subscriptions = await repository.getSubscriptionsWithDetails();
-  return { plans, subscriptions };
+  return { plans };
 }
 
 export async function action({ request, context }: Route.ActionArgs) {
@@ -84,7 +83,7 @@ export async function action({ request, context }: Route.ActionArgs) {
  * @see https://github.com/shadcnblocks/shadcn-ui-blocks/blob/30a7540bf9fd9dd55a8b55fd53a4df1d2c098697/src/block/pricing2.tsx
  */
 export default function RouteComponent({
-  loaderData: { plans, subscriptions: _subscriptions },
+  loaderData: { plans },
 }: Route.ComponentProps) {
   const [isAnnual, setIsAnnual] = useState(false);
   return (
@@ -151,7 +150,6 @@ export default function RouteComponent({
           })}
         </div>
       </div>
-      <pre>{JSON.stringify(_subscriptions, null, 2)}</pre>
     </div>
   );
 }
