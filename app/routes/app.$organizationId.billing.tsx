@@ -28,7 +28,7 @@ export async function loader({
   const activeSubscription = subscriptions.find(
     (v) => v.status === "active" || v.status === "trialing",
   );
-  return { activeSubscription, subscriptions };
+  return { activeSubscription };
 }
 
 export async function action({
@@ -98,7 +98,7 @@ export async function action({
 }
 
 export default function RouteComponent({
-  loaderData: { activeSubscription, subscriptions },
+  loaderData: { activeSubscription },
 }: Route.ComponentProps) {
   return (
     <div className="flex flex-col gap-8 p-6">
@@ -208,7 +208,6 @@ export default function RouteComponent({
           )}
         </CardContent>
       </Card>
-      <pre>{JSON.stringify({ subscriptions }, null, 2)}</pre>
     </div>
   );
 }

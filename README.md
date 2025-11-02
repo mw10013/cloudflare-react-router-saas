@@ -5,26 +5,24 @@
 
 ## TODO
 
-- queries in repository
-- remove seed.tsx?
-- stripe
-  - cancel -> subscribe -> another free trial!
-  - referenceId -> organizationId
+- homepage heading spacing/responsive
+- app
+  - sidebar: icons?
 - admin
+  - pagination
   - customers
   - sessions
-- organization
-  - teams?
-- domain
-  - zod brands
 - css
   - invitations: pre overflow, main overflow, min-width-0?
-  - buttons in pricing
-- d1
-  - strict tables: https://www.sqlite.org/stricttables.html, https://www.sqlite.org/stricttables.html
-- batch
-  - scavenge expired verifications
+- batch: scavenge expired verifications?
+- remove seed.tsx?
+
+- zod brands
+- d1 strict tables: https://www.sqlite.org/stricttables.html, https://www.sqlite.org/stricttables.html
+- organization: teams
 - secondary storage: https://www.better-auth.com/docs/concepts/database#secondary-storage
+- stripe: referenceId -> organizationId?
+
 
 ```
 http://localhost:5173/

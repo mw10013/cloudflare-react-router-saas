@@ -142,7 +142,6 @@ export default function RouteComponent({
           )}
         </CardContent>
       </Card>
-      <pre>{JSON.stringify({ members }, null, 2)}</pre>
     </div>
   );
 }
