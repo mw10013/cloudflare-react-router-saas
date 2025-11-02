@@ -34,11 +34,24 @@ export function createRepository({
     return Domain.User.nullable().parse(result);
   };
 
+  const getSubscriptionsWithDetails = async () => {
+    const result = await db.prepare(`
+select u.email as email, u.stripeCustomerId as userStripeCustomerId, s.*, o.name as organizationName from Subscription s 
+inner join Organization o on o.organizationId = s.referenceId
+inner join Member m on m.organizationId = o.organizationId and m.role = 'owner'
+inner join User u on u.userId = m.userId
+    `).all();
+    return Domain.SubscriptionWithDetails.array().parse(result.results);
+  };
+
+  const getUsers = async () => {
+    const result = await db.prepare(`select * from User`).run();
+    return Domain.User.array().parse(result.results);
+  };
+
   return {
     getUser,
-    getUsers: async () => {
-      const result = await db.prepare(`select * from User`).run();
-      return Domain.User.array().parse(result.results);
-    },
+    getUsers,
+    getSubscriptionsWithDetails,
   };
 }

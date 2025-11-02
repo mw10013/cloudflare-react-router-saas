@@ -12,7 +12,6 @@ import {
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import { env } from "cloudflare:workers";
 import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 import * as z from "zod";
@@ -20,17 +19,9 @@ import * as z from "zod";
 export async function loader({ context }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { stripeService } = requestContext;
+  const { stripeService, repository } = requestContext;
   const plans = await stripeService.getPlans();
-  const subscriptions = (
-    await env.D1.prepare(
-      `
-select u.email as email, u.stripeCustomerId as userStripeCustomerId, s.*, o.name as organizationName from Subscription s 
-inner join Organization o on o.organizationId = s.referenceId
-inner join Member m on m.organizationId = o.organizationId and m.role = 'owner'
-inner join User u on u.userId = m.userId`,
-    ).all()
-  ).results;
+  const subscriptions = await repository.getSubscriptionsWithDetails();
   return { plans, subscriptions };
 }
 
@@ -160,6 +151,7 @@ export default function RouteComponent({
           })}
         </div>
       </div>
+      <pre>{JSON.stringify(_subscriptions, null, 2)}</pre>
     </div>
   );
 }

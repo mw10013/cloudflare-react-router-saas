@@ -101,3 +101,26 @@ export const Plan = z.object({
   freeTrialDays: z.number().int(),
 });
 export type Plan = z.infer<typeof Plan>;
+
+export const Subscription = z.object({
+  subscriptionId: z.number().int(),
+  plan: z.string().nonempty(),
+  referenceId: z.number().int(),
+  stripeCustomerId: z.string().nullable(),
+  stripeSubscriptionId: z.string().nullable(),
+  status: z.string().nonempty(),
+  periodStart: z.nullable(isoDatetimeToDate),
+  periodEnd: z.nullable(isoDatetimeToDate),
+  cancelAtPeriodEnd: intToBoolean,
+  seats: z.number().int().nullable(),
+  trialStart: z.nullable(isoDatetimeToDate),
+  trialEnd: z.nullable(isoDatetimeToDate),
+});
+export type Subscription = z.infer<typeof Subscription>;
+
+export const SubscriptionWithDetails = Subscription.extend({
+  email: z.string(),
+  userStripeCustomerId: z.string().nullable(),
+  organizationName: z.string(),
+});
+export type SubscriptionWithDetails = z.infer<typeof SubscriptionWithDetails>;
