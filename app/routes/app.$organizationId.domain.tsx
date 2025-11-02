@@ -7,14 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// import { env } from "cloudflare:workers";
-
 export function loader() {
-  // const { DOMAIN_DO } = env;
-  // const id = DOMAIN_DO.idFromName("domain");
-  // const stub = DOMAIN_DO.get(id);
-  // return { ping: await stub.ping(), high: await stub.high() };
-  return { message: "DomainDo is commented out" };
+  return { message: "Domain management coming soon" };
 }
 
 export default function RouteComponent({ loaderData }: Route.ComponentProps) {

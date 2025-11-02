@@ -6,7 +6,6 @@ import { createSesService } from "@/lib/ses-service";
 import { createStripeService } from "@/lib/stripe-service";
 import * as Hono from "hono";
 import * as ReactRouter from "react-router";
-// import { DomainDo } from "./domain-do";
 import { createE2eRoutes } from "./e2e";
 
 const MAGIC_LINK_VERIFY_PATH = "/api/auth/magic-link/verify";
@@ -101,5 +100,3 @@ export default {
     return response;
   },
 } satisfies ExportedHandler<Env>;
-
-// export { DomainDo };

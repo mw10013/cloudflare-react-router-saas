@@ -42,21 +42,6 @@
       }
     }
   ],
-  // "durable_objects": {
-  //   "bindings": [
-  //     {
-  //       "name": "DOMAIN_DO",
-  //       "class_name": "DomainDo"
-  //     }
-  //   ]
-  // },
-  "migrations": [
-    // {
-    //   "tag": "v1",
-    //   "new_sqlite_classes": ["DomainDo"]
-    // }
-  ],
-
   "env": {
     "production": {
       "vars": {
@@ -96,20 +81,6 @@
             "period": 60
           }
         }
-      ],
-      // "durable_objects": {
-      //   "bindings": [
-      //     {
-      //       "name": "DOMAIN_DO",
-      //       "class_name": "DomainDo"
-      //     }
-      //   ]
-      // },
-      "migrations": [
-        // {
-        //   "tag": "v1",
-        //   "new_sqlite_classes": ["DomainDo"]
-        // }
       ]
     }
   }
