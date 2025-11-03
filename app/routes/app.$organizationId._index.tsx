@@ -24,7 +24,7 @@ export async function loader({
   invariant(session, "Missing session");
   const now = Date.now();
   return {
-    invitations: (
+    userInvitations: (
       await auth.api.listUserInvitations({
         headers: request.headers,
         query: { email: session.user.email },
@@ -81,7 +81,7 @@ const expiresIn = (expiresAt: Date): string => {
 function InvitationItem({
   invitation,
 }: {
-  invitation: Route.ComponentProps["loaderData"]["invitations"][number];
+  invitation: Route.ComponentProps["loaderData"]["userInvitations"][number];
 }) {
   const fetcher = useFetcher();
   const disabled = fetcher.state !== "idle";
@@ -121,11 +121,11 @@ function InvitationItem({
 }
 
 export default function RouteComponent({
-  loaderData: { invitations, ...loaderData },
+  loaderData: { userInvitations, ...loaderData },
 }: Route.ComponentProps) {
   return (
     <div data-slot="invite-container" className="flex flex-col gap-6 p-6">
-      {invitations.length > 0 && (
+      {userInvitations.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle>Invitations</CardTitle>
@@ -135,7 +135,7 @@ export default function RouteComponent({
           </CardHeader>
           <CardContent>
             <ul className="flex flex-col divide-y">
-              {invitations.map((invitation) => (
+              {userInvitations.map((invitation) => (
                 <InvitationItem key={invitation.id} invitation={invitation} />
               ))}
             </ul>
