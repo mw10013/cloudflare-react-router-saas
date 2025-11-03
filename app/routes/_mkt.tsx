@@ -18,13 +18,14 @@ export function loader({ context }: Route.LoaderArgs) {
 
 export default function RouteComponent() {
   return (
-    // shadcn AppLayout
-    <div data-wrapper="" className="border-grid flex flex-1 flex-col">
+    <div
+      data-wrapper=""
+      className="container mx-auto flex flex-1 flex-col px-4"
+    >
       <SiteHeader />
       <main className="flex flex-1 flex-col">
         <ReactRouter.Outlet />
       </main>
-      {/* <SiteFooter /> */}
     </div>
   );
 }
@@ -35,11 +36,10 @@ function SiteHeader() {
       "routes/_mkt",
     );
   return (
-    <header className="border-grid bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
-      <div className="container-wrapper">
-        <div className="container flex h-14 items-center gap-2 md:gap-4">
-          <MainNav />
-          {/* <MobileNav />
+    <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
+      <div className="flex h-14 items-center gap-2 md:gap-4">
+        <MainNav />
+        {/* <MobileNav />
           <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
             <div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
               <CommandMenu />
@@ -63,32 +63,28 @@ function SiteHeader() {
               <ModeSwitcher />
             </nav>
           </div> */}
-          <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
-            {/* <div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
-              <CommandMenu />
-            </div> */}
-            <nav className="flex items-center gap-0.5">
-              <ReactRouterThemeToggleButton />
-              {routeLoaderData?.sessionUser ? (
-                <Rac.Form
-                  action="/signout"
-                  method="post"
-                  className="grid w-full max-w-sm gap-6"
-                >
-                  <Oui.Button type="submit" variant="outline">
-                    Sign Out
-                  </Oui.Button>
-                </Rac.Form>
-              ) : (
-                <Oui.Link
-                  href="/login"
-                  className={Oui.buttonClassName({ variant: "outline" })}
-                >
-                  Sign in / Sign up
-                </Oui.Link>
-              )}
-            </nav>
-          </div>
+        <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
+          <nav className="flex items-center gap-0.5">
+            <ReactRouterThemeToggleButton />
+            {routeLoaderData?.sessionUser ? (
+              <Rac.Form
+                action="/signout"
+                method="post"
+                className="grid w-full max-w-sm gap-6"
+              >
+                <Oui.Button type="submit" variant="outline">
+                  Sign Out
+                </Oui.Button>
+              </Rac.Form>
+            ) : (
+              <Oui.Link
+                href="/login"
+                className={Oui.buttonClassName({ variant: "outline" })}
+              >
+                Sign in / Sign up
+              </Oui.Link>
+            )}
+          </nav>
         </div>
       </div>
     </header>

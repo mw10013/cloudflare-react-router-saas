@@ -66,7 +66,7 @@ function Html({
         <PreventFlashOnWrongTheme ssrTheme={ssrTheme} />
         <Links />
       </head>
-      <body className="background font-sans antialiased">
+      <body className="font-sans antialiased">
         <ReactRouterProvider>
           <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
           <ScrollRestoration />
