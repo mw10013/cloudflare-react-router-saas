@@ -5,6 +5,7 @@ import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
+import { siGithub } from "simple-icons";
 
 export function loader({ context }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
@@ -20,7 +21,7 @@ export default function RouteComponent() {
   return (
     <div
       data-wrapper=""
-      className="container mx-auto flex flex-1 flex-col px-4"
+      className="container mx-auto flex flex-1 flex-col px-4 lg:px-8"
     >
       <SiteHeader />
       <main className="flex flex-1 flex-col">
@@ -40,10 +41,6 @@ function SiteHeader() {
       <div className="flex h-14 items-center gap-2 md:gap-4">
         <MainNav />
         {/* <MobileNav />
-          <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
-            <div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
-              <CommandMenu />
-            </div>
             <nav className="flex items-center gap-0.5">
               <Button
                 asChild
@@ -65,6 +62,17 @@ function SiteHeader() {
           </div> */}
         <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
           <nav className="flex items-center gap-0.5">
+            <Oui.Link
+              aria-label="GitHub repo"
+              href="https://github.com/mw10013/cloudflare-react-router-saas"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={Oui.buttonClassName({ variant: "ghost" })}
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d={siGithub.path} />
+              </svg>
+            </Oui.Link>
             <ReactRouterThemeToggleButton />
             {routeLoaderData?.sessionUser ? (
               <Rac.Form
@@ -78,7 +86,7 @@ function SiteHeader() {
               </Rac.Form>
             ) : (
               <Oui.Link
-                href="/login"
+                href={ReactRouter.href("/login")}
                 className={Oui.buttonClassName({ variant: "outline" })}
               >
                 Sign in / Sign up
@@ -94,19 +102,14 @@ function SiteHeader() {
 function MainNav() {
   return (
     <div className="mr-4 hidden md:flex">
-      <Oui.Link href="/" className="mr-4 flex items-center gap-2 lg:mr-6">
-        <AppLogoIcon className="text-primary size-7" />
-        <span className="hidden font-bold lg:inline-block">SaaS</span>
+      <Oui.Link
+        href={ReactRouter.href("/")}
+        className="mr-4 flex items-center gap-2"
+      >
+        <AppLogoIcon className="text-primary" />
       </Oui.Link>
       <nav className="flex items-center gap-4 text-sm xl:gap-6">
-        <Oui.Link
-          href="/pricing"
-          className={
-            "text-foreground/80 data-hovered:text-foreground/80 transition-colors"
-          }
-        >
-          Pricing
-        </Oui.Link>
+        <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>
       </nav>
     </div>
   );
