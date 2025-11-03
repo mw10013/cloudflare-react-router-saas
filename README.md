@@ -5,7 +5,7 @@
 
 ## TODO
 
-- oui: oui-alert-ex-form, oui-sidebar-ex
+- oui: oui-alert-ex-form, oui-sidebar-ex, popover-ex: min-w-min?
 - homepage heading spacing/responsive
 - app
   - sidebar: icons?
