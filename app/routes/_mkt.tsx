@@ -39,27 +39,12 @@ function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="flex h-14 items-center gap-2 md:gap-4">
-        <MainNav />
-        {/* <MobileNav />
-            <nav className="flex items-center gap-0.5">
-              <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 px-0"
-              >
-                <Link
-                  href={siteConfig.links.github}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Icons.gitHub className="h-4 w-4" />
-                  <span className="sr-only">GitHub</span>
-                </Link>
-              </Button>
-              <ModeSwitcher />
-            </nav>
-          </div> */}
+        <Oui.Link href={ReactRouter.href("/")}>
+          <AppLogoIcon />
+        </Oui.Link>
+        <nav className="hidden items-center gap-4 text-sm md:flex xl:gap-6">
+          <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>
+        </nav>
         <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
           <nav className="flex items-center gap-0.5">
             <Oui.Link
@@ -96,21 +81,5 @@ function SiteHeader() {
         </div>
       </div>
     </header>
-  );
-}
-
-function MainNav() {
-  return (
-    <div className="mr-4 hidden md:flex">
-      <Oui.Link
-        href={ReactRouter.href("/")}
-        className="mr-4 flex items-center gap-2"
-      >
-        <AppLogoIcon className="text-primary" />
-      </Oui.Link>
-      <nav className="flex items-center gap-4 text-sm xl:gap-6">
-        <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>
-      </nav>
-    </div>
   );
 }
