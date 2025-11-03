@@ -8,6 +8,7 @@
 - oui: oui-alert-ex-form, oui-sidebar-ex, popover-ex: min-w-min?
 - footer
 - app
+  - accept/reject invitation: name of org extending invite
   - sidebar: icons?
 - admin
   - pagination
