@@ -46,11 +46,39 @@ function Header() {
         <nav className="hidden items-center gap-4 text-sm md:flex xl:gap-6">
           <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>
         </nav>
-        <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
-          <nav className="flex items-center gap-0.5">
-            <div className="hidden items-center gap-0.5 md:flex">
-              <GitHubRepoLink />
-              <ReactRouterThemeToggleButton />
+        <nav className="ml-auto">
+          <div className="hidden items-center gap-2 md:flex">
+            <GitHubRepoLink />
+            <ReactRouterThemeToggleButton />
+            {routeLoaderData?.sessionUser ? (
+              <Rac.Form action="/signout" method="post">
+                <Oui.Button type="submit" variant="outline">
+                  Sign Out
+                </Oui.Button>
+              </Rac.Form>
+            ) : (
+              <Oui.Link
+                href={ReactRouter.href("/login")}
+                className={Oui.buttonClassName({ variant: "outline" })}
+              >
+                Sign in / Sign up
+              </Oui.Link>
+            )}
+          </div>
+          <Oui.PopoverEx
+            triggerElement={
+              <Oui.Button variant="ghost" className="md:hidden">
+                <Menu />
+              </Oui.Button>
+            }
+            className="min-w-min"
+          >
+            <div className="flex flex-col gap-4">
+              <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>
+              <div className="flex gap-2">
+                <GitHubRepoLink />
+                <ReactRouterThemeToggleButton />
+              </div>
               {routeLoaderData?.sessionUser ? (
                 <Rac.Form action="/signout" method="post">
                   <Oui.Button type="submit" variant="outline">
@@ -58,50 +86,13 @@ function Header() {
                   </Oui.Button>
                 </Rac.Form>
               ) : (
-                <Oui.Link
-                  href={ReactRouter.href("/login")}
-                  className={Oui.buttonClassName({ variant: "outline" })}
-                >
+                <Oui.Link href={ReactRouter.href("/login")}>
                   Sign in / Sign up
                 </Oui.Link>
               )}
             </div>
-            <Oui.PopoverEx
-              triggerElement={
-                <Oui.Button variant="ghost" className="md:hidden">
-                  <Menu />
-                </Oui.Button>
-              }
-              className="min-w-min"
-            >
-              <div className="flex flex-col gap-4">
-                <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>
-                <div className="flex gap-2">
-                  <GitHubRepoLink />
-                  <ReactRouterThemeToggleButton />
-                </div>
-                {routeLoaderData?.sessionUser ? (
-                  <Rac.Form action="/signout" method="post">
-                    <Oui.Button
-                      type="submit"
-                      variant="outline"
-                      className="w-full"
-                    >
-                      Sign Out
-                    </Oui.Button>
-                  </Rac.Form>
-                ) : (
-                  <Oui.Link
-                    href={ReactRouter.href("/login")}
-                    className="w-full"
-                  >
-                    Sign in / Sign up
-                  </Oui.Link>
-                )}
-              </div>
-            </Oui.PopoverEx>
-          </nav>
-        </div>
+          </Oui.PopoverEx>
+        </nav>
       </div>
     </header>
   );
