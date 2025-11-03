@@ -31,3 +31,13 @@ import * as ReactRouter from "react-router";
 import * as Stripe from "stripe";
 import * as z from "zod";
 ```
+
+## UI Guidelines
+
+- **Preference order for UI components:**
+  1. Oui UI components (oui-\* prefixed files in `@/components` and `@/components/ui`) - these are ui components and react-aria-components reusable wrappers with shadcn styling
+  2. Shadcn UI components from `@/components/ui` - use for gaps in oui coverage
+  3. React Aria Components (`Rac.*`) directly - when no styling is needed
+- Custom or app-specific components generally live in `@/components` or route modules
+- Leverage the design token system: CSS variables defined in `app/app.css` are mapped to Tailwind utilities via `@theme inline` (use semantic color classes like `bg-background`, `text-foreground`, `border-border` instead of hardcoded colors)
+- Follow the shadcn color convention: each color has a base and `-foreground` variant (e.g., `bg-primary text-primary-foreground`)
