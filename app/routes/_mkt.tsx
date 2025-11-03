@@ -23,7 +23,7 @@ export default function RouteComponent() {
       data-wrapper=""
       className="container mx-auto flex flex-1 flex-col px-4 lg:px-8"
     >
-      <SiteHeader />
+      <Header />
       <main className="flex flex-1 flex-col">
         <ReactRouter.Outlet />
       </main>
@@ -31,7 +31,7 @@ export default function RouteComponent() {
   );
 }
 
-function SiteHeader() {
+function Header() {
   const routeLoaderData =
     ReactRouter.useRouteLoaderData<Route.ComponentProps["loaderData"]>(
       "routes/_mkt",
@@ -60,11 +60,7 @@ function SiteHeader() {
             </Oui.Link>
             <ReactRouterThemeToggleButton />
             {routeLoaderData?.sessionUser ? (
-              <Rac.Form
-                action="/signout"
-                method="post"
-                className="grid w-full max-w-sm gap-6"
-              >
+              <Rac.Form action="/signout" method="post">
                 <Oui.Button type="submit" variant="outline">
                   Sign Out
                 </Oui.Button>
