@@ -19,16 +19,13 @@ export async function loader({
   const MIN_TTL_MS = 5 * 60 * 1000;
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { authService: auth } = requestContext;
+  const { authService: auth, repository } = requestContext;
   const session = await auth.api.getSession({ headers: request.headers });
   invariant(session, "Missing session");
   const now = Date.now();
   return {
     userInvitations: (
-      await auth.api.listUserInvitations({
-        headers: request.headers,
-        query: { email: session.user.email },
-      })
+      await repository.getInvitationsForEmail({ email: session.user.email })
     ).filter(
       (v) =>
         v.status === "pending" && v.expiresAt.getTime() - now >= MIN_TTL_MS,
@@ -98,13 +95,17 @@ function InvitationItem({
   return (
     <li className="flex items-center justify-between py-4 first:pt-0 last:pb-0">
       <div className="grow text-sm">
-        <div>Inviter ID: {invitation.inviterId}</div>
-        <div>Organization ID: {invitation.organizationId}</div>
+        <div>Inviter: {invitation.inviter.email}</div>
+        <div>Organization: {invitation.organization.name}</div>
         <div>Role: {invitation.role}</div>
         <div>Expires: {expiresIn(invitation.expiresAt)}</div>
       </div>
       <fetcher.Form method="post" className="flex gap-2">
-        <input type="hidden" name="invitationId" value={invitation.id} />
+        <input
+          type="hidden"
+          name="invitationId"
+          value={invitation.invitationId}
+        />
         <Oui.Button
           type="submit"
           name="intent"
@@ -146,7 +147,10 @@ export default function RouteComponent({
           <CardContent>
             <ul className="flex flex-col divide-y">
               {userInvitations.map((invitation) => (
-                <InvitationItem key={invitation.id} invitation={invitation} />
+                <InvitationItem
+                  key={invitation.invitationId}
+                  invitation={invitation}
+                />
               ))}
             </ul>
           </CardContent>

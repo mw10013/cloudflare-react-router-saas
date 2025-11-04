@@ -53,9 +53,58 @@ inner join User u on u.userId = m.userId
     return Domain.User.array().parse(result.results);
   };
 
+  const getInvitationsForEmail = async ({ email }: { email: string }) => {
+    const result = await db
+      .prepare(
+        `
+select json_object(
+  'invitationId', i.invitationId,
+  'email', i.email,
+  'inviterId', i.inviterId,
+  'organizationId', i.organizationId,
+  'role', i.role,
+  'status', i.status,
+  'expiresAt', i.expiresAt,
+  'organization', json_object(
+    'organizationId', o.organizationId,
+    'name', o.name,
+    'slug', o.slug,
+    'logo', o.logo,
+    'metadata', o.metadata,
+    'createdAt', o.createdAt
+  ),
+  'inviter', json_object(
+    'userId', u.userId,
+    'name', u.name,
+    'email', u.email,
+    'emailVerified', u.emailVerified,
+    'image', u.image,
+    'role', u.role,
+    'banned', u.banned,
+    'banReason', u.banReason,
+    'banExpires', u.banExpires,
+    'stripeCustomerId', u.stripeCustomerId,
+    'createdAt', u.createdAt,
+    'updatedAt', u.updatedAt
+  )
+) as data
+from Invitation i
+inner join Organization o on o.organizationId = i.organizationId
+inner join User u on u.userId = i.inviterId
+where i.email = ?1
+        `,
+      )
+      .bind(email)
+      .all();
+    return Domain.InvitationWithOrganizationAndInviter.array().parse(
+      result.results.map((r) => JSON.parse(r.data as string) as unknown),
+    );
+  };
+
   return {
     getUser,
     getUsers,
     getSubscriptionsWithDetails,
+    getInvitationsForEmail,
   };
 }
