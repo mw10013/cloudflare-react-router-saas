@@ -36,77 +36,9 @@ export function createRepository({
     return Domain.User.nullable().parse(result);
   };
 
-  const getSubscriptionsWithDetails = async () => {
-    const result = await db
-      .prepare(
-        `
-select u.email as email, u.stripeCustomerId as userStripeCustomerId, s.*, o.name as organizationName from Subscription s 
-inner join Organization o on o.organizationId = s.referenceId
-inner join Member m on m.organizationId = o.organizationId and m.role = 'owner'
-inner join User u on u.userId = m.userId
-    `,
-      )
-      .all();
-    return Domain.SubscriptionWithDetails.array().parse(result.results);
-  };
-
   const getUsers = async () => {
     const result = await db.prepare(`select * from User`).run();
     return Domain.User.array().parse(result.results);
-  };
-
-  const getInvitationsForEmail = async ({
-    email,
-    status,
-  }: {
-    email: string;
-    status: string;
-  }) => {
-    const result = await db
-      .prepare(
-        `
-select json_object(
-  'invitationId', i.invitationId,
-  'email', i.email,
-  'inviterId', i.inviterId,
-  'organizationId', i.organizationId,
-  'role', i.role,
-  'status', i.status,
-  'expiresAt', i.expiresAt,
-  'organization', json_object(
-    'organizationId', o.organizationId,
-    'name', o.name,
-    'slug', o.slug,
-    'logo', o.logo,
-    'metadata', o.metadata,
-    'createdAt', o.createdAt
-  ),
-  'inviter', json_object(
-    'userId', u.userId,
-    'name', u.name,
-    'email', u.email,
-    'emailVerified', u.emailVerified,
-    'image', u.image,
-    'role', u.role,
-    'banned', u.banned,
-    'banReason', u.banReason,
-    'banExpires', u.banExpires,
-    'stripeCustomerId', u.stripeCustomerId,
-    'createdAt', u.createdAt,
-    'updatedAt', u.updatedAt
-  )
-) as data
-from Invitation i
-inner join Organization o on o.organizationId = i.organizationId
-inner join User u on u.userId = i.inviterId
-where i.email = ?1 and i.status = ?2
-        `,
-      )
-      .bind(email, status)
-      .all();
-    return Domain.InvitationWithOrganizationAndInviter.array().parse(
-      result.results.map((r) => JSON.parse(r.data as string) as unknown),
-    );
   };
 
   const getAppDashboardData = async ({
@@ -170,12 +102,10 @@ select json_object(
       )
       .bind(userEmail, organizationId)
       .first();
-
     invariant(
       typeof result?.data === "string",
       "Expected result.data to be a string",
     );
-
     return z
       .object({
         userInvitations: Domain.InvitationWithOrganizationAndInviter.array(),
@@ -188,8 +118,6 @@ select json_object(
   return {
     getUser,
     getUsers,
-    getSubscriptionsWithDetails,
-    getInvitationsForEmail,
     getAppDashboardData,
   };
 }

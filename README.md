@@ -8,7 +8,6 @@
 - oui: oui-alert-ex-form, oui-sidebar-ex, popover-ex: min-w-min?
 - footer
 - app
-  - accept/reject invitation: name of org extending invite
   - sidebar: icons?
 - admin
   - pagination
@@ -24,7 +23,6 @@
 - organization: teams
 - secondary storage: https://www.better-auth.com/docs/concepts/database#secondary-storage
 - stripe: referenceId -> organizationId?
-
 
 ```
 http://localhost:5173/
