@@ -53,7 +53,13 @@ inner join User u on u.userId = m.userId
     return Domain.User.array().parse(result.results);
   };
 
-  const getInvitationsForEmail = async ({ email }: { email: string }) => {
+  const getInvitationsForEmail = async ({
+    email,
+    status,
+  }: {
+    email: string;
+    status: string;
+  }) => {
     const result = await db
       .prepare(
         `
@@ -91,10 +97,10 @@ select json_object(
 from Invitation i
 inner join Organization o on o.organizationId = i.organizationId
 inner join User u on u.userId = i.inviterId
-where i.email = ?1
+where i.email = ?1 and i.status = ?2
         `,
       )
-      .bind(email)
+      .bind(email, status)
       .all();
     return Domain.InvitationWithOrganizationAndInviter.array().parse(
       result.results.map((r) => JSON.parse(r.data as string) as unknown),

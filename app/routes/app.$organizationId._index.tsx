@@ -25,11 +25,11 @@ export async function loader({
   const now = Date.now();
   return {
     userInvitations: (
-      await repository.getInvitationsForEmail({ email: session.user.email })
-    ).filter(
-      (v) =>
-        v.status === "pending" && v.expiresAt.getTime() - now >= MIN_TTL_MS,
-    ),
+      await repository.getInvitationsForEmail({
+        email: session.user.email,
+        status: "pending",
+      })
+    ).filter((v) => v.expiresAt.getTime() - now >= MIN_TTL_MS),
     memberCount: (
       await auth.api.listMembers({
         headers: request.headers,
