@@ -109,7 +109,7 @@ where i.email = ?1 and i.status = ?2
     );
   };
 
-  const getOrganizationDashboardData = async ({
+  const getAppDashboardData = async ({
     userEmail,
     organizationId,
   }: {
@@ -190,6 +190,6 @@ select json_object(
     getUsers,
     getSubscriptionsWithDetails,
     getInvitationsForEmail,
-    getOrganizationDashboardData,
+    getAppDashboardData,
   };
 }
