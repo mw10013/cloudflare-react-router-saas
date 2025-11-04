@@ -47,6 +47,17 @@ export const InvitationStatus = z.enum([
 ]);
 export type InvitationStatus = z.infer<typeof InvitationStatus>;
 
+export const Invitation = z.object({
+  invitationId: z.number().int(),
+  email: z.email(),
+  inviterId: z.number().int(),
+  organizationId: z.number().int(),
+  role: MemberRole,
+  status: InvitationStatus,
+  expiresAt: isoDatetimeToDate,
+});
+export type Invitation = z.infer<typeof Invitation>;
+
 export const User = z.object({
   userId: z.number().int(),
   name: z.string(),
@@ -62,6 +73,16 @@ export const User = z.object({
   updatedAt: isoDatetimeToDate,
 });
 export type User = z.infer<typeof User>;
+
+export const Organization = z.object({
+  organizationId: z.number().int(),
+  name: z.string().nonempty(),
+  slug: z.string().nonempty(),
+  logo: z.string().nullable(),
+  metadata: z.string().nullable(),
+  createdAt: isoDatetimeToDate,
+});
+export type Organization = z.infer<typeof Organization>;
 
 export const planData = [
   // in display order
