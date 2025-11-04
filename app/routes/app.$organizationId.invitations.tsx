@@ -49,7 +49,7 @@ export async function action({
   request,
   context,
   params: { organizationId },
-}: Route.ActionArgs): Promise<Oui.FormActionResult> {
+}: Route.ActionArgs): Promise<Oui.AlertExFormActionResult> {
   const schema = z.discriminatedUnion("intent", [
     z.object({
       intent: z.literal("cancel"),

@@ -3,7 +3,6 @@ import type { User } from "better-auth/types";
 import type { Route } from "./+types/app.$organizationId";
 import React from "react";
 import { AppLogoIcon } from "@/components/app-logo-icon";
-import { SidebarExTree } from "@/components/oui-sidebar-ex";
 import * as Oui from "@/components/ui/oui-index";
 import {
   Sidebar,
@@ -125,7 +124,7 @@ export function AppSidebar({
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarExTree aria-label="Organization Navigation" items={items} />
+        <Oui.SidebarExTree aria-label="Organization Navigation" items={items} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

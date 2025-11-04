@@ -51,7 +51,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 export async function action({
   request,
   context,
-}: Route.ActionArgs): Promise<Oui.FormActionResult> {
+}: Route.ActionArgs): Promise<Oui.AlertExFormActionResult> {
   const schema = z.discriminatedUnion("intent", [
     z.object({
       intent: z.literal("ban"),
@@ -324,7 +324,7 @@ function BanDialog({
         validationErrors={fetcher.data?.validationErrors}
         onSubmit={onSubmitReactRouter(fetcher.submit)}
       >
-        <Oui.FormAlert
+        <Oui.AlertExForm
           success={fetcher.data?.success}
           message={fetcher.data?.message}
           details={fetcher.data?.details}

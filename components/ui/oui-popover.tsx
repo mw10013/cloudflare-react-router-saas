@@ -13,7 +13,7 @@ import { twMerge } from "tailwind-merge";
  */
 
 const trigger = {
-  DialogTrigger: "min-w-72 p-4",
+  DialogTrigger: " p-4",
   MenuTrigger: "",
   SubmenuTrigger: "shadow-lg",
   Select: "min-w-(--trigger-width) p-1",
@@ -29,7 +29,7 @@ const placement = {
 
 export const popoverVariants = cva(
   [
-    "relative min-w-32 overflow-x-hidden overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md outline-none",
+    "relative overflow-x-hidden overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md outline-none",
     "data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95",
     "data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95",
   ],

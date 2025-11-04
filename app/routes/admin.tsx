@@ -1,5 +1,4 @@
 import type { Route } from "./+types/admin";
-import { SidebarExTree, SidebarExTrigger } from "@/components/oui-sidebar-ex";
 import {
   Sidebar,
   SidebarContent,
@@ -8,6 +7,7 @@ import {
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import * as ReactRouter from "react-router";
+import * as Oui from "@/components/ui/oui-index";
 
 export const adminMiddleware: Route.MiddlewareFunction = ({ context }) => {
   const requestContext = context.get(RequestContext);
@@ -41,7 +41,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        <SidebarExTree aria-label="Admin Navigation" items={items} />
+        <Oui.SidebarExTree aria-label="Admin Navigation" items={items} />
       </SidebarContent>
     </Sidebar>
   );
@@ -52,7 +52,7 @@ export default function RouteComponent() {
     <SidebarProvider>
       <AppSidebar />
       <main>
-        <SidebarExTrigger className="m-2" />
+        <Oui.SidebarExTrigger className="m-2" />
         <div className="flex flex-col gap-2 px-4">
           <ReactRouter.Outlet />
         </div>

@@ -32,6 +32,7 @@ export * from "@/components/ui/oui-text-field";
 export * from "@/components/ui/oui-text";
 export * from "@/components/ui/oui-tooltip";
 
+export * from "@/components/oui-alert-ex-form";
 export * from "@/components/oui-autocomplete-ex";
 export * from "@/components/oui-checkbox-ex";
 export * from "@/components/oui-checkbox-group-ex";
@@ -40,8 +41,7 @@ export * from "@/components/oui-dialog-ex-alert";
 export * from "@/components/oui-dialog-ex-sheet";
 export * from "@/components/oui-dialog-ex";
 export * from "@/components/oui-disclosure-ex";
-export * from "@/components/oui-form-alert";
-export * from "@/components/oui-list-box-ex-pagination"; // experimental
+export * from "@/components/oui-list-box-ex-pagination";
 export * from "@/components/oui-menu-ex";
 export * from "@/components/oui-modal-ex-sheet";
 export * from "@/components/oui-modal-ex";
@@ -51,8 +51,7 @@ export * from "@/components/oui-radio-group-ex";
 export * from "@/components/oui-search-field-ex";
 export * from "@/components/oui-select-ex-popover";
 export * from "@/components/oui-select-ex";
-// Depends on shadcn sidebar.tsx which may need to be patched to import VariantProps as type.
-// export * from "@/registry/default/components/oui-sidebar-ex"; // experimental
+export * from "@/components/oui-sidebar-ex";
 export * from "@/components/oui-slider-ex";
 export * from "@/components/oui-switch-ex";
 export * from "@/components/oui-text-field-ex";

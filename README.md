@@ -8,7 +8,7 @@
 - oui: oui-alert-ex-form, oui-sidebar-ex, popover-ex: min-w-min?
 - footer
 - app
-  - sidebar: icons?
+  - sidebar: trigger, icons?
 - admin
   - pagination
   - customers
@@ -61,7 +61,6 @@ pnpm dlx shadcn@latest add --overwrite @oui/oui-index
 pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
 pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-theme-toggle-button
 pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
-pnpm dlx shadcn@latest add --overwrite @oui/oui-sidebar-ex
 
 ```
 

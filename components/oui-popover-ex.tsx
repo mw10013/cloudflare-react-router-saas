@@ -12,7 +12,7 @@ export interface PopoverExProps extends Omit<Rac.PopoverProps, "children"> {
 }
 
 /**
- * A popover dialog.
+ * Reusable wrapper for Popover that displays a popover dialog.
  * If `triggerElement` is a string, it's rendered as a ghost `Button`.
  * The dialog is dismissable via an outside press if `role` is not "alertdialog".
  */
