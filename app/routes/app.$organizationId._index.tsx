@@ -33,6 +33,12 @@ export async function loader({
       (v) =>
         v.status === "pending" && v.expiresAt.getTime() - now >= MIN_TTL_MS,
     ),
+    members: (
+      await auth.api.listMembers({
+        headers: request.headers,
+        query: { organizationId },
+      })
+    ).members,
     invitations: (
       await auth.api.listInvitations({
         headers: request.headers,
