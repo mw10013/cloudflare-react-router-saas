@@ -67,11 +67,10 @@ function Header() {
           </div>
           <Oui.PopoverEx
             triggerElement={
-              <Oui.Button variant="ghost" className="md:hidden">
+              <Oui.Button aria-label="Menu" variant="ghost" className="md:hidden">
                 <Menu />
               </Oui.Button>
             }
-            className="min-w-min"
           >
             <div className="flex flex-col gap-4">
               <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>

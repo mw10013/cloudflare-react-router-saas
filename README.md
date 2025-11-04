@@ -5,7 +5,6 @@
 
 ## TODO
 
-- oui: oui-alert-ex-form, oui-sidebar-ex, popover-ex: min-w-min?
 - footer
 - app
   - sidebar: trigger, icons?
