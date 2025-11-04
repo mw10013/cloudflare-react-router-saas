@@ -1,4 +1,6 @@
 import * as Domain from "@/lib/domain";
+import { invariant } from "@epic-web/invariant";
+import * as z from "zod";
 
 /**
  * The repository provides data access methods for the application's domain entities.
@@ -107,10 +109,87 @@ where i.email = ?1 and i.status = ?2
     );
   };
 
+  const getOrganizationDashboardData = async ({
+    userEmail,
+    organizationId,
+  }: {
+    userEmail: string;
+    organizationId: string;
+  }) => {
+    const result = await db
+      .prepare(
+        `
+select json_object(
+  'userInvitations', (
+    select json_group_array(
+      json_object(
+        'invitationId', i.invitationId,
+        'email', i.email,
+        'inviterId', i.inviterId,
+        'organizationId', i.organizationId,
+        'role', i.role,
+        'status', i.status,
+        'expiresAt', i.expiresAt,
+        'organization', json_object(
+          'organizationId', o.organizationId,
+          'name', o.name,
+          'slug', o.slug,
+          'logo', o.logo,
+          'metadata', o.metadata,
+          'createdAt', o.createdAt
+        ),
+        'inviter', json_object(
+          'userId', u.userId,
+          'name', u.name,
+          'email', u.email,
+          'emailVerified', u.emailVerified,
+          'image', u.image,
+          'role', u.role,
+          'banned', u.banned,
+          'banReason', u.banReason,
+          'banExpires', u.banExpires,
+          'stripeCustomerId', u.stripeCustomerId,
+          'createdAt', u.createdAt,
+          'updatedAt', u.updatedAt
+        )
+      )
+    )
+    from Invitation i
+    inner join Organization o on o.organizationId = i.organizationId
+    inner join User u on u.userId = i.inviterId
+    where i.email = ?1 and i.status = 'pending'
+  ),
+  'memberCount', (
+    select count(*) from Member where organizationId = ?2
+  ),
+  'pendingInvitationCount', (
+    select count(*) from Invitation where organizationId = ?2 and status = 'pending'
+  )
+) as data
+        `,
+      )
+      .bind(userEmail, organizationId)
+      .first();
+
+    invariant(
+      typeof result?.data === "string",
+      "Expected result.data to be a string",
+    );
+
+    return z
+      .object({
+        userInvitations: Domain.InvitationWithOrganizationAndInviter.array(),
+        memberCount: z.number(),
+        pendingInvitationCount: z.number(),
+      })
+      .parse(JSON.parse(result.data));
+  };
+
   return {
     getUser,
     getUsers,
     getSubscriptionsWithDetails,
     getInvitationsForEmail,
+    getOrganizationDashboardData,
   };
 }

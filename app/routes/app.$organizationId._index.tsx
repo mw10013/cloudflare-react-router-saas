@@ -16,35 +16,43 @@ export async function loader({
   context,
   params: { organizationId },
 }: Route.LoaderArgs) {
-  const MIN_TTL_MS = 5 * 60 * 1000;
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
   const { authService: auth, repository } = requestContext;
   const session = await auth.api.getSession({ headers: request.headers });
   invariant(session, "Missing session");
-  const now = Date.now();
+
+  // Existing approach
+  const userInvitations = await repository.getInvitationsForEmail({
+    email: session.user.email,
+    status: "pending",
+  });
+  const memberCount = (
+    await auth.api.listMembers({
+      headers: request.headers,
+      query: { organizationId },
+    })
+  ).members.length;
+  const pendingInvitationCount = (
+    await auth.api.listInvitations({
+      headers: request.headers,
+      query: { organizationId },
+    })
+  ).filter((v) => v.status === "pending").length;
+
+  // New single query approach
+  const dashboardData = await repository.getOrganizationDashboardData({
+    userEmail: session.user.email,
+    organizationId,
+  });
+
   return {
-    userInvitations: (
-      await repository.getInvitationsForEmail({
-        email: session.user.email,
-        status: "pending",
-      })
-    ).filter((v) => v.expiresAt.getTime() - now >= MIN_TTL_MS),
-    memberCount: (
-      await auth.api.listMembers({
-        headers: request.headers,
-        query: { organizationId },
-      })
-    ).members.length,
-    pendingInvitationCount: (
-      await auth.api.listInvitations({
-        headers: request.headers,
-        query: { organizationId },
-      })
-    ).filter(
-      (v) =>
-        v.status === "pending" && v.expiresAt.getTime() - now >= MIN_TTL_MS,
-    ).length,
+    // Existing data
+    userInvitations,
+    memberCount,
+    pendingInvitationCount,
+    // New data for comparison
+    dashboardData,
   };
 }
 
@@ -132,7 +140,12 @@ function InvitationItem({
 }
 
 export default function RouteComponent({
-  loaderData: { userInvitations, ...loaderData },
+  loaderData: {
+    userInvitations,
+    memberCount,
+    pendingInvitationCount,
+    dashboardData,
+  },
 }: Route.ComponentProps) {
   return (
     <div data-slot="invite-container" className="flex flex-col gap-6 p-6">
@@ -156,9 +169,75 @@ export default function RouteComponent({
           </CardContent>
         </Card>
       )}
-      <pre className="overflow-x-auto">
-        {JSON.stringify(loaderData, null, 2)}
-      </pre>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Existing Approach</CardTitle>
+            <CardDescription>
+              Multiple API calls + repository query
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <pre className="overflow-x-auto text-xs">
+              {JSON.stringify(
+                {
+                  userInvitations: userInvitations.length,
+                  memberCount,
+                  pendingInvitationCount,
+                },
+                null,
+                2,
+              )}
+            </pre>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Single Query Approach</CardTitle>
+            <CardDescription>
+              One repository query with subqueries
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <pre className="overflow-x-auto text-xs">
+              {JSON.stringify(
+                {
+                  userInvitations: dashboardData.userInvitations.length,
+                  memberCount: dashboardData.memberCount,
+                  pendingInvitationCount: dashboardData.pendingInvitationCount,
+                },
+                null,
+                2,
+              )}
+            </pre>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Full Comparison</CardTitle>
+          <CardDescription>Complete data from both approaches</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <pre className="overflow-x-auto text-xs">
+            {JSON.stringify(
+              {
+                existing: {
+                  userInvitations,
+                  memberCount,
+                  pendingInvitationCount,
+                },
+                singleQuery: dashboardData,
+              },
+              null,
+              2,
+            )}
+          </pre>
+        </CardContent>
+      </Card>
     </div>
   );
 }
