@@ -155,7 +155,7 @@ select json_object(
       .prepare(
         `
 select json_object(
-  'customers', (
+  'customers', coalesce((
     select json_group_array(
       json_object(
         'userId', u.userId,
@@ -192,7 +192,7 @@ select json_object(
     and u.email like ?
     order by u.email asc
     limit ? offset ?
-  ),
+  ), json('[]')),
   'count', (
     select count(*) from User u where u.role = 'user' and u.email like ?
   ),
