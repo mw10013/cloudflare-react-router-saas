@@ -36,11 +36,6 @@ export function createRepository({
     return Domain.User.nullable().parse(result);
   };
 
-  const getUsers = async () => {
-    const result = await db.prepare(`select * from User`).run();
-    return Domain.User.array().parse(result.results);
-  };
-
   const getAppDashboardData = async ({
     userEmail,
     organizationId,
@@ -148,7 +143,6 @@ select json_object(
 
   return {
     getUser,
-    getUsers,
     getAppDashboardData,
     getAdminDashboardData,
   };
