@@ -41,11 +41,9 @@ export default function RouteComponent({
   return (
     <SidebarProvider>
       <AppSidebar user={user} />
-      <main>
+      <main className="flex h-svh w-full flex-col overflow-x-hidden">
         <Oui.SidebarExTrigger />
-        <div className="flex flex-col gap-2 px-4">
-          <ReactRouter.Outlet />
-        </div>
+        <ReactRouter.Outlet />
       </main>
     </SidebarProvider>
   );

@@ -23,46 +23,44 @@ export default function RouteComponent({
   loaderData: { dashboardData },
 }: Route.ComponentProps) {
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>Customers</CardTitle>
-            <CardDescription>
-              Total customers with Stripe accounts
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {dashboardData.customerCount}
-            </div>
-          </CardContent>
-        </Card>
+    <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-3">
+      <Card>
+        <CardHeader>
+          <CardTitle>Customers</CardTitle>
+          <CardDescription>
+            Total customers with Stripe accounts
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">
+            {dashboardData.customerCount}
+          </div>
+        </CardContent>
+      </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Active Subscriptions</CardTitle>
-            <CardDescription>Subscriptions currently active</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {dashboardData.activeSubscriptionCount}
-            </div>
-          </CardContent>
-        </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Active Subscriptions</CardTitle>
+          <CardDescription>Subscriptions currently active</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">
+            {dashboardData.activeSubscriptionCount}
+          </div>
+        </CardContent>
+      </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Trialing Subscriptions</CardTitle>
-            <CardDescription>Subscriptions in trial period</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {dashboardData.trialingSubscriptionCount}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Trialing Subscriptions</CardTitle>
+          <CardDescription>Subscriptions in trial period</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">
+            {dashboardData.trialingSubscriptionCount}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
