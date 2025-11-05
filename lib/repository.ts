@@ -187,11 +187,13 @@ select json_object(
           ) from Subscription s where s.stripeCustomerId = u.stripeCustomerId limit 1
         )
       )
-    ) from User u
-    where u.role = 'user'
-    and u.email like ?
-    order by u.email asc
-    limit ? offset ?
+    ) from (
+      select * from User u
+      where u.role = 'user'
+      and u.email like ?
+      order by u.email asc
+      limit ? offset ?
+    ) as u
   ), json('[]')),
   'count', (
     select count(*) from User u where u.role = 'user' and u.email like ?
