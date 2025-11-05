@@ -4,7 +4,6 @@ import ReactRouterThemeToggleButton from "@/components/oui-react-router-theme-to
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { Menu } from "lucide-react";
-import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 import { siGithub } from "simple-icons";
 
@@ -37,6 +36,7 @@ function Header() {
     ReactRouter.useRouteLoaderData<Route.ComponentProps["loaderData"]>(
       "routes/_mkt",
     );
+  const submit = ReactRouter.useSubmit();
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="flex h-14 items-center gap-2 md:gap-4">
@@ -51,11 +51,14 @@ function Header() {
             <GitHubRepoLink />
             <ReactRouterThemeToggleButton />
             {routeLoaderData?.sessionUser ? (
-              <Rac.Form action="/signout" method="post">
-                <Oui.Button type="submit" variant="outline">
-                  Sign Out
-                </Oui.Button>
-              </Rac.Form>
+              <Oui.Button
+                variant="outline"
+                onPress={() =>
+                  void submit({}, { method: "post", action: "/signout" })
+                }
+              >
+                Sign Out
+              </Oui.Button>
             ) : (
               <Oui.Link
                 href={ReactRouter.href("/login")}
@@ -67,7 +70,11 @@ function Header() {
           </div>
           <Oui.PopoverEx
             triggerElement={
-              <Oui.Button aria-label="Menu" variant="ghost" className="md:hidden">
+              <Oui.Button
+                aria-label="Menu"
+                variant="ghost"
+                className="md:hidden"
+              >
                 <Menu />
               </Oui.Button>
             }
@@ -79,11 +86,14 @@ function Header() {
                 <ReactRouterThemeToggleButton />
               </div>
               {routeLoaderData?.sessionUser ? (
-                <Rac.Form action="/signout" method="post">
-                  <Oui.Button type="submit" variant="outline">
-                    Sign Out
-                  </Oui.Button>
-                </Rac.Form>
+                <Oui.Button
+                  variant="outline"
+                  onPress={() =>
+                    void submit({}, { method: "post", action: "/signout" })
+                  }
+                >
+                  Sign Out
+                </Oui.Button>
               ) : (
                 <Oui.Link href={ReactRouter.href("/login")}>
                   Sign in / Sign up
