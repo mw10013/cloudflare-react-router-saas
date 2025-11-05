@@ -3,10 +3,13 @@ import * as Oui from "@/components/ui/oui-index";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import { ChevronsUpDown, LogOut } from "lucide-react";
+import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 
 export const adminMiddleware: Route.MiddlewareFunction = ({ context }) => {
@@ -22,35 +25,20 @@ export const adminMiddleware: Route.MiddlewareFunction = ({ context }) => {
 
 export const middleware: Route.MiddlewareFunction[] = [adminMiddleware];
 
-const items = [
-  {
-    id: "SaaS",
-    href: "/",
-  },
-  {
-    id: "Admin",
-    href: "/admin",
-  },
-  {
-    id: "Users",
-    href: "/admin/users",
-  },
-];
-
-export function AppSidebar() {
-  return (
-    <Sidebar>
-      <SidebarContent>
-        <Oui.SidebarExTree aria-label="Admin Navigation" items={items} />
-      </SidebarContent>
-    </Sidebar>
-  );
+export function loader({ context }: Route.LoaderArgs) {
+  const requestContext = context.get(RequestContext);
+  invariant(requestContext, "Missing request context.");
+  const { session } = requestContext;
+  invariant(session?.user, "Missing user session");
+  return { user: session.user };
 }
 
-export default function RouteComponent() {
+export default function RouteComponent({
+  loaderData: { user },
+}: Route.ComponentProps) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={user} />
       <main>
         <Oui.SidebarExTrigger />
         <div className="flex flex-col gap-2 px-4">
@@ -58,5 +46,71 @@ export default function RouteComponent() {
         </div>
       </main>
     </SidebarProvider>
+  );
+}
+
+export function AppSidebar({ user }: { user: { email: string } }) {
+  const items = [
+    {
+      id: "SaaS",
+      href: "/",
+    },
+    {
+      id: "Admin",
+      href: "/admin",
+    },
+    {
+      id: "Users",
+      href: "/admin/users",
+    },
+  ];
+
+  return (
+    <Sidebar>
+      <SidebarContent>
+        <Oui.SidebarExTree aria-label="Admin Navigation" items={items} />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={user} />
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
+
+export function NavUser({
+  user,
+}: {
+  user: {
+    email: string;
+  };
+}) {
+  const submit = ReactRouter.useSubmit();
+  return (
+    <Oui.MenuEx
+      className="min-w-56 rounded-lg"
+      triggerElement={
+        <Oui.SidebarExButton>
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-medium">{user.email}</span>
+          </div>
+          <ChevronsUpDown className="ml-auto size-4" />
+        </Oui.SidebarExButton>
+      }
+    >
+      <Rac.MenuSection>
+        <Rac.Header className="truncate px-1 py-1.5 text-center text-sm font-medium">
+          {user.email}
+        </Rac.Header>
+      </Rac.MenuSection>
+      <Oui.Separator variant="menu" />
+      <Oui.MenuItem
+        id="signOut"
+        textValue="Sign Out"
+        onAction={() => void submit({}, { method: "post", action: "/signout" })}
+      >
+        <LogOut className="mr-2 size-4" />
+        Sign Out
+      </Oui.MenuItem>
+    </Oui.MenuEx>
   );
 }
