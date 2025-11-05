@@ -33,26 +33,3 @@ export default function RouteComponent() {
     </div>
   );
 }
-
-// export default function RouteComponent({ loaderData }: Route.ComponentProps) {
-//   return (
-//     <main className="p-8">
-//       {loaderData?.isSignedIn ? (
-//         <div className="mb-6 flex justify-center">
-//           <Rac.Form method="post" action="/signout" className="w-full max-w-xs">
-//             <Oui.Button type="submit" className="w-full">
-//               Sign Out
-//             </Oui.Button>
-//           </Rac.Form>
-//         </div>
-//       ) : (
-//         <div className="mb-6 flex justify-center">
-//           <Oui.Link href="/login" className={Oui.buttonClassName({})}>
-//             Sign in / Sign up
-//           </Oui.Link>
-//         </div>
-//       )}
-//       <pre>{JSON.stringify(loaderData, null, 2)}</pre>
-//     </main>
-//   );
-// }
