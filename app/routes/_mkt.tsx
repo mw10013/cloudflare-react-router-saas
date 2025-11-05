@@ -54,7 +54,7 @@ function Header() {
               <Oui.Button
                 variant="outline"
                 onPress={() =>
-                  void submit({}, { method: "post", action: "/signout" })
+                  void submit({}, { method: "post", action: ReactRouter.href("/signout") })
                 }
               >
                 Sign Out
@@ -89,7 +89,7 @@ function Header() {
                 <Oui.Button
                   variant="outline"
                   onPress={() =>
-                    void submit({}, { method: "post", action: "/signout" })
+                    void submit({}, { method: "post", action: ReactRouter.href("/signout") })
                   }
                 >
                   Sign Out

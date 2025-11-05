@@ -202,7 +202,7 @@ export function NavUser({
       <Oui.MenuItem
         id="signOut"
         textValue="Sign Out"
-        onAction={() => void submit({}, { method: "post", action: "/signout" })}
+        onAction={() => void submit({}, { method: "post", action: ReactRouter.href("/signout") })}
       >
         <LogOut className="mr-2 size-4" />
         Sign Out

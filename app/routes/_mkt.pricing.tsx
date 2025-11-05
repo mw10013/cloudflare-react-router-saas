@@ -29,7 +29,7 @@ export async function action({ request, context }: Route.ActionArgs) {
   invariant(requestContext, "Missing request context.");
   const { authService: auth, session, stripeService } = requestContext;
   if (!session) {
-    return ReactRouter.redirect("/login");
+    return ReactRouter.redirect(ReactRouter.href("/login"));
   }
   if (session.user.role !== "user")
     // eslint-disable-next-line @typescript-eslint/only-throw-error
@@ -66,9 +66,11 @@ export async function action({ request, context }: Route.ActionArgs) {
       referenceId: activeOrganizationId,
       subscriptionId,
       seats: 1,
-      successUrl: "/app", // stripe checkout session
-      cancelUrl: "/pricing",
-      returnUrl: `/app/${activeOrganizationId}/billing`, // stripe billing portal
+      successUrl: ReactRouter.href("/app"), // stripe checkout session
+      cancelUrl: ReactRouter.href("/pricing"),
+      returnUrl: ReactRouter.href("/app/:organizationId/billing", {
+        organizationId: activeOrganizationId,
+      }), // stripe billing portal
       disableRedirect: false, // disable false since we redirect after successful subscription
     },
   });

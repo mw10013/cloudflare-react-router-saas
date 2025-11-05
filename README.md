@@ -147,7 +147,6 @@ Double subscriptions are not an issue when you create a customer first, then cre
 
 - https://github.com/t3dotgg/stripe-recommendations?tab=readme-ov-file#enable-limit-customers-to-one-subscription
 - https://docs.stripe.com/payments/checkout/limit-subscriptions
-- https://billing.stripe.com/p/login/test_3cs9EBfMn4Qn7Ze144
 
 ### Webhook
 
@@ -161,7 +160,6 @@ Double subscriptions are not an issue when you create a customer first, then cre
 
 - Settings | Billing | Customer portal
 - https://docs.stripe.com/customer-management/activate-no-code-customer-portal
-- https://billing.stripe.com/p/login/test_9AQeYV6bN1Eb6VafYZ
 
 ### Testing Payments
 
