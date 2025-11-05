@@ -95,7 +95,7 @@ export async function action({
         body: { userId: parseResult.data.userId },
       });
       // eslint-disable-next-line @typescript-eslint/only-throw-error
-      throw ReactRouter.redirect("/app", { headers });
+      throw ReactRouter.redirect(ReactRouter.href("/app"), { headers });
     }
     default:
       void (parseResult.data satisfies never);

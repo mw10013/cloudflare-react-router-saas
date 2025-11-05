@@ -10,7 +10,7 @@ import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import * as Rac from "react-aria-components";
-import { redirect } from "react-router";
+import * as ReactRouter from "react-router";
 import * as z from "zod";
 
 export function loader({
@@ -46,7 +46,7 @@ export async function action({
       headers: request.headers,
     });
   }
-  return redirect("/app");
+  return ReactRouter.redirect(ReactRouter.href("/app"));
 }
 
 export default function RouteComponent({ loaderData }: Route.ComponentProps) {

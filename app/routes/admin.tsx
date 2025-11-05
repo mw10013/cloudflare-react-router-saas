@@ -19,7 +19,7 @@ export const adminMiddleware: Route.MiddlewareFunction = ({ context }) => {
   invariant(requestContext, "Missing request context.");
   const { session } = requestContext;
   // eslint-disable-next-line @typescript-eslint/only-throw-error
-  if (!session?.user) throw ReactRouter.redirect("/login");
+  if (!session?.user) throw ReactRouter.redirect(ReactRouter.href("/login"));
   if (session.user.role !== "admin")
     // eslint-disable-next-line @typescript-eslint/only-throw-error
     throw new Response("Forbidden", { status: 403 });
