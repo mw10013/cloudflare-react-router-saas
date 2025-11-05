@@ -115,9 +115,41 @@ select json_object(
       .parse(JSON.parse(result.data));
   };
 
+  const getAdminDashboardData = async () => {
+    const result = await db
+      .prepare(
+        `
+select json_object(
+  'customerCount', (
+    select count(*) from User where stripeCustomerId is not null
+  ),
+  'activeSubscriptionCount', (
+    select count(*) from Subscription where status = 'active'
+  ),
+  'trialingSubscriptionCount', (
+    select count(*) from Subscription where status = 'trialing'
+  )
+) as data
+        `,
+      )
+      .first();
+    invariant(
+      typeof result?.data === "string",
+      "Expected result.data to be a string",
+    );
+    return z
+      .object({
+        customerCount: z.number(),
+        activeSubscriptionCount: z.number(),
+        trialingSubscriptionCount: z.number(),
+      })
+      .parse(JSON.parse(result.data));
+  };
+
   return {
     getUser,
     getUsers,
     getAppDashboardData,
+    getAdminDashboardData,
   };
 }
