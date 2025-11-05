@@ -47,6 +47,21 @@ export const InvitationStatus = z.enum([
 ]);
 export type InvitationStatus = z.infer<typeof InvitationStatus>;
 
+/**
+ * Subscription status values that must align with Stripe's Subscription.Status.
+ */
+export const SubscriptionStatus = z.enum([
+  "active",
+  "canceled",
+  "incomplete",
+  "incomplete_expired",
+  "past_due",
+  "paused",
+  "trialing",
+  "unpaid",
+]);
+export type SubscriptionStatus = z.infer<typeof SubscriptionStatus>;
+
 export const Invitation = z.object({
   invitationId: z.number().int(),
   email: z.email(),
@@ -129,7 +144,7 @@ export const Subscription = z.object({
   referenceId: z.number().int(),
   stripeCustomerId: z.string().nullable(),
   stripeSubscriptionId: z.string().nullable(),
-  status: z.string().nonempty(),
+  status: SubscriptionStatus,
   periodStart: z.nullable(isoDatetimeToDate),
   periodEnd: z.nullable(isoDatetimeToDate),
   cancelAtPeriodEnd: intToBoolean,
