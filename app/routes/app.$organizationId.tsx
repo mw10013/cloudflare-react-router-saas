@@ -10,7 +10,6 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
@@ -74,7 +73,7 @@ export default function RouteComponent({
         user={user}
       />
       <main className="flex h-svh w-full flex-col overflow-x-hidden">
-        <SidebarTrigger />
+        <Oui.SidebarExTrigger className="m-2" />
         <Outlet />
       </main>
     </SidebarProvider>
