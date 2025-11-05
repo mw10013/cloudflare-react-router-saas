@@ -1,16 +1,21 @@
 "use client";
 
 /**
- * The `oui-sidebar-ex` module provides SidebarExTrigger and SidebarExTree to use with shadcn Sidebar.
- * 
+ * The `oui-sidebar-ex` module provides SidebarExTrigger, SidebarExTree, and SidebarExButton to use with shadcn Sidebar.
+ *
  * @example
  * ```tsx
+ * import * as Oui from "@/components/ui/oui-index";
+ *
  * <SidebarProvider>
- *   <SidebarExTrigger />
+ *   <Oui.SidebarExTrigger />
  *   <Sidebar>
  *     <SidebarContent>
- *       <SidebarExTree aria-label="App Navigation" items={items} />
+ *       <Oui.SidebarExTree aria-label="App Navigation" items={items} />
  *     </SidebarContent>
+ *     <SidebarFooter>
+ *       <Oui.SidebarExButton />
+ *     </SidebarFooter>
  *   </Sidebar>
  * </SidebarProvider>
  * ```
@@ -40,7 +45,7 @@ export function SidebarExTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={composeTailwindRenderProps(className, "size-7")}
+      className={composeTailwindRenderProps(className, "m-2 size-7")}
       onPress={(e) => {
         onPress?.(e);
         toggleSidebar();
@@ -112,7 +117,7 @@ export interface SidebarExTreeItemProps extends Partial<Rac.TreeItemProps> {
   title: string;
 }
 
-export function SidebarTreeItemEx({
+export function SidebarExTreeItem({
   title,
   className,
   children,
@@ -147,7 +152,7 @@ export function SidebarExTree(props: Rac.TreeProps<SidebarExTreeNode>) {
     <Rac.Tree {...props} className="relative flex w-full min-w-0 flex-col p-2">
       {function renderSidebarTreeNodeEx(item) {
         return (
-          <SidebarTreeItemEx
+          <SidebarExTreeItem
             key={item.id}
             id={item.id}
             title={item.title ?? item.id}
@@ -157,9 +162,26 @@ export function SidebarExTree(props: Rac.TreeProps<SidebarExTreeNode>) {
             <Rac.Collection items={item.children}>
               {renderSidebarTreeNodeEx}
             </Rac.Collection>
-          </SidebarTreeItemEx>
+          </SidebarExTreeItem>
         );
       }}
     </Rac.Tree>
+  );
+}
+
+export function SidebarExButton({
+  variant = "ghost",
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  return (
+    <Button
+      variant={variant}
+      className={composeTailwindRenderProps(
+        className,
+        "h-12 w-full justify-start overflow-hidden rounded-md p-2 text-left text-sm font-normal data-hovered:bg-sidebar-accent data-hovered:text-sidebar-accent-foreground data-pressed:bg-sidebar-accent data-pressed:text-sidebar-accent-foreground",
+      )}
+      {...props}
+    />
   );
 }

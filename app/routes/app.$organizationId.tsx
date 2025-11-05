@@ -1,7 +1,7 @@
 import type { Organization } from "better-auth/plugins";
 import type { User } from "better-auth/types";
 import type { Route } from "./+types/app.$organizationId";
-import React from "react";
+import * as React from "react";
 import { AppLogoIcon } from "@/components/app-logo-icon";
 import * as Oui from "@/components/ui/oui-index";
 import {
@@ -15,7 +15,7 @@ import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import * as Rac from "react-aria-components";
-import { Outlet, useNavigate, useSubmit } from "react-router";
+import * as ReactRouter from "react-router";
 
 const organizationMiddleware: Route.MiddlewareFunction = async ({
   request,
@@ -73,8 +73,8 @@ export default function RouteComponent({
         user={user}
       />
       <main className="flex h-svh w-full flex-col overflow-x-hidden">
-        <Oui.SidebarExTrigger className="m-2" />
-        <Outlet />
+        <Oui.SidebarExTrigger />
+        <ReactRouter.Outlet />
       </main>
     </SidebarProvider>
   );
@@ -139,7 +139,7 @@ export function OrganizationSwitcher({
   organizations: Organization[];
   organization: Organization;
 }) {
-  const navigate = useNavigate();
+  const navigate = ReactRouter.useNavigate();
   return (
     <Oui.MenuEx
       className="min-w-56 rounded-lg"
@@ -180,20 +180,17 @@ export function NavUser({
     email: string;
   };
 }) {
-  const submit = useSubmit();
+  const submit = ReactRouter.useSubmit();
   return (
     <Oui.MenuEx
       className="min-w-56 rounded-lg"
       triggerElement={
-        <Oui.Button
-          variant="ghost"
-          className="data-hovered:bg-sidebar-accent data-hovered:text-sidebar-accent-foreground data-pressed:bg-sidebar-accent data-pressed:text-sidebar-accent-foreground h-12 w-full justify-start overflow-hidden rounded-md p-2 text-left text-sm font-normal"
-        >
+        <Oui.SidebarExButton>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-medium">{user.email}</span>
           </div>
           <ChevronsUpDown className="ml-auto size-4" />
-        </Oui.Button>
+        </Oui.SidebarExButton>
       }
     >
       <Rac.MenuSection>

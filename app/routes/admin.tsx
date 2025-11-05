@@ -1,4 +1,5 @@
 import type { Route } from "./+types/admin";
+import * as Oui from "@/components/ui/oui-index";
 import {
   Sidebar,
   SidebarContent,
@@ -7,7 +8,6 @@ import {
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import * as ReactRouter from "react-router";
-import * as Oui from "@/components/ui/oui-index";
 
 export const adminMiddleware: Route.MiddlewareFunction = ({ context }) => {
   const requestContext = context.get(RequestContext);
@@ -52,7 +52,7 @@ export default function RouteComponent() {
     <SidebarProvider>
       <AppSidebar />
       <main>
-        <Oui.SidebarExTrigger className="m-2" />
+        <Oui.SidebarExTrigger />
         <div className="flex flex-col gap-2 px-4">
           <ReactRouter.Outlet />
         </div>
