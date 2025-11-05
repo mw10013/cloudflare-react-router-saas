@@ -52,12 +52,12 @@ export default function RouteComponent({
 export function AppSidebar({ user }: { user: { email: string } }) {
   const items = [
     {
-      id: "Admin",
-      href: "/admin",
+      id: "Dashboard",
+      href: ReactRouter.href("/admin"),
     },
     {
       id: "Users",
-      href: "/admin/users",
+      href: ReactRouter.href("/admin/users"),
     },
   ];
 

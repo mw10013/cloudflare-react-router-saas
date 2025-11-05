@@ -121,7 +121,7 @@ select json_object(
         `
 select json_object(
   'customerCount', (
-    select count(*) from User where stripeCustomerId is not null
+    select count(*) from User where role = 'user'
   ),
   'activeSubscriptionCount', (
     select count(*) from Subscription where status = 'active'
