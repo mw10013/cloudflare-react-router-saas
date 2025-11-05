@@ -109,7 +109,7 @@ export const planData = [
     monthlyPriceLookupKey: "basic-monthly",
     annualPriceInCents: Math.round(5000 * 12 * 0.8), // 20% discount for annual,
     annualPriceLookupKey: "basic-annual",
-    freeTrialDays: 7,
+    freeTrialDays: 2,
   },
   {
     name: "pro",
@@ -119,7 +119,7 @@ export const planData = [
     monthlyPriceLookupKey: "pro-monthly",
     annualPriceInCents: Math.round(10000 * 12 * 0.8),
     annualPriceLookupKey: "pro-annual",
-    freeTrialDays: 14,
+    freeTrialDays: 7,
   },
 ] as const;
 
