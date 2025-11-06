@@ -188,7 +188,5 @@ export type InvitationWithOrganizationAndInviter = z.infer<
 
 export const SessionWithUser = Session.extend({
   user: User,
-  organization: Organization.nullable(),
-  impersonator: User.nullable(),
 });
 export type SessionWithUser = z.infer<typeof SessionWithUser>;

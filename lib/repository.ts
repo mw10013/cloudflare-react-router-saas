@@ -363,29 +363,7 @@ select json_object(
           'stripeCustomerId', u_stripeCustomerId,
           'createdAt', u_createdAt,
           'updatedAt', u_updatedAt
-        ),
-        'organization', case when o_organizationId is null then json('null') else json_object(
-          'organizationId', o_organizationId,
-          'name', o_name,
-          'slug', o_slug,
-          'logo', o_logo,
-          'metadata', o_metadata,
-          'createdAt', o_createdAt
-        ) end,
-        'impersonator', case when i_userId is null then json('null') else json_object(
-          'userId', i_userId,
-          'name', i_name,
-          'email', i_email,
-          'emailVerified', i_emailVerified,
-          'image', i_image,
-          'role', i_role,
-          'banned', i_banned,
-          'banReason', i_banReason,
-          'banExpires', i_banExpires,
-          'stripeCustomerId', i_stripeCustomerId,
-          'createdAt', i_createdAt,
-          'updatedAt', i_updatedAt
-        ) end
+        )
       )
     ) from (
       select 
@@ -410,29 +388,9 @@ select json_object(
         u.banExpires as u_banExpires,
         u.stripeCustomerId as u_stripeCustomerId,
         u.createdAt as u_createdAt,
-        u.updatedAt as u_updatedAt,
-        o.organizationId as o_organizationId,
-        o.name as o_name,
-        o.slug as o_slug,
-        o.logo as o_logo,
-        o.metadata as o_metadata,
-        o.createdAt as o_createdAt,
-        i.userId as i_userId,
-        i.name as i_name,
-        i.email as i_email,
-        i.emailVerified as i_emailVerified,
-        i.image as i_image,
-        i.role as i_role,
-        i.banned as i_banned,
-        i.banReason as i_banReason,
-        i.banExpires as i_banExpires,
-        i.stripeCustomerId as i_stripeCustomerId,
-        i.createdAt as i_createdAt,
-        i.updatedAt as i_updatedAt
+        u.updatedAt as u_updatedAt
       from Session s
       inner join User u on s.userId = u.userId
-      left join Organization o on s.activeOrganizationId = o.organizationId
-      left join User i on s.impersonatedBy = i.userId
       where u.email like ?1
       order by u_email asc, s_createdAt asc
       limit ?2 offset ?3
