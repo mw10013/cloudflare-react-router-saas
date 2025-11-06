@@ -239,7 +239,7 @@ select json_object(
         'subscriptionId', subscriptionId,
         'plan', plan,
         'referenceId', referenceId,
-        'stripeCustomerId', s_stripeCustomerId,
+        'stripeCustomerId', stripeCustomerId,
         'stripeSubscriptionId', stripeSubscriptionId,
         'status', status,
         'periodStart', periodStart,
@@ -258,9 +258,9 @@ select json_object(
           'banned', banned,
           'banReason', banReason,
           'banExpires', banExpires,
-          'stripeCustomerId', u_stripeCustomerId,
-          'createdAt', u_createdAt,
-          'updatedAt', u_updatedAt
+          'stripeCustomerId', stripeCustomerId,
+          'createdAt', createdAt,
+          'updatedAt', updatedAt
         )
       )
     ) from (
@@ -268,7 +268,7 @@ select json_object(
         s.subscriptionId,
         s.plan,
         s.referenceId,
-        s.stripeCustomerId as s_stripeCustomerId,
+        s.stripeCustomerId,
         s.stripeSubscriptionId,
         s.status,
         s.periodStart,
@@ -286,9 +286,8 @@ select json_object(
         u.banned,
         u.banReason,
         u.banExpires,
-        u.stripeCustomerId as u_stripeCustomerId,
-        u.createdAt as u_createdAt,
-        u.updatedAt as u_updatedAt
+        u.createdAt,
+        u.updatedAt
       from Subscription s
       inner join User u on u.stripeCustomerId = s.stripeCustomerId
       where u.email like ?
