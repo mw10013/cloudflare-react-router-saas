@@ -27,6 +27,7 @@ export default function RouteComponent() {
       <main className="flex flex-1 flex-col">
         <ReactRouter.Outlet />
       </main>
+      <Footer />
     </div>
   );
 }
@@ -54,7 +55,10 @@ function Header() {
               <Oui.Button
                 variant="outline"
                 onPress={() =>
-                  void submit({}, { method: "post", action: ReactRouter.href("/signout") })
+                  void submit(
+                    {},
+                    { method: "post", action: ReactRouter.href("/signout") },
+                  )
                 }
               >
                 Sign Out
@@ -89,7 +93,10 @@ function Header() {
                 <Oui.Button
                   variant="outline"
                   onPress={() =>
-                    void submit({}, { method: "post", action: ReactRouter.href("/signout") })
+                    void submit(
+                      {},
+                      { method: "post", action: ReactRouter.href("/signout") },
+                    )
                   }
                 >
                   Sign Out
@@ -120,5 +127,17 @@ function GitHubRepoLink() {
         <path d={siGithub.path} />
       </svg>
     </Oui.Link>
+  );
+}
+
+export function Footer() {
+  return (
+    <footer className="relative mt-16 py-8 md:mt-20">
+      <div className="flex justify-between gap-2 max-sm:flex-col max-sm:text-center">
+        <p className="text-muted-foreground text-sm">
+          &copy; {new Date().getFullYear()} Oui
+        </p>
+      </div>
+    </footer>
   );
 }

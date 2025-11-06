@@ -5,16 +5,13 @@
 
 ## TODO
 
-- footer
 - admin
-  - pagination
-  - customers
-  - sessions
+  - pagination: count/total
 - css
   - invitations: pre overflow, main overflow, min-width-0?
-- batch: scavenge expired verifications?
 - remove seed.tsx?
 
+- batch: scavenge expired verifications?
 - zod brands
 - d1 strict tables: https://www.sqlite.org/stricttables.html, https://www.sqlite.org/stricttables.html
 - organization: teams
