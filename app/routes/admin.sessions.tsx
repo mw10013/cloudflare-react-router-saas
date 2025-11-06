@@ -66,9 +66,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
             Id
           </Oui.Column>
           <Oui.Column>Email</Oui.Column>
-          <Oui.Column>Organization</Oui.Column>
           <Oui.Column>IP Address</Oui.Column>
-          <Oui.Column>User Agent</Oui.Column>
           <Oui.Column>Impersonator</Oui.Column>
           <Oui.Column>Created At</Oui.Column>
           <Oui.Column>Expires At</Oui.Column>
@@ -78,9 +76,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
             <Oui.Row id={session.sessionId}>
               <Oui.Cell>{session.sessionId}</Oui.Cell>
               <Oui.Cell>{session.user.email}</Oui.Cell>
-              <Oui.Cell>{session.organization?.name ?? ""}</Oui.Cell>
               <Oui.Cell>{session.ipAddress ?? ""}</Oui.Cell>
-              <Oui.Cell>{session.userAgent ?? ""}</Oui.Cell>
               <Oui.Cell>{session.impersonator?.email ?? ""}</Oui.Cell>
               <Oui.Cell>
                 {new Date(session.createdAt).toLocaleString()}
