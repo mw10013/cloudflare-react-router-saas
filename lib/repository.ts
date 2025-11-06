@@ -236,64 +236,65 @@ select json_object(
   'subscriptions', coalesce((
     select json_group_array(
       json_object(
-        'subscriptionId', subscriptionId,
-        'plan', plan,
-        'referenceId', referenceId,
-        'stripeCustomerId', stripeCustomerId,
-        'stripeSubscriptionId', stripeSubscriptionId,
-        'status', status,
-        'periodStart', periodStart,
-        'periodEnd', periodEnd,
-        'cancelAtPeriodEnd', cancelAtPeriodEnd,
-        'seats', seats,
-        'trialStart', trialStart,
-        'trialEnd', trialEnd,
+        'subscriptionId', s_subscriptionId,
+        'plan', s_plan,
+        'referenceId', s_referenceId,
+        'stripeCustomerId', s_stripeCustomerId,
+        'stripeSubscriptionId', s_stripeSubscriptionId,
+        'status', s_status,
+        'periodStart', s_periodStart,
+        'periodEnd', s_periodEnd,
+        'cancelAtPeriodEnd', s_cancelAtPeriodEnd,
+        'seats', s_seats,
+        'trialStart', s_trialStart,
+        'trialEnd', s_trialEnd,
         'user', json_object(
-          'userId', userId,
-          'name', name,
-          'email', email,
-          'emailVerified', emailVerified,
-          'image', image,
-          'role', role,
-          'banned', banned,
-          'banReason', banReason,
-          'banExpires', banExpires,
-          'stripeCustomerId', stripeCustomerId,
-          'createdAt', createdAt,
-          'updatedAt', updatedAt
+          'userId', u_userId,
+          'name', u_name,
+          'email', u_email,
+          'emailVerified', u_emailVerified,
+          'image', u_image,
+          'role', u_role,
+          'banned', u_banned,
+          'banReason', u_banReason,
+          'banExpires', u_banExpires,
+          'stripeCustomerId', u_stripeCustomerId,
+          'createdAt', u_createdAt,
+          'updatedAt', u_updatedAt
         )
       )
     ) from (
       select 
-        s.subscriptionId,
-        s.plan,
-        s.referenceId,
-        s.stripeCustomerId,
-        s.stripeSubscriptionId,
-        s.status,
-        s.periodStart,
-        s.periodEnd,
-        s.cancelAtPeriodEnd,
-        s.seats,
-        s.trialStart,
-        s.trialEnd,
-        u.userId,
-        u.name,
-        u.email,
-        u.emailVerified,
-        u.image,
-        u.role,
-        u.banned,
-        u.banReason,
-        u.banExpires,
-        u.createdAt,
-        u.updatedAt
+        s.subscriptionId as s_subscriptionId,
+        s.plan as s_plan,
+        s.referenceId as s_referenceId,
+        s.stripeCustomerId as s_stripeCustomerId,
+        s.stripeSubscriptionId as s_stripeSubscriptionId,
+        s.status as s_status,
+        s.periodStart as s_periodStart,
+        s.periodEnd as s_periodEnd,
+        s.cancelAtPeriodEnd as s_cancelAtPeriodEnd,
+        s.seats as s_seats,
+        s.trialStart as s_trialStart,
+        s.trialEnd as s_trialEnd,
+        u.userId as u_userId,
+        u.name as u_name,
+        u.email as u_email,
+        u.emailVerified as u_emailVerified,
+        u.image as u_image,
+        u.role as u_role,
+        u.banned as u_banned,
+        u.banReason as u_banReason,
+        u.banExpires as u_banExpires,
+        u.stripeCustomerId as u_stripeCustomerId,
+        u.createdAt as u_createdAt,
+        u.updatedAt as u_updatedAt
       from Subscription s
       inner join User u on u.stripeCustomerId = s.stripeCustomerId
       where u.email like ?1
-      order by u.email asc, s.subscriptionId asc
+      order by u_email asc, s_subscriptionId asc
       limit ?2 offset ?3
-    ) as combined
+    ) as joined
   ), json('[]')),
   'count', (
     select count(*)
