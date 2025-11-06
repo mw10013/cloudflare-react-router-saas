@@ -167,3 +167,7 @@ To test Stripe payments, use the following test card details:
 ## Sqlite
 
 - https://emschwartz.me/subtleties-of-sqlite-indexes/?utm_source=tldrwebdev
+
+## License
+
+Licensed under the [MIT License](https://github.com/mw10013/cloudflare-react-router-saas/blob/main/LICENSE).
