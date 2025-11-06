@@ -41,3 +41,10 @@ import * as z from "zod";
 - Custom or app-specific components generally live in `@/components` or route modules
 - Leverage the design token system: CSS variables defined in `app/app.css` are mapped to Tailwind utilities via `@theme inline` (use semantic color classes like `bg-background`, `text-foreground`, `border-border` instead of hardcoded colors)
 - Follow the shadcn color convention: each color has a base and `-foreground` variant (e.g., `bg-primary text-primary-foreground`)
+
+## SQL Guidelines
+
+- Using sqlite with Cloudflare D1.
+- Use lowercase for all sql keywords.
+- Use positional parameter placeholders.
+

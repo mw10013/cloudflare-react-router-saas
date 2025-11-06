@@ -30,7 +30,7 @@ export function createRepository({
 }) {
   const getUser = async ({ email }: { email: Domain.User["email"] }) => {
     const result = await db
-      .prepare(`select * from User where email = ?`)
+      .prepare(`select * from User where email = ?1`)
       .bind(email)
       .first();
     return Domain.User.nullable().parse(result);
@@ -190,20 +190,20 @@ select json_object(
     ) from (
       select * from User u
       where u.role = 'user'
-      and u.email like ?
+      and u.email like ?1
       order by u.email asc
-      limit ? offset ?
+      limit ?2 offset ?3
     ) as u
   ), json('[]')),
   'count', (
-    select count(*) from User u where u.role = 'user' and u.email like ?
+    select count(*) from User u where u.role = 'user' and u.email like ?1
   ),
-  'limit', ?,
-  'offset', ?
+  'limit', ?2,
+  'offset', ?3
 ) as data
         `,
       )
-      .bind(searchPattern, limit, offset, searchPattern, limit, offset)
+      .bind(searchPattern, limit, offset)
       .first();
     invariant(
       typeof result?.data === "string",
@@ -290,23 +290,23 @@ select json_object(
         u.updatedAt
       from Subscription s
       inner join User u on u.stripeCustomerId = s.stripeCustomerId
-      where u.email like ?
+      where u.email like ?1
       order by u.email asc, s.subscriptionId asc
-      limit ? offset ?
+      limit ?2 offset ?3
     ) as combined
   ), json('[]')),
   'count', (
     select count(*)
     from Subscription s
     inner join User u on u.stripeCustomerId = s.stripeCustomerId
-    where u.email like ?
+    where u.email like ?1
   ),
-  'limit', ?,
-  'offset', ?
+  'limit', ?2,
+  'offset', ?3
 ) as data
         `,
       )
-      .bind(searchPattern, limit, offset, searchPattern, limit, offset)
+      .bind(searchPattern, limit, offset)
       .first();
     invariant(
       typeof result?.data === "string",
