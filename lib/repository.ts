@@ -323,11 +323,154 @@ select json_object(
       .parse(JSON.parse(result.data));
   };
 
+  const getSessions = async ({
+    limit,
+    offset,
+    searchValue,
+  }: {
+    limit: number;
+    offset: number;
+    searchValue?: string;
+  }) => {
+    const searchPattern = searchValue ? `%${searchValue}%` : "%";
+    const result = await db
+      .prepare(
+        `
+select json_object(
+  'sessions', coalesce((
+    select json_group_array(
+      json_object(
+        'sessionId', s_sessionId,
+        'expiresAt', s_expiresAt,
+        'token', s_token,
+        'createdAt', s_createdAt,
+        'updatedAt', s_updatedAt,
+        'ipAddress', s_ipAddress,
+        'userAgent', s_userAgent,
+        'userId', s_userId,
+        'impersonatedBy', s_impersonatedBy,
+        'activeOrganizationId', s_activeOrganizationId,
+        'user', json_object(
+          'userId', u_userId,
+          'name', u_name,
+          'email', u_email,
+          'emailVerified', u_emailVerified,
+          'image', u_image,
+          'role', u_role,
+          'banned', u_banned,
+          'banReason', u_banReason,
+          'banExpires', u_banExpires,
+          'stripeCustomerId', u_stripeCustomerId,
+          'createdAt', u_createdAt,
+          'updatedAt', u_updatedAt
+        ),
+        'organization', case when o_organizationId is null then json('null') else json_object(
+          'organizationId', o_organizationId,
+          'name', o_name,
+          'slug', o_slug,
+          'logo', o_logo,
+          'metadata', o_metadata,
+          'createdAt', o_createdAt
+        ) end,
+        'impersonator', case when i_userId is null then json('null') else json_object(
+          'userId', i_userId,
+          'name', i_name,
+          'email', i_email,
+          'emailVerified', i_emailVerified,
+          'image', i_image,
+          'role', i_role,
+          'banned', i_banned,
+          'banReason', i_banReason,
+          'banExpires', i_banExpires,
+          'stripeCustomerId', i_stripeCustomerId,
+          'createdAt', i_createdAt,
+          'updatedAt', i_updatedAt
+        ) end
+      )
+    ) from (
+      select 
+        s.sessionId as s_sessionId,
+        s.expiresAt as s_expiresAt,
+        s.token as s_token,
+        s.createdAt as s_createdAt,
+        s.updatedAt as s_updatedAt,
+        s.ipAddress as s_ipAddress,
+        s.userAgent as s_userAgent,
+        s.userId as s_userId,
+        s.impersonatedBy as s_impersonatedBy,
+        s.activeOrganizationId as s_activeOrganizationId,
+        u.userId as u_userId,
+        u.name as u_name,
+        u.email as u_email,
+        u.emailVerified as u_emailVerified,
+        u.image as u_image,
+        u.role as u_role,
+        u.banned as u_banned,
+        u.banReason as u_banReason,
+        u.banExpires as u_banExpires,
+        u.stripeCustomerId as u_stripeCustomerId,
+        u.createdAt as u_createdAt,
+        u.updatedAt as u_updatedAt,
+        o.organizationId as o_organizationId,
+        o.name as o_name,
+        o.slug as o_slug,
+        o.logo as o_logo,
+        o.metadata as o_metadata,
+        o.createdAt as o_createdAt,
+        i.userId as i_userId,
+        i.name as i_name,
+        i.email as i_email,
+        i.emailVerified as i_emailVerified,
+        i.image as i_image,
+        i.role as i_role,
+        i.banned as i_banned,
+        i.banReason as i_banReason,
+        i.banExpires as i_banExpires,
+        i.stripeCustomerId as i_stripeCustomerId,
+        i.createdAt as i_createdAt,
+        i.updatedAt as i_updatedAt
+      from Session s
+      inner join User u on s.userId = u.userId
+      left join Organization o on s.activeOrganizationId = o.organizationId
+      left join User i on s.impersonatedBy = i.userId
+      where u.email like ?1
+      order by u_email asc, s_createdAt asc
+      limit ?2 offset ?3
+    ) as joined
+  ), json('[]')),
+  'count', (
+    select count(*)
+    from Session s
+    inner join User u on s.userId = u.userId
+    where u.email like ?1
+  ),
+  'limit', ?2,
+  'offset', ?3
+) as data
+        `,
+      )
+      .bind(searchPattern, limit, offset)
+      .first();
+    invariant(
+      typeof result?.data === "string",
+      "Expected result.data to be a string",
+    );
+    return z
+      .object({
+        sessions: Domain.SessionWithUserOrganizationAndImpersonator.array(),
+        count: z.number(),
+        limit: z.number(),
+        offset: z.number(),
+      })
+      .parse(JSON.parse(result.data));
+  };
+
   return {
     getUser,
     getAppDashboardData,
     getAdminDashboardData,
     getCustomers,
     getSubscriptions,
+    getSessions,
   };
 }

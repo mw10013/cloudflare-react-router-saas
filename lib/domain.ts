@@ -89,6 +89,20 @@ export const User = z.object({
 });
 export type User = z.infer<typeof User>;
 
+export const Session = z.object({
+  sessionId: z.number().int(),
+  expiresAt: isoDatetimeToDate,
+  token: z.string(),
+  createdAt: isoDatetimeToDate,
+  updatedAt: isoDatetimeToDate,
+  ipAddress: z.string().nullable(),
+  userAgent: z.string().nullable(),
+  userId: z.number().int(),
+  impersonatedBy: z.number().int().nullable(),
+  activeOrganizationId: z.number().int().nullable(),
+});
+export type Session = z.infer<typeof Session>;
+
 export const Organization = z.object({
   organizationId: z.number().int(),
   name: z.string().nonempty(),
@@ -170,4 +184,13 @@ export const InvitationWithOrganizationAndInviter = Invitation.extend({
 });
 export type InvitationWithOrganizationAndInviter = z.infer<
   typeof InvitationWithOrganizationAndInviter
+>;
+
+export const SessionWithUserOrganizationAndImpersonator = Session.extend({
+  user: User,
+  organization: Organization.nullable(),
+  impersonator: User.nullable(),
+});
+export type SessionWithUserOrganizationAndImpersonator = z.infer<
+  typeof SessionWithUserOrganizationAndImpersonator
 >;
