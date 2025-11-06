@@ -186,11 +186,9 @@ export type InvitationWithOrganizationAndInviter = z.infer<
   typeof InvitationWithOrganizationAndInviter
 >;
 
-export const SessionWithUserOrganizationAndImpersonator = Session.extend({
+export const SessionWithUser = Session.extend({
   user: User,
   organization: Organization.nullable(),
   impersonator: User.nullable(),
 });
-export type SessionWithUserOrganizationAndImpersonator = z.infer<
-  typeof SessionWithUserOrganizationAndImpersonator
->;
+export type SessionWithUser = z.infer<typeof SessionWithUser>;

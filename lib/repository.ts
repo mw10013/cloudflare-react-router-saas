@@ -457,7 +457,7 @@ select json_object(
     );
     return z
       .object({
-        sessions: Domain.SessionWithUserOrganizationAndImpersonator.array(),
+        sessions: Domain.SessionWithUser.array(),
         count: z.number(),
         limit: z.number(),
         offset: z.number(),
