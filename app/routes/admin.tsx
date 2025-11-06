@@ -63,6 +63,10 @@ export function AppSidebar({ user }: { user: { email: string } }) {
       id: "Customers",
       href: ReactRouter.href("/admin/customers"),
     },
+    {
+      id: "Subscriptions",
+      href: ReactRouter.href("/admin/subscriptions"),
+    },
   ];
 
   return (

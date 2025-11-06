@@ -236,39 +236,63 @@ select json_object(
   'subscriptions', coalesce((
     select json_group_array(
       json_object(
-        'subscriptionId', s.subscriptionId,
-        'plan', s.plan,
-        'referenceId', s.referenceId,
-        'stripeCustomerId', s.stripeCustomerId,
-        'stripeSubscriptionId', s.stripeSubscriptionId,
-        'status', s.status,
-        'periodStart', s.periodStart,
-        'periodEnd', s.periodEnd,
-        'cancelAtPeriodEnd', s.cancelAtPeriodEnd,
-        'seats', s.seats,
-        'trialStart', s.trialStart,
-        'trialEnd', s.trialEnd,
+        'subscriptionId', subscriptionId,
+        'plan', plan,
+        'referenceId', referenceId,
+        'stripeCustomerId', s_stripeCustomerId,
+        'stripeSubscriptionId', stripeSubscriptionId,
+        'status', status,
+        'periodStart', periodStart,
+        'periodEnd', periodEnd,
+        'cancelAtPeriodEnd', cancelAtPeriodEnd,
+        'seats', seats,
+        'trialStart', trialStart,
+        'trialEnd', trialEnd,
         'user', json_object(
-          'userId', u.userId,
-          'name', u.name,
-          'email', u.email,
-          'emailVerified', u.emailVerified,
-          'image', u.image,
-          'role', u.role,
-          'banned', u.banned,
-          'banReason', u.banReason,
-          'banExpires', u.banExpires,
-          'stripeCustomerId', u.stripeCustomerId,
-          'createdAt', u.createdAt,
-          'updatedAt', u.updatedAt
+          'userId', userId,
+          'name', name,
+          'email', email,
+          'emailVerified', emailVerified,
+          'image', image,
+          'role', role,
+          'banned', banned,
+          'banReason', banReason,
+          'banExpires', banExpires,
+          'stripeCustomerId', u_stripeCustomerId,
+          'createdAt', u_createdAt,
+          'updatedAt', u_updatedAt
         )
       )
     ) from (
-      select s.*, u.*
+      select 
+        s.subscriptionId,
+        s.plan,
+        s.referenceId,
+        s.stripeCustomerId as s_stripeCustomerId,
+        s.stripeSubscriptionId,
+        s.status,
+        s.periodStart,
+        s.periodEnd,
+        s.cancelAtPeriodEnd,
+        s.seats,
+        s.trialStart,
+        s.trialEnd,
+        u.userId,
+        u.name,
+        u.email,
+        u.emailVerified,
+        u.image,
+        u.role,
+        u.banned,
+        u.banReason,
+        u.banExpires,
+        u.stripeCustomerId as u_stripeCustomerId,
+        u.createdAt as u_createdAt,
+        u.updatedAt as u_updatedAt
       from Subscription s
       inner join User u on u.stripeCustomerId = s.stripeCustomerId
       where u.email like ?
-      order by u.email asc
+      order by u.email asc, s.subscriptionId asc
       limit ? offset ?
     ) as combined
   ), json('[]')),
