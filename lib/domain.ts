@@ -159,6 +159,11 @@ export const UserWithSubscription = User.extend({
 });
 export type UserWithSubscription = z.infer<typeof UserWithSubscription>;
 
+export const SubscriptionWithUser = Subscription.extend({
+  user: User,
+});
+export type SubscriptionWithUser = z.infer<typeof SubscriptionWithUser>;
+
 export const InvitationWithOrganizationAndInviter = Invitation.extend({
   organization: Organization,
   inviter: User,

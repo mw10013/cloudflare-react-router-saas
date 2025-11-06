@@ -6,8 +6,6 @@
 ## TODO
 
 - footer
-- app
-  - sidebar: trigger, icons?
 - admin
   - pagination
   - customers

@@ -219,10 +219,91 @@ select json_object(
       .parse(JSON.parse(result.data));
   };
 
+  const getSubscriptions = async ({
+    limit,
+    offset,
+    searchValue,
+  }: {
+    limit: number;
+    offset: number;
+    searchValue?: string;
+  }) => {
+    const searchPattern = searchValue ? `%${searchValue}%` : "%";
+    const result = await db
+      .prepare(
+        `
+select json_object(
+  'subscriptions', coalesce((
+    select json_group_array(
+      json_object(
+        'subscriptionId', s.subscriptionId,
+        'plan', s.plan,
+        'referenceId', s.referenceId,
+        'stripeCustomerId', s.stripeCustomerId,
+        'stripeSubscriptionId', s.stripeSubscriptionId,
+        'status', s.status,
+        'periodStart', s.periodStart,
+        'periodEnd', s.periodEnd,
+        'cancelAtPeriodEnd', s.cancelAtPeriodEnd,
+        'seats', s.seats,
+        'trialStart', s.trialStart,
+        'trialEnd', s.trialEnd,
+        'user', json_object(
+          'userId', u.userId,
+          'name', u.name,
+          'email', u.email,
+          'emailVerified', u.emailVerified,
+          'image', u.image,
+          'role', u.role,
+          'banned', u.banned,
+          'banReason', u.banReason,
+          'banExpires', u.banExpires,
+          'stripeCustomerId', u.stripeCustomerId,
+          'createdAt', u.createdAt,
+          'updatedAt', u.updatedAt
+        )
+      )
+    ) from (
+      select s.*, u.*
+      from Subscription s
+      inner join User u on u.stripeCustomerId = s.stripeCustomerId
+      where u.email like ?
+      order by u.email asc
+      limit ? offset ?
+    ) as combined
+  ), json('[]')),
+  'count', (
+    select count(*)
+    from Subscription s
+    inner join User u on u.stripeCustomerId = s.stripeCustomerId
+    where u.email like ?
+  ),
+  'limit', ?,
+  'offset', ?
+) as data
+        `,
+      )
+      .bind(searchPattern, limit, offset, searchPattern, limit, offset)
+      .first();
+    invariant(
+      typeof result?.data === "string",
+      "Expected result.data to be a string",
+    );
+    return z
+      .object({
+        subscriptions: Domain.SubscriptionWithUser.array(),
+        count: z.number(),
+        limit: z.number(),
+        offset: z.number(),
+      })
+      .parse(JSON.parse(result.data));
+  };
+
   return {
     getUser,
     getAppDashboardData,
     getAdminDashboardData,
     getCustomers,
+    getSubscriptions,
   };
 }
