@@ -44,6 +44,21 @@ export interface SesService {
 }
 
 export function createSesService(): SesService {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (env.DEMO_MODE === "true") {
+    return {
+      sendEmail: ({ to, from, text, subject }) => {
+        console.log(`ses: sendEmail: DEMO_MODE`, {
+          to,
+          from,
+          subject,
+          text,
+        });
+        return Promise.resolve();
+      },
+    };
+  }
+
   invariant(env.AWS_SES_ACCESS_KEY_ID, "Missing AWS_SES_ACCESS_KEY_ID");
   invariant(env.AWS_SES_SECRET_ACCESS_KEY, "Missing AWS_SES_SECRET_ACCESS_KEY");
   invariant(env.AWS_SES_ENDPOINT, "Missing AWS_SES_ENDPOINT");
@@ -71,7 +86,7 @@ export function createSesService(): SesService {
     text: string;
     subject: string;
   }) => {
-    console.log(`ses: sendEmail: to: ${to}`, { to, from, subject, text });
+    console.log(`ses: sendEmail`, { to, from, subject, text });
     if (emailWhitelist.length > 0 && !emailWhitelist.includes(to)) {
       console.log(
         `ses: sendEmail: skipping ${to} because it is not in the whitelist`,

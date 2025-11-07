@@ -78,7 +78,7 @@ function createBetterAuthOptions({
           console.log("sendResetPassword", { to: user.email, url, token });
           await sesService.sendEmail({
             to: user.email,
-            from: env.COMPANY_EMAIL,
+            from: env.TRANSACTIONAL_EMAIL,
             subject: "Reset your password",
             text: `Click the link to reset your password: ${url}`,
             html: `<a href="${url}">Click here to reset your password</a>`,
@@ -95,7 +95,7 @@ function createBetterAuthOptions({
           console.log("sendVerificationEmail", { to: user.email, url, token });
           await sesService.sendEmail({
             to: user.email,
-            from: env.COMPANY_EMAIL,
+            from: env.TRANSACTIONAL_EMAIL,
             subject: "Please verify your email",
             text: `Click the link to verify your email: ${url}`,
             html: `<a href="${url}">Click here to verify your email</a>`,
@@ -153,7 +153,7 @@ function createBetterAuthOptions({
             }
             await sesService.sendEmail({
               to: data.email,
-              from: env.COMPANY_EMAIL,
+              from: env.TRANSACTIONAL_EMAIL,
               subject: "Your Magic Link",
               text: `Click the link to sign in: ${data.url}`,
               html: `<a href="${data.url}">Click here to sign in</a>`,
@@ -173,11 +173,10 @@ function createBetterAuthOptions({
         sendInvitationEmail:
           sendInvitationEmail ??
           (async (data) => {
-            console.log("sendInvitationEmail", data);
             const url = `${env.BETTER_AUTH_URL}/accept-invitation/${data.id}`;
             await sesService.sendEmail({
               to: data.email,
-              from: env.COMPANY_EMAIL,
+              from: env.TRANSACTIONAL_EMAIL,
               subject: "You're invited!",
               text: `Click the link to accept your invitation: ${url}`,
               html: `<a href="${url}">Click here to accept your invitation</a>`,

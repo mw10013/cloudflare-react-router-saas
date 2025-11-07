@@ -7,7 +7,7 @@
   "vars": {
     "ENVIRONMENT": "local",
     "DEMO_MODE": "true",
-    "COMPANY_EMAIL": "motio@mail.com",
+    "TRANSACTIONAL_EMAIL": "noreply@saas.com",
     "BETTER_AUTH_URL": "http://localhost:5173",
     "AWS_SES_ENDPOINT": "https://email.us-east-1.amazonaws.com/v2/email/outbound-emails",
     "AWS_SES_REGION": "us-east-1"
@@ -47,7 +47,7 @@
       "vars": {
         "ENVIRONMENT": "production",
         "DEMO_MODE": "true",
-        "COMPANY_EMAIL": "motio@mail.com",
+        "TRANSACTIONAL_EMAIL": "motio@mail.com",
         "BETTER_AUTH_URL": "https://crrs-production.devxo.workers.dev",
         "AWS_SES_ENDPOINT": "https://email.us-east-1.amazonaws.com/v2/email/outbound-emails",
         "AWS_SES_REGION": "us-east-1"
