@@ -205,7 +205,7 @@ export default function RouteComponent({
         </CardHeader>
         <CardContent>
           {invitations.length > 0 ? (
-            <ul className="divide-y">
+            <ul className="divide-y" data-testid="invitations-list">
               {invitations.map((i) => (
                 <InvitationItem
                   key={i.id}

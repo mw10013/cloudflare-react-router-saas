@@ -1,7 +1,7 @@
 import type { APIRequestContext, Page } from "@playwright/test";
+import { planData } from "@/lib/domain";
 import { invariant } from "@epic-web/invariant";
 import { expect, test } from "@playwright/test";
-import { planData } from "@/lib/domain";
 
 const emailPrefix = "stripe-";
 
@@ -136,9 +136,7 @@ class StripePom {
     await this.page.getByRole("textbox", { name: "Email" }).click();
     await this.page.getByRole("textbox", { name: "Email" }).fill(email);
     await this.page.getByRole("button", { name: "Send magic link" }).click();
-    await this.page
-      .getByRole("link", { name: "http://localhost:5173/api/" })
-      .click();
+    await this.page.getByRole("link", { name: /magic-link/ }).click();
   }
 
   async navigateToPricing() {
