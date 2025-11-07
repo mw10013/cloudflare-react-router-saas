@@ -4,20 +4,20 @@ import { expect, test } from "@playwright/test";
 
 test.describe("invite", () => {
   test.describe.configure({ mode: "serial" });
-  Array.from({ length: 10 }, (_, n) => n).forEach((n) => {
-    const email = `invite-${String(n)}@e2e.com`;
-    const otherEmails = Array.from({ length: 10 }, (_, j) => j)
-      .filter((j) => j !== n)
-      .map((j) => `invite-${String(j)}@e2e.com`);
-
+  const emails = Array.from(
+    { length: 10 },
+    (_, n) => `invite-${String(n)}@e2e.com`,
+  );
+  emails.forEach((email) => {
+    const emailsToInvite = emails.filter((e) => e !== email);
     test(`invite from ${email}`, async ({ page, request, baseURL }) => {
       invariant(baseURL, "Missing baseURL");
       const pom = new InvitePom({ page, baseURL });
 
       await pom.deleteUser({ request, email });
       await pom.login({ email });
-      await pom.inviteUsers({ emails: otherEmails });
-      await pom.verifyInvitations({ expectedEmails: otherEmails });
+      await pom.inviteUsers({ emails: emailsToInvite });
+      await pom.verifyInvitations({ expectedEmails: emailsToInvite });
     });
   });
 });
@@ -55,7 +55,6 @@ class InvitePom {
   async inviteUsers({ emails }: { emails: string[] }) {
     await this.page.getByTestId("sidebar-invitations").click();
     await this.page.waitForURL(/invitations/);
-
     await this.page
       .getByRole("textbox", { name: "Email Addresses" })
       .fill(emails.join(", "));
