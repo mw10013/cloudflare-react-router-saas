@@ -49,14 +49,13 @@ class InvitePom {
     await this.page.getByRole("textbox", { name: "Email" }).fill(email);
     await this.page.getByRole("button", { name: "Send magic link" }).click();
     await this.page.getByRole("link", { name: /magic-link/ }).click();
-  }
-
-  async navigateToInvitations() {
-    await this.page.getByRole("link", { name: "Invitations" }).click();
+    await this.page.waitForURL(/app/);
   }
 
   async inviteUsers({ emails }: { emails: string[] }) {
-    await this.navigateToInvitations();
+    await this.page.getByTestId("sidebar-invitations").click();
+    await this.page.waitForURL(/invitations/);
+
     await this.page
       .getByRole("textbox", { name: "Email Addresses" })
       .fill(emails.join(", "));
