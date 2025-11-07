@@ -3,6 +3,7 @@
   "extends": "./tsconfig.base.jsonc",
   "include": [
     "test/**/*.ts",
+    "e2e/**/*.ts",
     "worker-configuration.d.ts",
     ".react-router/types/**/*",
     "test/do/cloudflare-test.d.ts"
@@ -10,7 +11,7 @@
   "references": [{ "path": "./tsconfig.cloudflare.json" }],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
-    "types": ["vitest", "@cloudflare/vitest-pool-workers"],
+    "types": ["vitest", "@cloudflare/vitest-pool-workers", "@playwright/test"],
     "lib": ["es2023", "DOM", "DOM.Iterable"],
     "module": "esnext",
     "moduleResolution": "bundler",
