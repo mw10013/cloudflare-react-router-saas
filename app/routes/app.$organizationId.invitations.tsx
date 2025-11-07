@@ -87,7 +87,7 @@ export async function action({
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
-  const { authService: auth, env } = requestContext;
+  const { authService: auth, repository } = requestContext;
   switch (parseResult.data.intent) {
     case "cancel":
       await auth.api.cancelInvitation({
@@ -108,11 +108,13 @@ export async function action({
         });
         // Workaround for better-auth createInvitation role bug
         if (result.role !== parseResult.data.role) {
-          await env.D1.prepare(
-            "update Invitation set role = ? where invitationId = ?",
-          )
-            .bind(parseResult.data.role, Number(result.id))
-            .run();
+          console.log(
+            `Applying workaround for better-auth createInvitation role bug: expected role ${parseResult.data.role}, got ${String(result.role)} for invitation ${String(result.id)}`,
+          );
+          await repository.updateInvitationRole({
+            invitationId: Number(result.id),
+            role: parseResult.data.role,
+          });
         }
       }
       return { success: true };

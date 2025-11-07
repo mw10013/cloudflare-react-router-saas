@@ -5,6 +5,9 @@
 
 ## TODO
 
+- ses: whitelist, remove motio admin
+- createInvitation workaround still needed?
+- session: cf-ip
 - admin
   - pagination: count/total
 - css

@@ -423,6 +423,19 @@ select json_object(
       .parse(JSON.parse(result.data));
   };
 
+  const updateInvitationRole = async ({
+    invitationId,
+    role,
+  }: {
+    invitationId: number;
+    role: string;
+  }) => {
+    await db
+      .prepare("update Invitation set role = ?1 where invitationId = ?2")
+      .bind(role, invitationId)
+      .run();
+  };
+
   return {
     getUser,
     getAppDashboardData,
@@ -430,5 +443,6 @@ select json_object(
     getCustomers,
     getSubscriptions,
     getSessions,
+    updateInvitationRole,
   };
 }
