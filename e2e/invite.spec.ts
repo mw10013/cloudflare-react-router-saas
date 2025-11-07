@@ -59,7 +59,10 @@ class InvitePom {
     await this.page
       .getByRole("textbox", { name: "Email Addresses" })
       .fill(emails.join(", "));
-    await this.page.getByRole("button", { name: "Invite" }).click();
+    await this.page
+      .locator("main")
+      .getByRole("button", { name: "Invite" })
+      .click();
     await expect(
       this.page.getByRole("textbox", { name: "Email Addresses" }),
     ).toHaveValue("");
