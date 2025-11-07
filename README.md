@@ -6,7 +6,6 @@
 ## TODO
 
 - ses: whitelist, remove motio admin
-- createInvitation workaround still needed?
 - session: cf-ip
 - stripe sandbox for prod
 - admin

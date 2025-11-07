@@ -106,7 +106,8 @@ export async function action({
             resend: true,
           },
         });
-        // Workaround for better-auth createInvitation role bug
+        // Workaround for better-auth createInvitation role bug.
+        // Occurs when a pending invitation exists and a new invitation is created with a different role.
         if (result.role !== parseResult.data.role) {
           console.log(
             `Applying workaround for better-auth createInvitation role bug: expected role ${parseResult.data.role}, got ${String(result.role)} for invitation ${String(result.id)}`,
