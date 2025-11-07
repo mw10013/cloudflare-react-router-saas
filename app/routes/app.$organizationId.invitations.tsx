@@ -68,7 +68,8 @@ export async function action({
         .pipe(
           z
             .array(z.email("Please provide valid email addresses."))
-            .min(1, "At least one email is required"),
+            .min(1, "At least one email is required")
+            .max(10, "Maximum 10 emails allowed"),
         ),
       role: Domain.MemberRole.extract(
         ["member", "admin"],
@@ -190,7 +191,7 @@ export default function RouteComponent({
               isDisabled={!canManageInvitations}
               className="justify-self-end"
             >
-              Send Invites
+              Invite
             </Oui.Button>
           </Oui.Form>
         </CardContent>
