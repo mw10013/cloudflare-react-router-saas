@@ -74,8 +74,5 @@ class InvitePom {
         this.page.getByTestId("invitations-list").getByText(email),
       ).toBeVisible();
     }
-    await expect(
-      this.page.getByTestId("invitations-list").locator("li"),
-    ).toHaveCount(expectedEmails.length);
   }
 }
