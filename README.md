@@ -10,6 +10,8 @@
 - css
   - invitations: pre overflow, main overflow, min-width-0?
 - remove seed.tsx?
+- docs
+- analytics
 
 - batch: scavenge expired verifications?
 - zod brands

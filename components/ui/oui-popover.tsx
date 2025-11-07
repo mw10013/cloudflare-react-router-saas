@@ -29,7 +29,8 @@ const placement = {
 
 export const popoverVariants = cva(
   [
-    "relative overflow-x-hidden overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md outline-none",
+    // `pointer-events-auto` ensures popovers remain interactive even when the body has `pointer-events: none` (e.g., in modal contexts like mobile sidebars).
+    "pointer-events-auto relative overflow-x-hidden overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md outline-none",
     "data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95",
     "data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95",
   ],
