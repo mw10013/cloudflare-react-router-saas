@@ -1,5 +1,5 @@
 import type { Route } from "./+types/app.$organizationId.invitations";
-import { useEffect, useRef } from "react";
+import * as React from "react";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import * as Domain from "@/lib/domain";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import { useFetcher, useSubmit } from "react-router";
+import * as ReactRouter from "react-router";
 import * as z from "zod";
 
 export async function loader({
@@ -126,11 +126,11 @@ export default function RouteComponent({
   loaderData: { canManageInvitations, invitations },
   actionData,
 }: Route.ComponentProps) {
-  const submit = useSubmit();
-  const formRef = useRef<HTMLFormElement>(null);
+  const submit = ReactRouter.useSubmit();
+  const formRef = React.useRef<HTMLFormElement>(null);
 
   // Reset form after successful invite
-  useEffect(() => {
+  React.useEffect(() => {
     if (actionData?.success) {
       formRef.current?.reset();
     }
@@ -228,7 +228,7 @@ function InvitationItem({
   invitation: Route.ComponentProps["loaderData"]["invitations"][number];
   canManageInvitations: boolean;
 }) {
-  const fetcher = useFetcher<Route.ComponentProps["actionData"]>();
+  const fetcher = ReactRouter.useFetcher<Route.ComponentProps["actionData"]>();
   const pending = fetcher.state !== "idle";
   return (
     <li

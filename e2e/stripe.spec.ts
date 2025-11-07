@@ -1,7 +1,7 @@
 import type { APIRequestContext, Page } from "@playwright/test";
 import { invariant } from "@epic-web/invariant";
 import { expect, test } from "@playwright/test";
-import { planData } from "../lib/domain";
+import { planData } from "@/lib/domain";
 
 const emailPrefix = "stripe-";
 
