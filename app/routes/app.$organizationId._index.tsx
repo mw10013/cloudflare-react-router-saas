@@ -95,6 +95,7 @@ function InvitationItem({
           variant="outline"
           size="sm"
           isDisabled={disabled}
+          aria-label={`Accept invitation from ${invitation.inviter.email}`}
         >
           Accept
         </Oui.Button>
@@ -105,6 +106,7 @@ function InvitationItem({
           variant="destructive"
           size="sm"
           isDisabled={disabled}
+          aria-label={`Reject invitation from ${invitation.inviter.email}`}
         >
           Reject
         </Oui.Button>
