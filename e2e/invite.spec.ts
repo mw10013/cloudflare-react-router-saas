@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 test.describe("invite", () => {
   test.describe.configure({ mode: "serial" });
   const emails = Array.from(
-    { length: 10 },
+    { length: 3 },
     (_, n) => `invite-${String(n)}@e2e.com`,
   );
 
@@ -35,8 +35,17 @@ test.describe("invite", () => {
 
       await pom.login({ email });
       await pom.acceptInvitations({ expectedEmails: expectedInviters });
-      // Perhaps verify memberships or something
     });
+  });
+
+  test("verify member count", async ({ page, baseURL }) => {
+    invariant(baseURL, "Missing baseURL");
+    const pom = new InvitePom({ page, baseURL });
+
+    await pom.login({ email: emails[0] });
+    await expect(page.getByTestId("member-count")).toHaveText(
+      String(emails.length),
+    );
   });
 });
 

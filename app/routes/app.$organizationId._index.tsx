@@ -150,7 +150,7 @@ export default function RouteComponent({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold" data-testid="member-count">
               {dashboardData.memberCount}
             </div>
           </CardContent>
