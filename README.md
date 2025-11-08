@@ -5,7 +5,13 @@
 
 ## TODO
 
-- (error) Error: D1_ERROR: D1UserError: invalid commitToken bookmark provided: 00000016-00000002-00004fb0-ed0164021c766b0b7ea458d9587295b4
+```
+POST https://crrs-production.devxo.workers.dev/login.data - Ok @ 11/8/2025, 12:40:04 AM
+  (log) d1-session-service: cookie bookmark: 00000016-00000002-00004fb0-ed0164021c766b0b7ea458d9587295b4
+  (log) d1-session-service: session bookmark: 00000016-00000002-00004fb0-ed0164021c766b0b7ea458d9587295b4
+  (error) Error: D1_ERROR: D1UserError: invalid commitToken bookmark provided: 00000016-00000002-00004fb0-ed0164021c766b0b7ea458d9587295b4
+```
+  
 - session: cf-ip
 - stripe sandbox for prod
 - admin
