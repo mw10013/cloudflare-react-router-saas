@@ -4,6 +4,7 @@
   "main": "./workers/app.ts",
   "compatibility_date": "2025-07-12",
   "compatibility_flags": ["nodejs_compat"],
+  "account_id": "1422451be59cc2401532ad67d92ae773",
   "vars": {
     "ENVIRONMENT": "local",
     "DEMO_MODE": "true",
@@ -63,7 +64,7 @@
         {
           "binding": "D1",
           "database_name": "crrs-d1-production",
-          "database_id": "e65e0a2c-f8ef-4015-80c0-d2f5cacdf51e" // crrs-d1-production
+          "database_id": "233bbabf-79fe-4721-9c2e-2182a723587d" // crrs-d1-production
         }
       ],
       "kv_namespaces": [

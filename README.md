@@ -5,7 +5,6 @@
 
 ## TODO
 
-- ses: whitelist, remove motio admin
 - session: cf-ip
 - stripe sandbox for prod
 - admin
@@ -16,7 +15,7 @@
 - docs
 - analytics
 
-- batch: scavenge expired verifications?
+- batch: scavenge expired verifications, sessions?
 - zod brands
 - d1 strict tables: https://www.sqlite.org/stricttables.html, https://www.sqlite.org/stricttables.html
 - organization: teams
