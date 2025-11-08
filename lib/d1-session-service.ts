@@ -33,7 +33,22 @@ export function createD1SessionService({
         .find((c) => c.trim().startsWith(`${BOOKMARK_COOKIE_NAME}=`))
         ?.split("=")[1];
       // console.log(`d1 session bookmark: ${String(bookmark)}`);
-      session = d1.withSession(bookmark ?? constraint ?? sessionConstraint);
+      try {
+        session = d1.withSession(bookmark ?? constraint ?? sessionConstraint);
+      } catch (error) {
+        // D1_ERROR: D1UserError: invalid commitToken bookmark provided: 00000016-00000002-00004fb0-ed0164021c766b0b7ea458d9587295b4
+        if (
+          error instanceof Error &&
+          error.message.includes("invalid commitToken bookmark")
+        ) {
+          console.warn(
+            `Invalid D1 bookmark: ${String(bookmark)}, retrying without bookmark`,
+          );
+          session = d1.withSession(constraint ?? sessionConstraint);
+        } else {
+          throw error;
+        }
+      }
     }
     return session;
   };

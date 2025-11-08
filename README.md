@@ -5,6 +5,7 @@
 
 ## TODO
 
+- (error) Error: D1_ERROR: D1UserError: invalid commitToken bookmark provided: 00000016-00000002-00004fb0-ed0164021c766b0b7ea458d9587295b4
 - session: cf-ip
 - stripe sandbox for prod
 - admin
