@@ -65,6 +65,9 @@ create table Session (
 create index SessionUserIdIndex on Session (userId);
 
 --> statement-breakpoint
+create index SessionExpiresAtIndex on Session (expiresAt);
+
+--> statement-breakpoint
 create table Organization (
   organizationId integer primary key,
   name text not null,

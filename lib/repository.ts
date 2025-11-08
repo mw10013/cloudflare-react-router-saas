@@ -436,6 +436,13 @@ select json_object(
       .run();
   };
 
+  const deleteExpiredSessions = async () => {
+    const result = await db
+      .prepare("delete from Session where expiresAt < datetime('now')")
+      .run();
+    return result.meta.changes;
+  };
+
   return {
     getUser,
     getAppDashboardData,
@@ -444,5 +451,6 @@ select json_object(
     getSubscriptions,
     getSessions,
     updateInvitationRole,
+    deleteExpiredSessions,
   };
 }
