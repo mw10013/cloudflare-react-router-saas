@@ -1,7 +1,17 @@
-# Cloudflare-React-Router-Saas (crrs)
+<h1 align="center">
+<code>Cloudflare-React-Router-Saas</code>
+</h1>
 
-- https://crrs-production.devxo.workers.dev/
-- https://crrs-production.devxo.workers.dev/api/auth/stripe/webhook
+<div align="center">
+  <p>
+  Lightweight saas template packed with essential functionality for Cloudflare and React Router
+  </p>
+  <p>
+    <a href="https://crrs-production.devxo.workers.dev/">Demo</a>
+  </p>
+</div>
+
+## Quick Start
 
 ## TODO
 
@@ -16,6 +26,7 @@
 - organization: teams
 - secondary storage: https://www.better-auth.com/docs/concepts/database#secondary-storage
 - stripe: referenceId -> organizationId?
+- https://crrs-production.devxo.workers.dev/api/auth/stripe/webhook
 
 ```
 http://localhost:5173/
