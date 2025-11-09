@@ -99,4 +99,19 @@ export default {
     // ctx.waitUntil(runtime.dispose());
     return response;
   },
+
+  async scheduled(scheduledEvent, env, _ctx) {
+    switch (scheduledEvent.cron) {
+      case "0 0 * * *": {
+        const repository = createRepository({ db: env.D1 });
+        const deletedCount = await repository.deleteExpiredSessions();
+        console.log(`Deleted ${String(deletedCount)} expired sessions`);
+        break;
+      }
+      default: {
+        console.warn(`Unexpected cron schedule: ${scheduledEvent.cron}`);
+        break;
+      }
+    }
+  },
 } satisfies ExportedHandler<Env>;
