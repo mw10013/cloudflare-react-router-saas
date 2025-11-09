@@ -137,6 +137,7 @@ class StripePom {
     await this.page.getByRole("textbox", { name: "Email" }).fill(email);
     await this.page.getByRole("button", { name: "Send magic link" }).click();
     await this.page.getByRole("link", { name: /magic-link/ }).click();
+    await this.page.waitForURL(/app/);
   }
 
   async navigateToPricing() {

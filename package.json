@@ -15,7 +15,7 @@
     "typecheck:test": "tsc -p test/tsconfig.json",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:watch": "vitest",
+    "test:e2e": "pnpm exec playwright test",
     "clean": "pnpm clean:node && pnpm clean:wrangler && pnpm clean:etc",
     "clean:node": "rm -rf node_modules test/*/node_modules",
     "clean:wrangler": "rm -rf .wrangler",
