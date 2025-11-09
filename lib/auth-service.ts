@@ -18,15 +18,15 @@ interface CreateAuthServiceOptions {
   db: D1Database | D1DatabaseSession;
   stripeService: StripeService;
   sesService: ReturnType<typeof createSesService>;
-  sendResetPassword?: NonNullable<
-    BetterAuthOptions["emailAndPassword"]
-  >["sendResetPassword"];
-  sendVerificationEmail?: NonNullable<
-    BetterAuthOptions["emailVerification"]
-  >["sendVerificationEmail"];
-  afterEmailVerification?: NonNullable<
-    BetterAuthOptions["emailVerification"]
-  >["afterEmailVerification"];
+  // sendResetPassword?: NonNullable<
+  //   BetterAuthOptions["emailAndPassword"]
+  // >["sendResetPassword"];
+  // sendVerificationEmail?: NonNullable<
+  //   BetterAuthOptions["emailVerification"]
+  // >["sendVerificationEmail"];
+  // afterEmailVerification?: NonNullable<
+  //   BetterAuthOptions["emailVerification"]
+  // >["afterEmailVerification"];
   sendMagicLink?: Parameters<typeof magicLink>[0]["sendMagicLink"];
   sendInvitationEmail?: NonNullable<
     Parameters<typeof organization>[0]
@@ -47,9 +47,9 @@ function createBetterAuthOptions({
   db,
   stripeService,
   sesService,
-  sendResetPassword,
-  sendVerificationEmail,
-  afterEmailVerification,
+  // sendResetPassword,
+  // sendVerificationEmail,
+  // afterEmailVerification,
   sendMagicLink,
   sendInvitationEmail,
   databaseHookUserCreateAfter,
@@ -69,40 +69,40 @@ function createBetterAuthOptions({
       accountLinking: { enabled: true },
     },
     verification: { modelName: "Verification" },
-    emailAndPassword: {
-      enabled: true,
-      requireEmailVerification: true,
-      sendResetPassword:
-        sendResetPassword ??
-        (async ({ user, url, token }) => {
-          console.log("sendResetPassword", { to: user.email, url, token });
-          await sesService.sendEmail({
-            to: user.email,
-            from: env.TRANSACTIONAL_EMAIL,
-            subject: "Reset your password",
-            text: `Click the link to reset your password: ${url}`,
-            html: `<a href="${url}">Click here to reset your password</a>`,
-          });
-        }),
-    },
-    emailVerification: {
-      sendOnSignUp: true,
-      sendOnSignIn: true,
-      autoSignInAfterVerification: true,
-      sendVerificationEmail:
-        sendVerificationEmail ??
-        (async ({ user, url, token }) => {
-          console.log("sendVerificationEmail", { to: user.email, url, token });
-          await sesService.sendEmail({
-            to: user.email,
-            from: env.TRANSACTIONAL_EMAIL,
-            subject: "Please verify your email",
-            text: `Click the link to verify your email: ${url}`,
-            html: `<a href="${url}">Click here to verify your email</a>`,
-          });
-        }),
-      afterEmailVerification,
-    },
+    // emailAndPassword: {
+    //   enabled: true,
+    //   requireEmailVerification: true,
+    //   sendResetPassword:
+    //     sendResetPassword ??
+    //     (async ({ user, url, token }) => {
+    //       console.log("sendResetPassword", { to: user.email, url, token });
+    //       await sesService.sendEmail({
+    //         to: user.email,
+    //         from: env.TRANSACTIONAL_EMAIL,
+    //         subject: "Reset your password",
+    //         text: `Click the link to reset your password: ${url}`,
+    //         html: `<a href="${url}">Click here to reset your password</a>`,
+    //       });
+    //     }),
+    // },
+    // emailVerification: {
+    //   sendOnSignUp: true,
+    //   sendOnSignIn: true,
+    //   autoSignInAfterVerification: true,
+    //   sendVerificationEmail:
+    //     sendVerificationEmail ??
+    //     (async ({ user, url, token }) => {
+    //       console.log("sendVerificationEmail", { to: user.email, url, token });
+    //       await sesService.sendEmail({
+    //         to: user.email,
+    //         from: env.TRANSACTIONAL_EMAIL,
+    //         subject: "Please verify your email",
+    //         text: `Click the link to verify your email: ${url}`,
+    //         html: `<a href="${url}">Click here to verify your email</a>`,
+    //       });
+    //     }),
+    //   afterEmailVerification,
+    // },
     advanced: { database: { generateId: false, useNumberId: true } },
     databaseHooks: {
       user: {
