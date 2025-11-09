@@ -22,7 +22,6 @@ POST https://crrs-production.devxo.workers.dev/login.data - Ok @ 11/8/2025, 12:4
 - docs
 - analytics
 
-- batch: scavenge expired verifications
 - zod brands
 - d1 strict tables: https://www.sqlite.org/stricttables.html, https://www.sqlite.org/stricttables.html
 - organization: teams

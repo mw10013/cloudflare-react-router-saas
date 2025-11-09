@@ -103,7 +103,12 @@ function createBetterAuthOptions({
     //     }),
     //   afterEmailVerification,
     // },
-    advanced: { database: { generateId: false, useNumberId: true } },
+    advanced: {
+      database: { generateId: false, useNumberId: true },
+      ipAddress: {
+        ipAddressHeaders: ["cf-connecting-ip"],
+      },
+    },
     databaseHooks: {
       user: {
         create: {
