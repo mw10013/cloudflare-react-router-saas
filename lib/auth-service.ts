@@ -294,6 +294,7 @@ export function createAuthService(
   const auth = betterAuth(
     createBetterAuthOptions({
       databaseHookUserCreateAfter: async (user) => {
+        // https://github.com/better-auth/better-auth/issues/2010
         if (user.role === "user") {
           await auth.api.createOrganization({
             body: {
@@ -305,6 +306,7 @@ export function createAuthService(
         }
       },
       databaseHookSessionCreateBefore: async (session) => {
+        // https://github.com/better-auth/better-auth/issues/2010
         const activeOrganizationId =
           (await options.db
             .prepare(
