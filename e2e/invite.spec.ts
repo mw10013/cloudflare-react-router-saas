@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 test.describe("invite", () => {
   test.describe.configure({ mode: "serial" });
   const emails = Array.from(
-    { length: 3 },
+    { length: 4 },
     (_, n) => `invite-${String(n)}@e2e.com`,
   );
 
