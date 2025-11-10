@@ -12,6 +12,7 @@ import * as Domain from "@/lib/domain";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 import * as z from "zod";
 
@@ -205,7 +206,11 @@ export default function RouteComponent({
         </CardHeader>
         <CardContent>
           {invitations.length > 0 ? (
-            <ul className="divide-y" data-testid="invitations-list">
+            <Rac.GridList
+              aria-label="Organization invitations"
+              className="divide-y"
+              data-testid="invitations-list"
+            >
               {invitations.map((i) => (
                 <InvitationItem
                   key={i.id}
@@ -213,7 +218,7 @@ export default function RouteComponent({
                   canManageInvitations={canManageInvitations}
                 />
               ))}
-            </ul>
+            </Rac.GridList>
           ) : (
             <p className="text-muted-foreground text-sm">
               No invitations have been sent for this organization yet.
@@ -235,8 +240,8 @@ function InvitationItem({
   const fetcher = ReactRouter.useFetcher<Route.ComponentProps["actionData"]>();
   const pending = fetcher.state !== "idle";
   return (
-    <li
-      key={invitation.id}
+    <Rac.GridListItem
+      textValue={invitation.email}
       className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0"
     >
       <div className="flex flex-col">
@@ -273,6 +278,6 @@ function InvitationItem({
           </fetcher.Form>
         </div>
       )}
-    </li>
+    </Rac.GridListItem>
   );
 }
