@@ -9,6 +9,7 @@ import {
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import * as Rac from "react-aria-components";
 import { redirect, useFetcher } from "react-router";
 import * as z from "zod";
 
@@ -125,7 +126,10 @@ export default function RouteComponent({
         </CardHeader>
         <CardContent>
           {members.length > 0 ? (
-            <ul className="divide-y">
+            <Rac.GridList
+              aria-label="Organization members"
+              className="divide-y"
+            >
               {members.map((member) => (
                 <MemberItem
                   key={member.id}
@@ -134,7 +138,7 @@ export default function RouteComponent({
                   canLeaveMemberId={canLeaveMemberId}
                 />
               ))}
-            </ul>
+            </Rac.GridList>
           ) : (
             <p className="text-muted-foreground text-sm">
               No members have been added to this organization yet.
@@ -155,10 +159,13 @@ function MemberItem({
   canEdit: boolean;
   canLeaveMemberId?: string;
 }) {
-  const fetcher = useFetcher(); // Caution: sharing fetcher
+  const fetcher = useFetcher();
   const pending = fetcher.state !== "idle";
   return (
-    <li className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0">
+    <Rac.GridListItem
+      textValue={member.user.email}
+      className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0"
+    >
       <div className="flex flex-col">
         <span className="text-sm font-medium">{member.user.email}</span>
         {member.role !== "owner" && canEdit ? (
@@ -217,6 +224,6 @@ function MemberItem({
           )}
         </div>
       )}
-    </li>
+    </Rac.GridListItem>
   );
 }
