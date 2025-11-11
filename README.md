@@ -80,6 +80,9 @@ pnpm i
 pnpm d1:reset
 pnpm dev
 pnpm stripe:listen
+
+# cron
+curl "http://localhost:5173/cdn-cgi/handler/scheduled?cron=0%200%20*%20*%20*"
 ```
 
 ## Testing
@@ -128,36 +131,19 @@ pnpm test:e2e
 - stripe listen --forward-to localhost:8787/api/stripe/webhook
 - stripe listen --print-secret
 
-- invitations: pre overflow, main overflow, min-width-0?
-- pagination: count/total
 - analytics
 - stripe sandbox for prod
-- zod brands
-- d1 strict tables: https://www.sqlite.org/stricttables.html, https://www.sqlite.org/stricttables.html
-- organization: teams
-- secondary storage: https://www.better-auth.com/docs/concepts/database#secondary-storage
-- stripe: referenceId -> organizationId?
-- https://crrs-production.devxo.workers.dev/api/auth/stripe/webhook
+
+## Oui
+
+- React aria components with shadcn characteristics.
+- https://oui.mw10013.workers.dev/
 
 ```
-http://localhost:5173/
-pnpm test --project d1 auth
-pnpm test test/d1/d1-adapter.test.ts
-
-curl "http://localhost:5173/cdn-cgi/handler/scheduled?cron=0%200%20*%20*%20*"
-```
-
-## Shadcn
-
-```
-pnpm dlx shadcn@latest add --all
-pnpm dlx shadcn@latest migrate radix
-
 pnpm dlx shadcn@latest add --overwrite @oui/oui-index
 pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
 pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-theme-toggle-button
 pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
-
 ```
 
 ## License

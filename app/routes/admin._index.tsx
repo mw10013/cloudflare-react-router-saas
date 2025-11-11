@@ -28,7 +28,7 @@ export default function RouteComponent({
         <CardHeader>
           <CardTitle>Customers</CardTitle>
           <CardDescription>
-            Total customers with Stripe accounts
+            Total customers
           </CardDescription>
         </CardHeader>
         <CardContent>
