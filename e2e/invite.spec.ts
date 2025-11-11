@@ -38,14 +38,16 @@ test.describe("invite", () => {
     });
   });
 
-  test("verify member count", async ({ page, baseURL }) => {
-    invariant(baseURL, "Missing baseURL");
-    const pom = new InvitePom({ page, baseURL });
+  emails.forEach((email) => {
+    test(`verify member count for ${email}`, async ({ page, baseURL }) => {
+      invariant(baseURL, "Missing baseURL");
+      const pom = new InvitePom({ page, baseURL });
 
-    await pom.login({ email: emails[0] });
-    await expect(page.getByTestId("member-count")).toHaveText(
-      String(emails.length),
-    );
+      await pom.login({ email });
+      await expect(page.getByTestId("member-count")).toHaveText(
+        String(emails.length),
+      );
+    });
   });
 });
 
