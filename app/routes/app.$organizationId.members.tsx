@@ -6,11 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { focusVisibleStyles } from "@/components/ui/oui-base";
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
 import * as Rac from "react-aria-components";
 import { redirect, useFetcher } from "react-router";
+import { twMerge } from "tailwind-merge";
 import * as z from "zod";
 
 export async function loader({
@@ -164,7 +166,10 @@ function MemberItem({
   return (
     <Rac.GridListItem
       textValue={member.user.email}
-      className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0"
+      className={twMerge(
+        focusVisibleStyles,
+        "data-focus-visible:ring-offset-card flex items-center justify-between gap-4 rounded-md py-4 first:pt-0 last:pb-0 data-focus-visible:border-transparent data-focus-visible:ring-offset-4",
+      )}
     >
       <div className="flex flex-col">
         <span className="text-sm font-medium">{member.user.email}</span>
