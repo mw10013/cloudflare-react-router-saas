@@ -7,15 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { focusVisibleStyles } from "@/components/ui/oui-base";
 import * as Oui from "@/components/ui/oui-index";
 import * as Domain from "@/lib/domain";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
-import { twMerge } from "tailwind-merge";
 import * as z from "zod";
 
 export async function loader({
@@ -208,9 +205,8 @@ export default function RouteComponent({
         </CardHeader>
         <CardContent>
           {invitations.length > 0 ? (
-            <Rac.GridList
+            <Oui.CardExGridList
               aria-label="Organization invitations"
-              className="divide-y"
               data-testid="invitations-list"
             >
               {invitations.map((i) => (
@@ -220,7 +216,7 @@ export default function RouteComponent({
                   canManageInvitations={canManageInvitations}
                 />
               ))}
-            </Rac.GridList>
+            </Oui.CardExGridList>
           ) : (
             <p className="text-muted-foreground text-sm">
               No invitations have been sent for this organization yet.
@@ -242,13 +238,7 @@ function InvitationItem({
   const fetcher = ReactRouter.useFetcher<Route.ComponentProps["actionData"]>();
   const pending = fetcher.state !== "idle";
   return (
-    <Rac.GridListItem
-      textValue={invitation.email}
-      className={twMerge(
-        focusVisibleStyles,
-        "data-focus-visible:ring-offset-card flex items-center justify-between gap-4 rounded-md py-4 first:pt-0 last:pb-0 data-focus-visible:border-transparent data-focus-visible:ring-offset-4",
-      )}
-    >
+    <Oui.CardExGridListItem textValue={invitation.email}>
       <div className="flex flex-col">
         <span className="text-sm font-medium">{invitation.email}</span>
         <span className="text-muted-foreground text-sm">
@@ -283,6 +273,6 @@ function InvitationItem({
           </fetcher.Form>
         </div>
       )}
-    </Rac.GridListItem>
+    </Oui.CardExGridListItem>
   );
 }

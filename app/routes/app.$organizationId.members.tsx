@@ -6,13 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { focusVisibleStyles } from "@/components/ui/oui-base";
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import * as Rac from "react-aria-components";
 import { redirect, useFetcher } from "react-router";
-import { twMerge } from "tailwind-merge";
 import * as z from "zod";
 
 export async function loader({
@@ -128,10 +125,7 @@ export default function RouteComponent({
         </CardHeader>
         <CardContent>
           {members.length > 0 ? (
-            <Rac.GridList
-              aria-label="Organization members"
-              className="divide-y"
-            >
+            <Oui.CardExGridList aria-label="Organization members">
               {members.map((member) => (
                 <MemberItem
                   key={member.id}
@@ -140,7 +134,7 @@ export default function RouteComponent({
                   canLeaveMemberId={canLeaveMemberId}
                 />
               ))}
-            </Rac.GridList>
+            </Oui.CardExGridList>
           ) : (
             <p className="text-muted-foreground text-sm">
               No members have been added to this organization yet.
@@ -164,13 +158,7 @@ function MemberItem({
   const fetcher = useFetcher();
   const pending = fetcher.state !== "idle";
   return (
-    <Rac.GridListItem
-      textValue={member.user.email}
-      className={twMerge(
-        focusVisibleStyles,
-        "data-focus-visible:ring-offset-card flex items-center justify-between gap-4 rounded-md py-4 first:pt-0 last:pb-0 data-focus-visible:border-transparent data-focus-visible:ring-offset-4",
-      )}
-    >
+    <Oui.CardExGridListItem textValue={member.user.email}>
       <div className="flex flex-col">
         <span className="text-sm font-medium">{member.user.email}</span>
         {member.role !== "owner" && canEdit ? (
@@ -229,6 +217,6 @@ function MemberItem({
           )}
         </div>
       )}
-    </Rac.GridListItem>
+    </Oui.CardExGridListItem>
   );
 }

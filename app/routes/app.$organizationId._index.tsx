@@ -6,13 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { focusVisibleStyles } from "@/components/ui/oui-base";
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
-import * as Rac from "react-aria-components";
 import { useFetcher } from "react-router";
-import { twMerge } from "tailwind-merge";
 
 export async function loader({
   request,
@@ -78,13 +75,7 @@ function InvitationItem({
   const fetcher = useFetcher();
   const disabled = fetcher.state !== "idle";
   return (
-    <Rac.GridListItem
-      textValue={invitation.inviter.email}
-      className={twMerge(
-        focusVisibleStyles,
-        "data-focus-visible:ring-offset-card flex items-center justify-between gap-4 rounded-md py-4 first:pt-0 last:pb-0 data-focus-visible:border-transparent data-focus-visible:ring-offset-4",
-      )}
-    >
+    <Oui.CardExGridListItem textValue={invitation.inviter.email}>
       <div className="flex flex-col">
         <span className="text-sm font-medium">{invitation.inviter.email}</span>
         <span className="text-muted-foreground text-sm">
@@ -126,7 +117,7 @@ function InvitationItem({
           Reject
         </Oui.Button>
       </fetcher.Form>
-    </Rac.GridListItem>
+    </Oui.CardExGridListItem>
   );
 }
 
@@ -144,17 +135,14 @@ export default function RouteComponent({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Rac.GridList
-              aria-label="Invitations awaiting your response"
-              className="divide-y"
-            >
+            <Oui.CardExGridList aria-label="Invitations awaiting your response">
               {dashboardData.userInvitations.map((invitation) => (
                 <InvitationItem
                   key={invitation.invitationId}
                   invitation={invitation}
                 />
               ))}
-            </Rac.GridList>
+            </Oui.CardExGridList>
           </CardContent>
         </Card>
       )}
