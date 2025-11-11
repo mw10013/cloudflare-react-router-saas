@@ -63,8 +63,8 @@ export function createSesService(): SesService {
   invariant(env.AWS_SES_SECRET_ACCESS_KEY, "Missing AWS_SES_SECRET_ACCESS_KEY");
   invariant(env.AWS_SES_ENDPOINT, "Missing AWS_SES_ENDPOINT");
   invariant(env.AWS_SES_REGION, "Missing AWS_SES_REGION");
-  const emailWhitelist = env.EMAIL_WHITE_LIST
-    ? env.EMAIL_WHITE_LIST.split(",")
+  const emailWhitelist = process.env.EMAIL_WHITE_LIST
+    ? process.env.EMAIL_WHITE_LIST.split(",")
     : [];
 
   const aws = new AwsClient({
