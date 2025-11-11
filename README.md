@@ -125,12 +125,6 @@ pnpm test:e2e
 
 - docs
 - Set API version in Stripe Workbench and confirm it matches version used by Stripe service.
-- stripe listen --load-from-webhooks-api --forward-to localhost:8787
-  - Must have stripe webhook endpoint url with path /api/stripe/webhook
-  - STRIPE_WEBHOOK_SECRET must align with listen secret
-- stripe listen --forward-to localhost:8787/api/stripe/webhook
-- stripe listen --print-secret
-
 - analytics
 - stripe sandbox for prod
 
