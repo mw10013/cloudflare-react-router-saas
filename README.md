@@ -109,13 +109,12 @@ pnpm test:e2e
 
 ## Deploy
 
-- pnpm exec wrangler kv namespace create <WRANGLER_NAME>-kv-production
-- pnpm exec wrangler queues create <WRANGLER_NAME>-q-production
+- pnpm exec wrangler kv namespace create crrs-kv-production
 - Update wrangler.jsonc production kv_namespaces and queues
 - pnpm d1:reset:PRODUCTION
 - pnpm deploy:PRODUCTION
 - pnpm exec wrangler secret put <SECRET> --env production
-- Workers & Pages Settings: <WRANGLER_NAME>-production
+- Workers & Pages Settings: crrs
   - Git repository: connect to git repo
   - Build configuration
     - Build command: CLOUDFLARE_ENV=production pnpm build
