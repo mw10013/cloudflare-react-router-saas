@@ -45,11 +45,12 @@
   ],
   "env": {
     "production": {
+      "name": "crrs",
       "vars": {
         "ENVIRONMENT": "production",
         "DEMO_MODE": "true",
         "TRANSACTIONAL_EMAIL": "noreply@saas.com",
-        "BETTER_AUTH_URL": "https://crrs-production.devxo.workers.dev",
+        "BETTER_AUTH_URL": "https://crrs.devxo.workers.dev",
         "AWS_SES_ENDPOINT": "https://email.us-east-1.amazonaws.com/v2/email/outbound-emails",
         "AWS_SES_REGION": "us-east-1"
       },

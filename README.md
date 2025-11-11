@@ -7,7 +7,7 @@
   Lightweight saas template packed with essential functionality for Cloudflare and React Router
   </p>
   <p>
-    <a href="https://crrs-production.devxo.workers.dev/">Demo</a>
+    <a href="https://crrs.devxo.workers.dev/">Demo</a>
   </p>
 </div>
 

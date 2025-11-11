@@ -20,7 +20,7 @@
     "clean:node": "rm -rf node_modules test/*/node_modules",
     "clean:wrangler": "rm -rf .wrangler",
     "clean:etc": "rm -rf .react-router build dist",
-    "tail:PRODUCTION": "wrangler tail crrs-production",
+    "tail:PRODUCTION": "wrangler tail crrs",
     "d1:migrate:list": "wrangler d1 migrations list d1-local --local",
     "d1:migrate:apply": "wrangler d1 migrations apply d1-local --local",
     "d1:migrate:list:int": "wrangler d1 migrations list crrs-d1-int --env int --remote",
