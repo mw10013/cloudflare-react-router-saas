@@ -1,11 +1,6 @@
 import type { Route as MktRoute } from "./+types/_mkt"; // Import type from parent route
-import type { Route } from "./+types/_mkt._index";
 import * as Oui from "@/components/ui/oui-index";
 import * as ReactRouter from "react-router";
-
-export function meta(_: Route.MetaArgs) {
-  return [{ title: "saas" }, { name: "description", content: "saas template" }];
-}
 
 export default function RouteComponent() {
   const mktRouteLoaderData =

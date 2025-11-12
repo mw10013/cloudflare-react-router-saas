@@ -5,7 +5,6 @@ import { themeSessionResolver } from "@/lib/theme.server";
 import {
   isRouteErrorResponse,
   Links,
-  Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -62,7 +61,8 @@ function Html({ children, ssrTheme, environment }: HtmlProps) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
+        <title>crrs</title>
+        <meta name="description" content="Saas template for cloudflare and react router." />
         <PreventFlashOnWrongTheme ssrTheme={ssrTheme} />
         <Links />
       </head>
