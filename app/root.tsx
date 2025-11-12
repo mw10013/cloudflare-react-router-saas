@@ -96,8 +96,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <Html
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         ssrTheme={Boolean(data?.loaderData?.theme)}
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-        isAnalyticsEnabled={data?.loaderData?.isAnalyticsEnabled ?? false}
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        isAnalyticsEnabled={Boolean(data?.loaderData?.isAnalyticsEnabled)}
       >
         {children}
       </Html>
