@@ -87,8 +87,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const data = ReactRouter.useRouteLoaderData("root");
   return (
     <RemixThemes.ThemeProvider
+      // ?? ensures undefined (from missing loader data) becomes null for ThemeProvider type
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      specifiedTheme={data?.loaderData?.theme}
+      specifiedTheme={data?.loaderData?.theme ?? null}
       themeAction="/action/set-theme"
       disableTransitionOnThemeChange
     >
