@@ -48,13 +48,15 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { theme: getTheme(), environment: env.ENVIRONMENT };
 }
 
-interface HtmlProps {
+function Html({
+  children,
+  ssrTheme,
+  environment,
+}: {
   children: React.ReactNode;
   ssrTheme: boolean;
   environment: typeof env.ENVIRONMENT;
-}
-
-function Html({ children, ssrTheme, environment }: HtmlProps) {
+}) {
   const [theme] = useTheme();
   return (
     <html lang="en" className={theme ?? ""}>
