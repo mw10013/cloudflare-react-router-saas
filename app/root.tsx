@@ -1,6 +1,7 @@
 import type { NavigateOptions } from "react-router";
 import type { Route } from "./+types/root";
 import * as Oui from "@/components/ui/oui-index";
+import { themeSessionResolver } from "@/lib/theme.server";
 import {
   isRouteErrorResponse,
   Links,
@@ -15,7 +16,6 @@ import {
   ThemeProvider,
   useTheme,
 } from "remix-themes";
-import { themeSessionResolver } from "@/lib/theme.server";
 import "@/app/app.css";
 import { ReactRouterProvider } from "@/components/oui-react-router-provider";
 import { env } from "cloudflare:workers";
@@ -49,13 +49,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { theme: getTheme(), environment: env.ENVIRONMENT };
 }
 
-function Html({
-  children,
-  ssrTheme,
-}: {
+interface HtmlProps {
   children: React.ReactNode;
   ssrTheme: boolean;
-}) {
+  environment: typeof env.ENVIRONMENT;
+}
+
+function Html({ children, ssrTheme, environment }: HtmlProps) {
   const [theme] = useTheme();
   return (
     <html lang="en" className={theme ?? ""}>
@@ -71,6 +71,17 @@ function Html({
           <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
           <ScrollRestoration />
           <Scripts />
+          {environment === "production" && (
+            <>
+              {/* Cloudflare Web Analytics */}
+              <script
+                defer
+                src="https://static.cloudflareinsights.com/beacon.min.js"
+                data-cf-beacon='{"token": "cda8ee53d031493ea855f227fcd90239"}'
+              ></script>
+              {/* End Cloudflare Web Analytics */}
+            </>
+          )}
         </ReactRouterProvider>
       </body>
     </html>
@@ -85,7 +96,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       themeAction="/action/set-theme"
       disableTransitionOnThemeChange
     >
-      <Html ssrTheme={Boolean(data.loaderData?.theme)}>{children}</Html>
+      <Html
+        ssrTheme={Boolean(data.loaderData?.theme)}
+        environment={data.loaderData?.environment ?? "local"}
+      >
+        {children}
+      </Html>
     </ThemeProvider>
   );
 }

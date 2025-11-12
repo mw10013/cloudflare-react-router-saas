@@ -44,7 +44,7 @@ export function Separator({
   className,
   variant,
   orientation,
-  ...rest
+  ...props
 }: SeparatorProps) {
   return (
     <Rac.Separator
@@ -56,7 +56,7 @@ export function Separator({
           className,
         }),
       )}
-      {...rest}
+      {...props}
     />
   );
 }

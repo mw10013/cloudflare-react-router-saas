@@ -88,7 +88,7 @@ function InvitationItem({
         <ItemContent>
           <ItemTitle>{invitation.inviter.email}</ItemTitle>
           <ItemDescription>
-            Role {invitation.role}
+            Role: {invitation.role}
             <br />
             Expires {expiresIn(invitation.expiresAt)}
           </ItemDescription>

@@ -25,11 +25,11 @@ export interface HeaderProps
   extends React.ComponentProps<typeof Rac.Header>,
     VariantProps<typeof headerVariants> {}
 
-export function Header({ variant, inset, className, ...rest }: HeaderProps) {
+export function Header({ variant, inset, className, ...props }: HeaderProps) {
   return (
     <Rac.Header
       className={twMerge(headerVariants({ variant, inset, className }))}
-      {...rest}
+      {...props}
     />
   );
 }

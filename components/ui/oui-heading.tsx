@@ -26,11 +26,11 @@ export interface HeadingProps
   extends Rac.HeadingProps,
     VariantProps<typeof headingVariants> {}
 
-export function Heading({ className, variant, ...rest }: HeadingProps) {
+export function Heading({ className, variant, ...props }: HeadingProps) {
   return (
     <Rac.Heading
       className={twMerge(headingVariants({ className, variant }))}
-      {...rest}
+      {...props}
     />
   );
 }

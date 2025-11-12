@@ -58,8 +58,8 @@ export const disabledStyles = tw`data-disabled:pointer-events-none data-disabled
  * @example
  * ```tsx
  * const newClassName = composeTailwindRenderProps(className, [
- *   baseStyles,
- *   "data-[focused]:bg-accent data-[hovered]:bg-accent",
+ *   focusVisibleStyles,
+ *   "data-hovered:bg-accent",
  * ]);
  * ```
  */

@@ -32,7 +32,7 @@ export function CardExGridListItem({
       className={Rac.composeRenderProps(className, (className) =>
         twMerge(
           focusVisibleStyles,
-          "data-focus-visible:ring-offset-card rounded-md data-focus-visible:ring-offset-4",
+          "rounded-md data-focus-visible:ring-offset-4 data-focus-visible:ring-offset-card",
           className,
         ),
       )}

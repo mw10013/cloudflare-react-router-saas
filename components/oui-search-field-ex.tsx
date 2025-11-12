@@ -20,10 +20,10 @@ export function SearchFieldEx({
   description,
   errorMessage,
   placeholder,
-  ...rest
+  ...props
 }: SearchFieldExProps) {
   return (
-    <SearchField {...rest}>
+    <SearchField {...props}>
       {label && typeof label === "string" ? <Label>{label}</Label> : label}
       <Input
         placeholder={placeholder}

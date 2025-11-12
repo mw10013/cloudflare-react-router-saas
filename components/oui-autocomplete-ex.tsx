@@ -21,7 +21,7 @@ export function AutocompleteEx({
   searchFieldProps,
   children,
   filter,
-  ...rest
+  ...props
 }: AutocompleteExProps) {
   /* eslint-disable-next-line @typescript-eslint/unbound-method --
    * React Aria uses functional patterns, so destructured functions don't use 'this'
@@ -29,7 +29,7 @@ export function AutocompleteEx({
   const { contains: defaultFilter } = Rac.useFilter({ sensitivity: "base" });
 
   return (
-    <Rac.Autocomplete {...rest} filter={filter ?? defaultFilter}>
+    <Rac.Autocomplete {...props} filter={filter ?? defaultFilter}>
       <SearchFieldEx
         {...searchFieldProps}
         label={label}

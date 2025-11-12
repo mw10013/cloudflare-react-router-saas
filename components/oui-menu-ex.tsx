@@ -15,7 +15,7 @@ export interface MenuExProps<T> extends Rac.MenuProps<T> {
 export function MenuEx<T extends object>({
   triggerElement,
   children,
-  ...rest
+  ...props
 }: MenuExProps<T>) {
   return (
     <Rac.MenuTrigger>
@@ -25,7 +25,7 @@ export function MenuEx<T extends object>({
         triggerElement
       )}
       <Popover>
-        <Menu {...rest}>{children}</Menu>
+        <Menu {...props}>{children}</Menu>
       </Popover>
     </Rac.MenuTrigger>
   );
