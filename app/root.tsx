@@ -62,7 +62,10 @@ function Html({ children, ssrTheme, environment }: HtmlProps) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>crrs</title>
-        <meta name="description" content="Saas template for cloudflare and react router." />
+        <meta
+          name="description"
+          content="Saas template for cloudflare and react router."
+        />
         <PreventFlashOnWrongTheme ssrTheme={ssrTheme} />
         <Links />
       </head>
