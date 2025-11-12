@@ -65,7 +65,7 @@
         {
           "binding": "D1",
           "database_name": "crrs-d1-production",
-          "database_id": "233bbabf-79fe-4721-9c2e-2182a723587d" // crrs-d1-production
+          "database_id": "2e3e1b77-b865-4b25-af2e-a2d6da921259" // crrs-d1-production
         }
       ],
       "kv_namespaces": [
