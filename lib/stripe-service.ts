@@ -18,7 +18,7 @@ export type StripeService = ReturnType<typeof createStripeService>;
 
 export function createStripeService() {
   const stripe = new Stripe.Stripe(env.STRIPE_SECRET_KEY, {
-    apiVersion: "2025-07-30.basil",
+    apiVersion: "2025-10-29.clover",
   });
 
   const getPlans = async (): Promise<Plan[]> => {

@@ -125,7 +125,6 @@ pnpm test:e2e
 - ErrorBoundary
 - docs
 - Set API version in Stripe Workbench and confirm it matches version used by Stripe service.
-- analytics
 - stripe sandbox for prod
 
 ## Oui
