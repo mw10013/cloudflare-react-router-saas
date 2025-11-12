@@ -1,5 +1,12 @@
 import type { NavigateOptions } from "react-router";
 import type { Route } from "./+types/root";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import * as Oui from "@/components/ui/oui-index";
 import { themeSessionResolver } from "@/lib/theme.server";
 import * as ReactRouter from "react-router";
@@ -34,6 +41,7 @@ export const links: Route.LinksFunction = () => [
 
 export async function loader({ request }: Route.LoaderArgs) {
   const { getTheme } = await themeSessionResolver(request);
+  throw new Error("Test error");
   return {
     theme: getTheme(),
     isAnalyticsEnabled: env.ENVIRONMENT === "production",
@@ -127,13 +135,27 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <main className="container mx-auto p-4 pt-16">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full overflow-x-auto p-4">
-          <code>{stack}</code>
-        </pre>
-      )}
+      <Card>
+        <CardHeader>
+          <CardTitle>{message}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {details}
+          {stack && (
+            <pre className="overflow-x-auto pt-4">
+              <code>{stack}</code>
+            </pre>
+          )}
+        </CardContent>
+        <CardFooter className="justify-end">
+          <Oui.Link
+            className={Oui.buttonClassName({ variant: "secondary" })}
+            href="/"
+          >
+            Return Home
+          </Oui.Link>
+        </CardFooter>
+      </Card>
     </main>
   );
 }
