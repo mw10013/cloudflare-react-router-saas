@@ -8,7 +8,17 @@ import {
 import * as Oui from "@/components/ui/oui-index";
 import * as ReactRouter from "react-router";
 
-export function ErrorBoundary({ error }: { error: unknown }) {
+/**
+ * ErrorBoundary for React Router.
+ *
+ * @example
+ * ```tsx
+ * import * as OuiReactRouter from "@/components/oui-react-router-index";
+ *
+ * export const ErrorBoundary = OuiReactRouter.ReactRouterErrorBoundary;
+ * ```
+ */
+export function ReactRouterErrorBoundary({ error }: { error: unknown }) {
   let message = "Error";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;

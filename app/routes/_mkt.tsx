@@ -1,6 +1,6 @@
 import type { Route } from "./+types/_mkt";
 import { AppLogoIcon } from "@/components/app-logo-icon";
-import ReactRouterThemeToggleButton from "@/components/oui-react-router-theme-toggle-button";
+import * as OuiReactRouter from "@/components/oui-react-router-index";
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { Menu } from "lucide-react";
@@ -50,7 +50,7 @@ function Header() {
         <nav className="ml-auto">
           <div className="hidden items-center gap-2 md:flex">
             <GitHubRepoLink />
-            <ReactRouterThemeToggleButton />
+            <OuiReactRouter.ReactRouterThemeToggleButton />
             {routeLoaderData?.sessionUser ? (
               <Oui.Button
                 variant="outline"
@@ -87,7 +87,7 @@ function Header() {
               <Oui.Link href={ReactRouter.href("/pricing")}>Pricing</Oui.Link>
               <div className="flex gap-2">
                 <GitHubRepoLink />
-                <ReactRouterThemeToggleButton />
+                <OuiReactRouter.ReactRouterThemeToggleButton />
               </div>
               {routeLoaderData?.sessionUser ? (
                 <Oui.Button

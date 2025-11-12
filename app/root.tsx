@@ -1,12 +1,11 @@
 import type { NavigateOptions } from "react-router";
 import type { Route } from "./+types/root";
-import { ErrorBoundary } from "@/components/oui-react-router-error-boundary";
 import * as Oui from "@/components/ui/oui-index";
 import { themeSessionResolver } from "@/lib/theme.server";
 import * as ReactRouter from "react-router";
 import * as RemixThemes from "remix-themes";
+import * as OuiReactRouter from "@/components/oui-react-router-index";
 import "@/app/app.css";
-import { ReactRouterProvider } from "@/components/oui-react-router-provider";
 import { env } from "cloudflare:workers";
 
 declare module "react-aria-components" {
@@ -65,7 +64,7 @@ function Html({
         <ReactRouter.Links />
       </head>
       <body className="font-sans antialiased">
-        <ReactRouterProvider>
+        <OuiReactRouter.ReactRouterProvider>
           <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
           <ReactRouter.ScrollRestoration />
           <ReactRouter.Scripts />
@@ -76,7 +75,7 @@ function Html({
               data-cf-beacon='{"token": "cda8ee53d031493ea855f227fcd90239"}'
             ></script>
           )}
-        </ReactRouterProvider>
+        </OuiReactRouter.ReactRouterProvider>
       </body>
     </html>
   );
@@ -110,4 +109,4 @@ export default function App() {
   return <ReactRouter.Outlet />;
 }
 
-export { ErrorBoundary };
+export const ErrorBoundary = OuiReactRouter.ReactRouterErrorBoundary;
