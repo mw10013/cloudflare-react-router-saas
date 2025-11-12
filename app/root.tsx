@@ -45,17 +45,17 @@ export const links: Route.LinksFunction = () => [
 
 export async function loader({ request }: Route.LoaderArgs) {
   const { getTheme } = await themeSessionResolver(request);
-  return { theme: getTheme(), environment: env.ENVIRONMENT };
+  return { theme: getTheme(), isAnalyticsEnabled: env.ENVIRONMENT === "production" };
 }
 
 function Html({
   children,
   ssrTheme,
-  environment,
+  isAnalyticsEnabled,
 }: {
   children: React.ReactNode;
   ssrTheme: boolean;
-  environment: typeof env.ENVIRONMENT;
+  isAnalyticsEnabled: boolean;
 }) {
   const [theme] = useTheme();
   return (
@@ -76,16 +76,12 @@ function Html({
           <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
           <ScrollRestoration />
           <Scripts />
-          {environment === "production" && (
-            <>
-              {/* Cloudflare Web Analytics */}
-              <script
-                defer
-                src="https://static.cloudflareinsights.com/beacon.min.js"
-                data-cf-beacon='{"token": "cda8ee53d031493ea855f227fcd90239"}'
-              ></script>
-              {/* End Cloudflare Web Analytics */}
-            </>
+          {isAnalyticsEnabled && (
+            <script
+              defer
+              src="https://static.cloudflareinsights.com/beacon.min.js"
+              data-cf-beacon='{"token": "cda8ee53d031493ea855f227fcd90239"}'
+            ></script>
           )}
         </ReactRouterProvider>
       </body>
@@ -103,7 +99,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     >
       <Html
         ssrTheme={Boolean(data.loaderData?.theme)}
-        environment={data.loaderData?.environment ?? "local"}
+        isAnalyticsEnabled={data.loaderData?.isAnalyticsEnabled ?? false}
       >
         {children}
       </Html>
@@ -116,7 +112,7 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "A dreadful error occurred.";
+  let message = "Error";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
 
