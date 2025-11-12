@@ -30,7 +30,7 @@
     "d1:reset": "node scripts/d1-reset.ts",
     "d1:reset:int": "node scripts/d1-reset.ts --env int",
     "d1:reset:PRODUCTION": "node scripts/d1-reset.ts --env production",
-    "stripe:listen": "stripe listen --load-from-webhooks-api --forward-to localhost:5173/",
+    "stripe:listen": "stripe listen --project-name=crrs-int --load-from-webhooks-api --forward-to localhost:5173/",
     "script": "node --env-file=.env"
   },
   "dependencies": {

@@ -62,24 +62,26 @@
 ### Stripe
 
 - Install the [Stripe CLI](https://stripe.com/docs/stripe-cli).
-- Go to stripe and create a sandbox for testing.
+- Go to stripe and create a sandbox for testing named `crrs-int`
   - Remember secret key for `STRIPE_SECRET_KEY` environment variable.
 - Create a stripe webhook
-  - Endpoint URL: dummy url for now.
+  - Endpoint URL: `https://dummy.com/api/auth/stripe/webhook` (This is dummy placeholder for local dev)
   - Events: `checkout.session.completed`, `customer.subscription.deleted`, `customer.subscription.updated`
-  - Remember signing secret for `STRIPE_WEBHOOK_SECRET` environment variable.
 
 ### Local Env
 
 - Copy `.env.example` to `.env`.
-- Edit the better-auth and stripe keys.
+- Edit the `BETTER_AUTH_SECRET` and `STRIPE_SECRET_KEY` keys.
+- SEt `STRIPE_WEBHOOK_SECRET` later after you run `pnpm stripe:listent` below.
 - Leave the aws ses email keys empty since we are running in demo mode.
 
 ```
 pnpm i
 pnpm d1:reset
-pnpm dev
+stripe login --project-name=crrs-int
 pnpm stripe:listen
+# copy webhook signing secret to STRIPE_WEBHOOK_SECRET in .env
+pnpm dev
 
 # cron
 curl "http://localhost:5173/cdn-cgi/handler/scheduled?cron=0%200%20*%20*%20*"
@@ -124,8 +126,6 @@ pnpm test:e2e
 
 - ErrorBoundary
 - docs
-- Set API version in Stripe Workbench and confirm it matches version used by Stripe service.
-- stripe sandbox for prod
 
 ## Oui
 
