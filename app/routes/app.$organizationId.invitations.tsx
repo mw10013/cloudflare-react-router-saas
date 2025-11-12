@@ -7,11 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+} from "@/components/ui/item";
 import * as Oui from "@/components/ui/oui-index";
 import * as Domain from "@/lib/domain";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 import * as z from "zod";
 
@@ -196,7 +204,7 @@ export default function RouteComponent({
           </Oui.Form>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="gap-4">
         <CardHeader>
           <CardTitle>Invitations</CardTitle>
           <CardDescription>
@@ -205,7 +213,7 @@ export default function RouteComponent({
         </CardHeader>
         <CardContent>
           {invitations.length > 0 ? (
-            <Oui.CardExGridList
+            <Rac.GridList
               aria-label="Organization invitations"
               data-testid="invitations-list"
             >
@@ -216,7 +224,7 @@ export default function RouteComponent({
                   canManageInvitations={canManageInvitations}
                 />
               ))}
-            </Oui.CardExGridList>
+            </Rac.GridList>
           ) : (
             <p className="text-muted-foreground text-sm">
               No invitations have been sent for this organization yet.
@@ -239,40 +247,45 @@ function InvitationItem({
   const pending = fetcher.state !== "idle";
   return (
     <Oui.CardExGridListItem textValue={invitation.email}>
-      <div className="flex flex-col">
-        <span className="text-sm font-medium">{invitation.email}</span>
-        <span className="text-muted-foreground text-sm">
-          {invitation.role} — {invitation.status}
-        </span>
-        {invitation.status === "pending" && (
-          <span className="text-muted-foreground text-xs">
-            Expires:{" "}
-            {new Date(invitation.expiresAt)
-              .toISOString()
-              .replace("T", " ")
-              .slice(0, 16)}{" "}
-            UTC
-          </span>
+      <Item size="sm" className="gap-4 px-0">
+        <ItemContent>
+          <ItemTitle>{invitation.email}</ItemTitle>
+          <ItemDescription>
+            {invitation.role} — {invitation.status}
+            {invitation.status === "pending" && (
+              <>
+                <br />
+                <span className="text-xs">
+                  Expires:{" "}
+                  {new Date(invitation.expiresAt)
+                    .toISOString()
+                    .replace("T", " ")
+                    .slice(0, 16)}{" "}
+                  UTC
+                </span>
+              </>
+            )}
+          </ItemDescription>
+        </ItemContent>
+        {canManageInvitations && invitation.status === "pending" && (
+          <ItemActions>
+            <fetcher.Form method="post">
+              <input type="hidden" name="invitationId" value={invitation.id} />
+              <Oui.Button
+                type="submit"
+                name="intent"
+                value="cancel"
+                variant="outline"
+                size="sm"
+                aria-label={`Cancel invitation for ${invitation.email}`}
+                isDisabled={pending}
+              >
+                Cancel
+              </Oui.Button>
+            </fetcher.Form>
+          </ItemActions>
         )}
-      </div>
-      {canManageInvitations && invitation.status === "pending" && (
-        <div className="flex flex-col items-end gap-1">
-          <fetcher.Form method="post">
-            <input type="hidden" name="invitationId" value={invitation.id} />
-            <Oui.Button
-              type="submit"
-              name="intent"
-              value="cancel"
-              variant="outline"
-              size="sm"
-              aria-label={`Cancel invitation for ${invitation.email}`}
-              isDisabled={pending}
-            >
-              Cancel
-            </Oui.Button>
-          </fetcher.Form>
-        </div>
-      )}
+      </Item>
     </Oui.CardExGridListItem>
   );
 }

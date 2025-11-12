@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * The `oui-card-ex` module provides CardExGridList and CardExGridListItem to use with shadcn Card.
+ * The `oui-card-ex` module provides CardExGridListItem to use with shadcn Card.
  *
  * @example
  * ```tsx
@@ -9,33 +9,18 @@
  *
  * <Card>
  *   <CardContent>
- *     <Oui.CardExGridList aria-label="Items">
+ *     <Rac.GridList aria-label="Items">
  *       <Oui.CardExGridListItem textValue="Item 1">
  *         Item content
  *       </Oui.CardExGridListItem>
- *     </Oui.CardExGridList>
+ *     </Rac.GridList>
  *   </CardContent>
  * </Card>
  * ```
  */
-import {
-  composeTailwindRenderProps,
-  focusVisibleStyles,
-} from "@/components/ui/oui-base";
+import { focusVisibleStyles } from "@/components/ui/oui-base";
 import * as Rac from "react-aria-components";
 import { twMerge } from "tailwind-merge";
-
-export function CardExGridList<T extends object>({
-  className,
-  ...props
-}: Rac.GridListProps<T>) {
-  return (
-    <Rac.GridList
-      {...props}
-      className={composeTailwindRenderProps(className, "divide-y")}
-    />
-  );
-}
 
 export function CardExGridListItem({
   className,
@@ -47,7 +32,7 @@ export function CardExGridListItem({
       className={Rac.composeRenderProps(className, (className) =>
         twMerge(
           focusVisibleStyles,
-          "data-focus-visible:ring-offset-card flex items-center justify-between gap-4 rounded-md py-4 first:pt-0 last:pb-0 data-focus-visible:border-transparent data-focus-visible:ring-offset-4",
+          "data-focus-visible:ring-offset-card rounded-md data-focus-visible:ring-offset-4",
           className,
         ),
       )}

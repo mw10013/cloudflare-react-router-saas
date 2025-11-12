@@ -6,9 +6,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+} from "@/components/ui/item";
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import * as Rac from "react-aria-components";
 import { redirect, useFetcher } from "react-router";
 import * as z from "zod";
 
@@ -116,7 +124,7 @@ export default function RouteComponent({
         </p>
       </header>
 
-      <Card>
+      <Card className="gap-4">
         <CardHeader>
           <CardTitle>Current Members</CardTitle>
           <CardDescription>
@@ -125,7 +133,7 @@ export default function RouteComponent({
         </CardHeader>
         <CardContent>
           {members.length > 0 ? (
-            <Oui.CardExGridList aria-label="Organization members">
+            <Rac.GridList aria-label="Organization members">
               {members.map((member) => (
                 <MemberItem
                   key={member.id}
@@ -134,7 +142,7 @@ export default function RouteComponent({
                   canLeaveMemberId={canLeaveMemberId}
                 />
               ))}
-            </Oui.CardExGridList>
+            </Rac.GridList>
           ) : (
             <p className="text-muted-foreground text-sm">
               No members have been added to this organization yet.
@@ -159,64 +167,69 @@ function MemberItem({
   const pending = fetcher.state !== "idle";
   return (
     <Oui.CardExGridListItem textValue={member.user.email}>
-      <div className="flex flex-col">
-        <span className="text-sm font-medium">{member.user.email}</span>
-        {member.role !== "owner" && canEdit ? (
-          <Oui.SelectEx
-            name="role"
-            defaultValue={member.role}
-            aria-label={`Change role for ${member.user.email}`}
-            items={[
-              { id: "member", name: "Member" },
-              { id: "admin", name: "Admin" },
-            ]}
-            onChange={(key) =>
-              void fetcher.submit(
-                { intent: "change-role", memberId: member.id, role: key },
-                { method: "post" },
-              )
-            }
-            className="mt-2"
-          >
-            {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
-          </Oui.SelectEx>
-        ) : (
-          <span className="text-muted-foreground text-sm">{member.role}</span>
+      <Item size="sm" className="gap-4 px-0">
+        <ItemContent>
+          <ItemTitle>{member.user.email}</ItemTitle>
+          <ItemDescription>
+            {member.role !== "owner" && canEdit ? (
+              <Oui.SelectEx
+                name="role"
+                defaultValue={member.role}
+                aria-label={`Change role for ${member.user.email}`}
+                items={[
+                  { id: "member", name: "Member" },
+                  { id: "admin", name: "Admin" },
+                ]}
+                onChange={(key) =>
+                  void fetcher.submit(
+                    { intent: "change-role", memberId: member.id, role: key },
+                    { method: "post" },
+                  )
+                }
+              >
+                {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
+              </Oui.SelectEx>
+            ) : (
+              member.role
+            )}
+          </ItemDescription>
+        </ItemContent>
+        {member.role !== "owner" && (
+          <ItemActions>
+            <div className="flex gap-2">
+              {canEdit && (
+                <fetcher.Form method="post">
+                  <input type="hidden" name="memberId" value={member.id} />
+                  <Oui.Button
+                    type="submit"
+                    name="intent"
+                    value="remove"
+                    variant="outline"
+                    size="sm"
+                    isDisabled={pending}
+                  >
+                    Remove
+                  </Oui.Button>
+                </fetcher.Form>
+              )}
+              {member.id === canLeaveMemberId && (
+                <fetcher.Form method="post">
+                  <Oui.Button
+                    type="submit"
+                    name="intent"
+                    value="leave"
+                    variant="outline"
+                    size="sm"
+                    isDisabled={pending}
+                  >
+                    Leave
+                  </Oui.Button>
+                </fetcher.Form>
+              )}
+            </div>
+          </ItemActions>
         )}
-      </div>
-      {member.role !== "owner" && (
-        <div className="flex gap-2">
-          {canEdit && (
-            <fetcher.Form method="post">
-              <input type="hidden" name="memberId" value={member.id} />
-              <Oui.Button
-                type="submit"
-                name="intent"
-                value="remove"
-                variant="outline"
-                size="sm"
-                isDisabled={pending}
-              >
-                Remove
-              </Oui.Button>
-            </fetcher.Form>
-          )}
-          {member.id === canLeaveMemberId && (
-            <fetcher.Form method="post">
-              <Oui.Button
-                type="submit"
-                name="intent"
-                value="leave"
-                variant="outline"
-                size="sm"
-                isDisabled={pending}
-              >
-                Leave
-              </Oui.Button>
-            </fetcher.Form>
-          )}
-        </div>
-      )}
+      </Item>
     </Oui.CardExGridListItem>
   );
 }

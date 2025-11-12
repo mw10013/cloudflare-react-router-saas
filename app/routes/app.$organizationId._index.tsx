@@ -6,9 +6,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+} from "@/components/ui/item";
 import * as Oui from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import * as Rac from "react-aria-components";
 import { useFetcher } from "react-router";
 
 export async function loader({
@@ -76,47 +84,47 @@ function InvitationItem({
   const disabled = fetcher.state !== "idle";
   return (
     <Oui.CardExGridListItem textValue={invitation.inviter.email}>
-      <div className="flex flex-col">
-        <span className="text-sm font-medium">{invitation.inviter.email}</span>
-        <span className="text-muted-foreground text-sm">
-          Organization: {invitation.organization.name}
-        </span>
-        <span className="text-muted-foreground text-sm">
-          Role: {invitation.role}
-        </span>
-        <span className="text-muted-foreground text-sm">
-          Expires: {expiresIn(invitation.expiresAt)}
-        </span>
-      </div>
-      <fetcher.Form method="post" className="flex gap-2">
-        <input
-          type="hidden"
-          name="invitationId"
-          value={invitation.invitationId}
-        />
-        <Oui.Button
-          type="submit"
-          name="intent"
-          value="accept"
-          variant="outline"
-          size="sm"
-          isDisabled={disabled}
-          aria-label={`Accept invitation from ${invitation.inviter.email}`}
-        >
-          Accept
-        </Oui.Button>
-        <Oui.Button
-          type="submit"
-          name="intent"
-          value="reject"
-          variant="destructive"
-          size="sm"
-          isDisabled={disabled}
-          aria-label={`Reject invitation from ${invitation.inviter.email}`}
-        >
-          Reject
-        </Oui.Button>
-      </fetcher.Form>
+      <Item size="sm" className="gap-4 px-0">
+        <ItemContent>
+          <ItemTitle>{invitation.inviter.email}</ItemTitle>
+          <ItemDescription>
+            Role {invitation.role}
+            <br />
+            Expires {expiresIn(invitation.expiresAt)}
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <fetcher.Form method="post" className="flex gap-2">
+            <input
+              type="hidden"
+              name="invitationId"
+              value={invitation.invitationId}
+            />
+            <Oui.Button
+              type="submit"
+              name="intent"
+              value="accept"
+              variant="outline"
+              size="sm"
+              isDisabled={disabled}
+              aria-label={`Accept invitation from ${invitation.inviter.email}`}
+            >
+              Accept
+            </Oui.Button>
+            <Oui.Button
+              type="submit"
+              name="intent"
+              value="reject"
+              variant="destructive"
+              size="sm"
+              isDisabled={disabled}
+              aria-label={`Reject invitation from ${invitation.inviter.email}`}
+            >
+              Reject
+            </Oui.Button>
+          </fetcher.Form>
+        </ItemActions>
+      </Item>
     </Oui.CardExGridListItem>
   );
 }
@@ -127,7 +135,7 @@ export default function RouteComponent({
   return (
     <div data-slot="invite-container" className="flex flex-col gap-6 p-6">
       {dashboardData.userInvitations.length > 0 && (
-        <Card>
+        <Card className="gap-4">
           <CardHeader>
             <CardTitle>Invitations</CardTitle>
             <CardDescription>
@@ -135,14 +143,14 @@ export default function RouteComponent({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Oui.CardExGridList aria-label="Invitations awaiting your response">
+            <Rac.GridList aria-label="Invitations awaiting your response">
               {dashboardData.userInvitations.map((invitation) => (
                 <InvitationItem
                   key={invitation.invitationId}
                   invitation={invitation}
                 />
               ))}
-            </Oui.CardExGridList>
+            </Rac.GridList>
           </CardContent>
         </Card>
       )}

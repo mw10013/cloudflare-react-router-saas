@@ -122,6 +122,7 @@ pnpm test:e2e
 
 ## TODO
 
+- ErrorBoundary
 - docs
 - Set API version in Stripe Workbench and confirm it matches version used by Stripe service.
 - analytics
