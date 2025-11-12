@@ -1,12 +1,6 @@
 import type { NavigateOptions } from "react-router";
 import type { Route } from "./+types/root";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { ErrorBoundary } from "@/components/oui-react-router-error-boundary";
 import * as Oui from "@/components/ui/oui-index";
 import { themeSessionResolver } from "@/lib/theme.server";
 import * as ReactRouter from "react-router";
@@ -116,45 +110,4 @@ export default function App() {
   return <ReactRouter.Outlet />;
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Error";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
-  if (ReactRouter.isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
-  }
-
-  return (
-    <main className="container mx-auto p-4 pt-16">
-      <Card>
-        <CardHeader>
-          <CardTitle>{message}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {details}
-          {stack && (
-            <pre className="overflow-x-auto pt-4">
-              <code>{stack}</code>
-            </pre>
-          )}
-        </CardContent>
-        <CardFooter className="justify-end">
-          <Oui.Link
-            className={Oui.buttonClassName({ variant: "secondary" })}
-            href="/"
-          >
-            Go Home
-          </Oui.Link>
-        </CardFooter>
-      </Card>
-    </main>
-  );
-}
+export { ErrorBoundary };

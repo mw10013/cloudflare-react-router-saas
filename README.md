@@ -125,6 +125,7 @@ pnpm test:e2e
 ## TODO
 
 - ErrorBoundary: oui
+- table limit
 - docs
 
 ## Oui
