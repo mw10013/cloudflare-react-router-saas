@@ -2,19 +2,8 @@ import type { NavigateOptions } from "react-router";
 import type { Route } from "./+types/root";
 import * as Oui from "@/components/ui/oui-index";
 import { themeSessionResolver } from "@/lib/theme.server";
-import {
-  isRouteErrorResponse,
-  Links,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  unstable_useRoute,
-} from "react-router";
-import {
-  PreventFlashOnWrongTheme,
-  ThemeProvider,
-  useTheme,
-} from "remix-themes";
+import * as ReactRouter from "react-router";
+import * as RemixThemes from "remix-themes";
 import "@/app/app.css";
 import { ReactRouterProvider } from "@/components/oui-react-router-provider";
 import { env } from "cloudflare:workers";
@@ -45,7 +34,10 @@ export const links: Route.LinksFunction = () => [
 
 export async function loader({ request }: Route.LoaderArgs) {
   const { getTheme } = await themeSessionResolver(request);
-  return { theme: getTheme(), isAnalyticsEnabled: env.ENVIRONMENT === "production" };
+  return {
+    theme: getTheme(),
+    isAnalyticsEnabled: env.ENVIRONMENT === "production",
+  };
 }
 
 function Html({
@@ -57,7 +49,7 @@ function Html({
   ssrTheme: boolean;
   isAnalyticsEnabled: boolean;
 }) {
-  const [theme] = useTheme();
+  const [theme] = RemixThemes.useTheme();
   return (
     <html lang="en" className={theme ?? ""}>
       <head>
@@ -68,14 +60,14 @@ function Html({
           name="description"
           content="Saas template for cloudflare and react router."
         />
-        <PreventFlashOnWrongTheme ssrTheme={ssrTheme} />
-        <Links />
+        <RemixThemes.PreventFlashOnWrongTheme ssrTheme={ssrTheme} />
+        <ReactRouter.Links />
       </head>
       <body className="font-sans antialiased">
         <ReactRouterProvider>
           <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
-          <ScrollRestoration />
-          <Scripts />
+          <ReactRouter.ScrollRestoration />
+          <ReactRouter.Scripts />
           {isAnalyticsEnabled && (
             <script
               defer
@@ -90,25 +82,30 @@ function Html({
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const data = unstable_useRoute("root");
+  // Layout is used by ErrorBoundary where there may be no loader data so cannot use unstable_useRoute
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const data = ReactRouter.useRouteLoaderData("root");
   return (
-    <ThemeProvider
-      specifiedTheme={data.loaderData?.theme ?? null}
+    <RemixThemes.ThemeProvider
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      specifiedTheme={data?.loaderData?.theme}
       themeAction="/action/set-theme"
       disableTransitionOnThemeChange
     >
       <Html
-        ssrTheme={Boolean(data.loaderData?.theme)}
-        isAnalyticsEnabled={data.loaderData?.isAnalyticsEnabled ?? false}
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        ssrTheme={Boolean(data?.loaderData?.theme)}
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        isAnalyticsEnabled={data?.loaderData?.isAnalyticsEnabled ?? false}
       >
         {children}
       </Html>
-    </ThemeProvider>
+    </RemixThemes.ThemeProvider>
   );
 }
 
 export default function App() {
-  return <Outlet />;
+  return <ReactRouter.Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -116,7 +113,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
 
-  if (isRouteErrorResponse(error)) {
+  if (ReactRouter.isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Error";
     details =
       error.status === 404
