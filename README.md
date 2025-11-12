@@ -124,7 +124,7 @@ pnpm test:e2e
 
 ## TODO
 
-- ErrorBoundary
+- ErrorBoundary: oui
 - docs
 
 ## Oui

@@ -41,7 +41,6 @@ export const links: Route.LinksFunction = () => [
 
 export async function loader({ request }: Route.LoaderArgs) {
   const { getTheme } = await themeSessionResolver(request);
-  throw new Error("Test error");
   return {
     theme: getTheme(),
     isAnalyticsEnabled: env.ENVIRONMENT === "production",
@@ -152,7 +151,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             className={Oui.buttonClassName({ variant: "secondary" })}
             href="/"
           >
-            Return Home
+            Go Home
           </Oui.Link>
         </CardFooter>
       </Card>
