@@ -124,7 +124,6 @@ pnpm test:e2e
 
 ## TODO
 
-- ErrorBoundary: oui
 - table limit
 - docs
 
@@ -135,9 +134,7 @@ pnpm test:e2e
 
 ```
 pnpm dlx shadcn@latest add --overwrite @oui/oui-index
-pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
-pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-theme-toggle-button
-pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-provider
+pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-index
 ```
 
 ## License

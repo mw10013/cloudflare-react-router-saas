@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/oui-base";
 import { cva } from "class-variance-authority";
 import * as Rac from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 
 /**
  * Derived from shadcn Toggle.
@@ -54,12 +55,14 @@ export function ToggleButton({
     <Rac.ToggleButton
       data-slot="toggle-button"
       className={Rac.composeRenderProps(className, (className, renderProps) =>
-        toggleButtonVariants({
-          ...renderProps,
-          variant,
-          size,
-          className,
-        }),
+        twMerge(
+          toggleButtonVariants({
+            ...renderProps,
+            variant,
+            size,
+            className,
+          }),
+        ),
       )}
       {...props}
     />

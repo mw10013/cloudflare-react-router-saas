@@ -5,11 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import * as Oui from "@/components/ui/oui-index";
-import * as ReactRouter from "react-router";
+import { buttonClassName } from "@/components/ui/oui-button";
+import { Link } from "@/components/ui/oui-link";
+import * as ReactRouter from "react-router"; 
 
 /**
- * ErrorBoundary for React Router.
+ * Error Boundary for react router.
  *
  * @example
  * ```tsx
@@ -49,12 +50,9 @@ export function ReactRouterErrorBoundary({ error }: { error: unknown }) {
           )}
         </CardContent>
         <CardFooter className="justify-end">
-          <Oui.Link
-            className={Oui.buttonClassName({ variant: "secondary" })}
-            href="/"
-          >
+          <Link className={buttonClassName({ variant: "secondary" })} href="/">
             Go Home
-          </Oui.Link>
+          </Link>
         </CardFooter>
       </Card>
     </main>

@@ -4,7 +4,7 @@ import { ToggleButton } from "@/components/ui/oui-toggle-button";
 import { Moon, Sun } from "lucide-react";
 import { Theme, useTheme } from "remix-themes";
 
-export default function ReactRouterThemeToggleButton() {
+export function ReactRouterThemeToggleButton() {
   const [theme, setTheme, metadata] = useTheme();
 
   const smartToggle = () => {
@@ -37,3 +37,5 @@ export default function ReactRouterThemeToggleButton() {
     </ToggleButton>
   );
 }
+
+export default ReactRouterThemeToggleButton;
