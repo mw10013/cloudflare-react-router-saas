@@ -2,47 +2,8 @@ import type { Page } from "@playwright/test";
 import { invariant } from "@epic-web/invariant";
 import { expect, test } from "@playwright/test";
 
-const users: {
-  email: string;
-  invitees: { email: string; action?: "accept" | "reject" }[];
-}[] = [
-  {
-    email: "invite@e2e.com",
-    invitees: [
-      { email: "invite1@e2e.com", action: "accept" },
-      { email: "invite2@e2e.com", action: "accept" },
-      { email: "invite3@e2e.com", action: "accept" },
-    ],
-  },
-  {
-    email: "invite1@e2e.com",
-    invitees: [
-      { email: "invite@e2e.com" },
-      { email: "invite2@e2e.com" },
-      { email: "invite3@e2e.com" },
-    ],
-  },
-  {
-    email: "invite2@e2e.com",
-    invitees: [
-      { email: "invite@e2e.com", action: "reject" },
-      { email: "invite1@e2e.com", action: "reject" },
-      { email: "invite3@e2e.com", action: "reject" },
-    ],
-  },
-  {
-    email: "invite3@e2e.com",
-    invitees: [
-      { email: "invite@e2e.com", action: "accept" },
-      { email: "invite1@e2e.com", action: "reject" },
-      { email: "invite2@e2e.com" },
-    ],
-  },
-];
-
 test.describe("invite", () => {
   test.describe.configure({ mode: "serial" });
-
   const emails = Array.from(
     { length: 4 },
     (_, n) => `invite-${String(n)}@e2e.com`,
