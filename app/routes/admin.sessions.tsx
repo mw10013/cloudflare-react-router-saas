@@ -6,7 +6,7 @@ import * as ReactRouter from "react-router";
 import * as z from "zod";
 
 export async function loader({ request, context }: Route.LoaderArgs) {
-  const LIMIT = 5;
+  const LIMIT = 20;
   const url = new URL(request.url);
   const params = Object.fromEntries(url.searchParams);
   const schema = z.object({

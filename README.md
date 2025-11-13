@@ -122,11 +122,6 @@ pnpm test:e2e
     - Build command: CLOUDFLARE_ENV=production pnpm build
     - Deploy command: pnpm exec wrangler deploy
 
-## TODO
-
-- table limit
-- docs
-
 ## Oui
 
 - React aria components with shadcn characteristics.
