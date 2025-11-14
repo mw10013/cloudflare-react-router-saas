@@ -116,7 +116,7 @@ pnpm test:e2e
 - Update wrangler.jsonc production kv_namespaces and queues
 - pnpm d1:reset:PRODUCTION
 - pnpm deploy:PRODUCTION
-- pnpm exec wrangler secret put <SECRET> --env production
+- pnpm exec wrangler secret put SECRET --env production
 - Workers & Pages Settings: crrs
   - Git repository: connect to git repo
   - Build configuration
