@@ -7,8 +7,13 @@
   Lightweight saas template packed with essential functionality for Cloudflare and React Router
   </p>
   <p>
+  Cloudflare • React Router • Better Auth • Stripe • Oui (React Aria Components with Shadcn characteristics) • SES
+  </p>
+  <p>
     <a href="https://crrs.devxo.workers.dev/">Demo</a>
   </p>
+
+  
 </div>
 
 ## Template Functionality
