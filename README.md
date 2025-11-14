@@ -73,7 +73,7 @@
 
 - Copy `.env.example` to `.env`.
 - Edit the `BETTER_AUTH_SECRET` and `STRIPE_SECRET_KEY` keys.
-- SEt `STRIPE_WEBHOOK_SECRET` later after you run `pnpm stripe:listent` below.
+- Set `STRIPE_WEBHOOK_SECRET` later after you run `pnpm stripe:listent` below.
 - Leave the aws ses email keys empty since we are running in demo mode.
 
 ```
