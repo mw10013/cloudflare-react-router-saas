@@ -1,5 +1,5 @@
 <h1 align="center">
-<code>Cloudflare-React-Router-Saas</code>
+<code>Cloudflare React Router Saas</code>
 </h1>
 
 <div align="center">
@@ -13,7 +13,6 @@
     <a href="https://crrs.devxo.workers.dev/">Demo</a>
   </p>
 
-  
 </div>
 
 ## Template Functionality
