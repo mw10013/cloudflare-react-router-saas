@@ -6,6 +6,7 @@ import { RequestContext } from "@/lib/request-context";
 import { Menu } from "lucide-react";
 import * as ReactRouter from "react-router";
 import { siGithub } from "simple-icons";
+import * as Rac from "react-aria-components";
 
 export function loader({ context }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
@@ -64,12 +65,12 @@ function Header() {
                 Sign Out
               </Oui.Button>
             ) : (
-              <Oui.Link
+              <Rac.Link
                 href={ReactRouter.href("/login")}
                 className={Oui.buttonClassName({ variant: "outline" })}
               >
                 Sign in / Sign up
-              </Oui.Link>
+              </Rac.Link>
             )}
           </div>
           <Oui.PopoverEx

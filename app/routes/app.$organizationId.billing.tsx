@@ -198,12 +198,12 @@ export default function RouteComponent({
               <p className="text-muted-foreground text-sm">
                 No active subscription for this organization.
               </p>
-              <Oui.Link
+              <Rac.Link
                 href="/pricing"
                 className={Oui.buttonClassName({ variant: "outline" })}
               >
                 Pricing
-              </Oui.Link>
+              </Rac.Link>
             </div>
           )}
         </CardContent>

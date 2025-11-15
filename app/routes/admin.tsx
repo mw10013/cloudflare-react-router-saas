@@ -76,13 +76,13 @@ export function AppSidebar({ user }: { user: { email: string } }) {
   return (
     <Sidebar>
       <SidebarHeader className="items-center justify-center">
-        <Oui.Link
+        <Rac.Link
           href="/"
           aria-label="Home"
           className={Oui.buttonClassName({ variant: "ghost", size: "icon" })}
         >
           <AppLogoIcon className="text-primary size-7" />
-        </Oui.Link>
+        </Rac.Link>
       </SidebarHeader>
       <SidebarContent>
         <Oui.SidebarExTree aria-label="Admin Navigation" items={items} />
