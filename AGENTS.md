@@ -48,3 +48,5 @@ import * as z from "zod";
 - Using sqlite with Cloudflare D1.
 - Use lowercase for all sql keywords.
 - Use positional parameter placeholders.
+
+Always use context7 when I need code generation, setup or configuration steps, or library/API documentation. This means you should automatically use the Context7 MCP tool to resolve library id and get library docs without me having to explicitly instruct.

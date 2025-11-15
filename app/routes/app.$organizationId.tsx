@@ -114,7 +114,7 @@ export function AppSidebar({
     <Sidebar>
       <SidebarHeader>
         <div className="flex w-full items-center gap-2 p-2">
-          <Rac.Link href="/" aria-label="Home">
+          <Rac.Link href="/" aria-label="Home" className={Oui.buttonClassName({ variant: "ghost", size: "icon" })}>
             <AppLogoIcon className="text-primary size-7" />
           </Rac.Link>
           <OrganizationSwitcher

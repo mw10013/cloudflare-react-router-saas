@@ -13,7 +13,11 @@ import { twMerge } from "tailwind-merge";
  * Derived from shadcn CardDemo.
  */
 export const linkVariants = cva(
-  [focusVisibleStyles, disabledStyles, "underline-offset-4"],
+  [
+    focusVisibleStyles,
+    disabledStyles,
+    "rounded-xs underline-offset-4 data-focus-visible:ring-offset-3 data-focus-visible:ring-offset-background",
+  ],
   {
     variants: {
       underline: {
