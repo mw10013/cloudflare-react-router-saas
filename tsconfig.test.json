@@ -5,8 +5,7 @@
     "test/**/*.ts",
     "e2e/**/*.ts",
     "worker-configuration.d.ts",
-    ".react-router/types/**/*",
-    "test/do/cloudflare-test.d.ts"
+    ".react-router/types/**/*"
   ],
   "references": [{ "path": "./tsconfig.cloudflare.json" }],
   "compilerOptions": {

@@ -46,6 +46,7 @@ export * from "@/components/ui/oui-tooltip";
 
 export * from "@/components/oui-alert-ex-form";
 export * from "@/components/oui-autocomplete-ex";
+export * from "@/components/oui-badge-ex";
 export * from "@/components/oui-card-ex";
 export * from "@/components/oui-checkbox-ex";
 export * from "@/components/oui-checkbox-group-ex";

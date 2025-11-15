@@ -49,15 +49,15 @@ export const buttonVariants = cva(
 );
 
 /**
- * Returns a className function to style a React Aria Component as a button.
+ * Returns a className function to style a react aria component as a button.
  *
  * @example
- * <Link
+ * <Rac.Link
  *   href="#"
  *   className={buttonClassName({ variant: "outline" })}
  * >
  *   Button Link
- * </Link>
+ * </Rac.Link>
  */
 export const buttonClassName =
   ({
@@ -72,7 +72,7 @@ export const buttonClassName =
       keyof VariantProps<typeof buttonVariants>
     >,
   ) =>
-    buttonVariants({ ...renderProps, ...props, className });
+    twMerge(buttonVariants({ ...renderProps, ...props, className }));
 
 export interface ButtonProps
   extends Rac.ButtonProps,
