@@ -171,13 +171,13 @@ export default function RouteComponent({
                 <p className="text-center text-2xl leading-tight font-medium text-wrap lg:text-3xl">
                   {plan.description}
                 </p>
-                <div className="relative mt-6 flex items-end">
+                <div className="relative  flex items-end">
                   <span className="text-4xl font-semibold">${price}</span>
                   <span className="text-muted-foreground text-2xl">
                     {isAnnual ? "/yr" : "/mo"}
                   </span>
                 </div>
-                <Rac.Form method="post" className="">
+                <Rac.Form method="post" className="mt-6">
                   <Oui.Button
                     name="intent"
                     value={lookupKey}
@@ -191,7 +191,7 @@ export default function RouteComponent({
                 <svg
                   viewBox="0 0 39 39"
                   fill="none"
-                  className="absolute -bottom-20 size-40 grayscale transition-all group-hover:scale-105 group-hover:grayscale-0"
+                  className="absolute -bottom-16 size-32 grayscale transition-all group-hover:scale-105 group-hover:grayscale-0"
                 >
                   <path
                     d="M39 24H24V6H6V24H24V39H0V6H6V0H39V24Z"
