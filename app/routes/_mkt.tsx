@@ -5,9 +5,9 @@ import * as Oui from "@/components/ui/oui-index";
 import { Separator } from "@/components/ui/oui-index";
 import { RequestContext } from "@/lib/request-context";
 import { cn } from "@/lib/utils";
+import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 import { siGithub } from "simple-icons";
-import * as Rac from "react-aria-components";
 
 export function loader({ context }: Route.LoaderArgs) {
   const requestContext = context.get(RequestContext);
@@ -55,18 +55,18 @@ function Header() {
           <div className="hidden items-center gap-6 md:flex">
             <Oui.Link
               href={ReactRouter.href("/pricing")}
-              className="hover:text-primary text-muted-foreground font-medium"
+              className="data-hovered:text-primary text-muted-foreground font-medium"
             >
               Pricing
             </Oui.Link>
-            <a
+            <Oui.Link
               href="https://github.com/mw10013/cloudflare-react-router-saas"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-primary text-muted-foreground font-medium"
+              className="data-hovered:text-primary text-muted-foreground font-medium"
             >
               Documentation
-            </a>
+            </Oui.Link>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -110,20 +110,20 @@ function GitHubRepoLink({
   className?: React.HTMLAttributes<SVGElement>["className"];
 }) {
   return (
-    <Oui.Link
+    <Rac.Link
       aria-label="GitHub repo"
       href="https://github.com/mw10013/cloudflare-react-router-saas"
       target="_blank"
       rel="noopener noreferrer"
       className={Oui.buttonClassName({
         variant: "ghost",
-        className: cn(className),
+        className,
       })}
     >
       <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
         <path d={siGithub.path} />
       </svg>
-    </Oui.Link>
+    </Rac.Link>
   );
 }
 
@@ -151,14 +151,14 @@ export function Footer() {
           <h4 className="text-sm font-bold">Resources</h4>
           <ul className="space-y-2 text-sm">
             <li>
-              <a
+              <Oui.Link
                 href="https://github.com/mw10013/oui"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground data-hovered:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Oui Components
-              </a>
+              </Oui.Link>
             </li>
           </ul>
         </div>
@@ -166,14 +166,14 @@ export function Footer() {
           <h4 className="text-sm font-bold">Support</h4>
           <ul className="space-y-2 text-sm">
             <li>
-              <a
+              <Oui.Link
                 href="https://github.com/mw10013/cloudflare-react-router-saas"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground data-hovered:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Documentation
-              </a>
+              </Oui.Link>
             </li>
           </ul>
         </div>
@@ -181,14 +181,14 @@ export function Footer() {
       <div className="border-border/40 flex flex-col items-center justify-between gap-4 border-t border-dashed pt-8 sm:flex-row">
         <p className="text-muted-foreground text-sm">
           © {/* */}2025{/* */} CRRS. Built with ♥ by{" "}
-          <a
+          <Oui.Link
             href="https://github.com/mw10013"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-foreground text-muted-foreground font-medium transition-all"
+            className="data-hovered:text-foreground text-muted-foreground font-medium transition-all"
           >
             @mw10013
-          </a>
+          </Oui.Link>
         </p>
       </div>
     </footer>

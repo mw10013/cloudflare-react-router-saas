@@ -284,11 +284,12 @@ export default function RouteComponent() {
         </h1>
         <p className="text-muted-foreground text-2xl leading-normal font-medium text-wrap sm:max-w-[80%] lg:text-3xl">
           Build with{" "}
-          <a
+          <Oui.Link
             href="https://github.com/mw10013/oui"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 hover:underline"
+            underline="hover"
+            className="inline-flex items-center gap-1.5"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -304,13 +305,14 @@ export default function RouteComponent() {
               <circle cx={12} cy={12} r={10} />
             </svg>
             <span className="text-primary font-semibold">Oui</span>
-          </a>{" "}
+          </Oui.Link>{" "}
           components, authenticate users with{" "}
-          <a
+          <Oui.Link
             href="https://www.better-auth.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 hover:underline"
+            underline="hover"
+            className="inline-flex items-center gap-1.5"
           >
             <svg
               fill="none"
@@ -329,7 +331,7 @@ export default function RouteComponent() {
               <path fill="#000" d="M252.762 204.455v92.089h-96.774v-92.089z" />
             </svg>
             <span className="text-primary font-semibold">Better-Auth</span>
-          </a>
+          </Oui.Link>
           , and monetize through{" "}
           <span className="inline-flex items-center gap-1.5">
             <svg
