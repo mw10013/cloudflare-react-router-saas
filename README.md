@@ -137,7 +137,7 @@ pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-index
 
 ## Credit
 
-Homepage / Pricing design by [dev-xo](https://github.com/dev-xo).
+Homepage / Pricing design by [dev-xo](https://github.com/dev-xo). See his [remix-saas](https://github.com/dev-xo/remix-saas) for a production-ready saas template for remix.
 
 ## License
 
