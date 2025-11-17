@@ -133,6 +133,10 @@ pnpm dlx shadcn@latest add --overwrite @oui/oui-index
 pnpm dlx shadcn@latest add --overwrite @oui/oui-react-router-index
 ```
 
+## Credit
+
+Homepage / Pricing design by [dev-xo](https://github.com/dev-xo).
+
 ## License
 
 Licensed under the [MIT License](https://github.com/mw10013/cloudflare-react-router-saas/blob/main/LICENSE).
