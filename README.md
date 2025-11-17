@@ -122,6 +122,8 @@ pnpm test:e2e
   - Build configuration
     - Build command: CLOUDFLARE_ENV=production pnpm build
     - Deploy command: pnpm exec wrangler deploy
+- Storage & databases: crrs-d1-production: Settings
+  - Enable read replication
 
 ## Oui
 
