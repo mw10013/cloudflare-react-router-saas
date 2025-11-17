@@ -151,12 +151,12 @@ export function Footer() {
           <ul className="space-y-2 text-sm">
             <li>
               <a
-                href="https://github.com/mw10013/cloudflare-react-router-saas"
+                href="https://github.com/mw10013/oui"
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Documentation
+                Oui Components
               </a>
             </li>
           </ul>
@@ -166,18 +166,12 @@ export function Footer() {
           <ul className="space-y-2 text-sm">
             <li>
               <a
-                href="#"
+                href="https://github.com/mw10013/cloudflare-react-router-saas"
                 className="text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Terms of Service
+                Documentation
               </a>
             </li>
           </ul>
@@ -194,7 +188,6 @@ export function Footer() {
           >
             @mw10013
           </a>
-          .
         </p>
       </div>
     </footer>

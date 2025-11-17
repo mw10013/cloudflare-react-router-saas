@@ -282,7 +282,7 @@ export default function RouteComponent() {
         <h1 className="text-2xl leading-tight font-semibold text-wrap lg:text-3xl">
           All-in-one.
         </h1>
-        <p className="text-muted-foreground max-w-[80%] text-2xl leading-normal font-medium text-wrap lg:text-3xl">
+        <p className="text-muted-foreground text-2xl leading-normal font-medium text-wrap sm:max-w-[80%] lg:text-3xl">
           Build with{" "}
           <a
             href="https://github.com/mw10013/oui"
@@ -305,7 +305,7 @@ export default function RouteComponent() {
             </svg>
             <span className="text-primary font-semibold">Oui</span>
           </a>{" "}
-          components, secure users with{" "}
+          components, authenticate users with{" "}
           <a
             href="https://www.better-auth.com/"
             target="_blank"
@@ -330,7 +330,7 @@ export default function RouteComponent() {
             </svg>
             <span className="text-primary font-semibold">Better-Auth</span>
           </a>
-          , and monetize with{" "}
+          , and monetize through{" "}
           <span className="inline-flex items-center gap-1.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
