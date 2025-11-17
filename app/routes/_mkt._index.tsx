@@ -1,8 +1,6 @@
 import type { Route as MktRoute } from "./+types/_mkt"; // Import type from parent route
 
 import * as Oui from "@/components/ui/oui-index";
-import { buttonVariants } from "@/components/ui/oui-index";
-import { cn } from "@/lib/utils";
 import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 import { siGithub } from "simple-icons";
@@ -44,7 +42,7 @@ export default function RouteComponent() {
               }
               className={Oui.buttonClassName({
                 variant: "default",
-                className: cn("h-11 rounded-full! px-6 text-base! font-medium"),
+                className: "h-11 rounded-full! px-6 text-base! font-medium",
               })}
             >
               Go to Dashboard
@@ -54,7 +52,7 @@ export default function RouteComponent() {
               href={ReactRouter.href("/login")}
               className={Oui.buttonClassName({
                 variant: "default",
-                className: cn("h-11 rounded-full! px-6 text-base! font-medium"),
+                className: "h-11 rounded-full! px-6 text-base! font-medium",
               })}
             >
               Get Started
