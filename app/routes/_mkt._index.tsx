@@ -331,7 +331,12 @@ export default function RouteComponent() {
             <span className="text-primary font-semibold">Better-Auth</span>
           </a>
           , and monetize through{" "}
-          <span className="inline-flex items-center gap-1.5">
+         <a
+            href="https://stripe.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 hover:underline"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
@@ -349,7 +354,7 @@ export default function RouteComponent() {
               />
             </svg>
             <span className="text-primary font-semibold">Stripe</span>
-          </span>
+          </a>
           .
         </p>
       </div>
