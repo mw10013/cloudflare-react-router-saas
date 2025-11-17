@@ -55,7 +55,7 @@ function Html({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>crrs</title>
+        <title>CRRS - Cloudflare React Router SaaS</title>
         <meta
           name="description"
           content="Saas template for cloudflare and react router."
