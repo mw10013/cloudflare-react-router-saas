@@ -5,12 +5,14 @@ import * as Rac from "react-aria-components";
 import { composeTailwindRenderProps } from "./oui-base";
 
 export function Tooltip({
-  className,
   offset = 7,
+  className,
+  children,
   ...props
 }: React.ComponentProps<typeof Rac.Tooltip>) {
   return (
     <Rac.Tooltip
+      data-slot="tooltip"
       offset={offset}
       className={composeTailwindRenderProps(className, [
         "z-50 w-fit rounded-md bg-foreground px-3 py-1.5 text-xs text-balance text-background",
@@ -23,7 +25,14 @@ export function Tooltip({
         "transform-origin-[var(--trigger-anchor-point)]",
       ])}
       {...props}
-    />
+    >
+      {(renderProps) => (
+        <>
+          <OverlayArrow />
+          {typeof children === "function" ? children(renderProps) : children}
+        </>
+      )}
+    </Rac.Tooltip>
   );
 }
 
@@ -32,6 +41,7 @@ export function OverlayArrow(
 ) {
   return (
     <Rac.OverlayArrow
+      data-slot="overlay-arrow"
       className={composeTailwindRenderProps(
         props.className,
         "fill-foreground stroke-foreground",

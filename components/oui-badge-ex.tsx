@@ -4,6 +4,7 @@ import {
   focusVisibleStyles,
 } from "@/components/ui/oui-base";
 import { cva } from "class-variance-authority";
+import * as Rac from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
 /**
@@ -45,17 +46,11 @@ const badgeExVariants = cva(
  *   Badge Link
  * </Rac.Link>
  */
-export const badgeExClassName =
-  ({
-    className,
-    ...props
-  }: VariantProps<typeof badgeExVariants> & { className?: string }) =>
-  // The renderProps type omits variant props (variant, size) from the badgeExVariants parameters,
-  // resulting in the RAC render props (isHovered, isPressed, etc.) for compatibility across components.
-  (
-    renderProps: Omit<
-      Parameters<typeof badgeExVariants>[0],
-      keyof VariantProps<typeof badgeExVariants>
-    >,
-  ) =>
-    twMerge(badgeExVariants({ ...renderProps, ...props, className }));
+export function badgeExClassName<T>(
+  props?: VariantProps<typeof badgeExVariants>,
+  className?: string | ((renderProps: T) => string),
+) {
+  return Rac.composeRenderProps(className, (className) =>
+    twMerge(badgeExVariants(props), className),
+  );
+}

@@ -32,8 +32,8 @@ export function ReactRouterThemeToggleButton() {
       aria-label="Toggle dark mode"
       variant="ghost"
     >
-      <Sun className="size-5 dark:hidden" />
-      <Moon className="hidden size-5 dark:block" />
+      <Sun className="dark:hidden" />
+      <Moon className="hidden dark:block" />
     </ToggleButton>
   );
 }

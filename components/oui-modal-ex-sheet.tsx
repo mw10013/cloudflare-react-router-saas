@@ -1,7 +1,6 @@
 "use client";
 
 import type { VariantProps } from "class-variance-authority";
-import { Modal, ModalOverlay } from "@/components/ui/oui-modal";
 import { cva } from "class-variance-authority";
 import * as Rac from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -33,33 +32,15 @@ export const modalExSheetVariants = cva(
   },
 );
 
-export interface ModalExSheetProps
-  extends Rac.ModalOverlayProps,
-    Pick<VariantProps<typeof modalExSheetVariants>, "side"> {
-  overlayClassName?: Rac.ModalOverlayProps["className"];
-}
-
 /**
- * A modal that slides in from an edge of the screen, suitable for a "Sheet" component.
- * Derived from shadcn SheetContent.
- * @param side - The side of the screen from which the modal will enter.
+ * Returns a className function to style a Modal as a sheet that slides in from an edge of the screen.
+ *
  */
-export function ModalExSheet({
-  className,
-  overlayClassName,
-  children,
-  side,
-  ...props
-}: ModalExSheetProps) {
-  return (
-    <ModalOverlay className={overlayClassName} {...props}>
-      <Modal
-        className={Rac.composeRenderProps(className, (className, renderProps) =>
-          twMerge(modalExSheetVariants({ ...renderProps, side, className })),
-        )}
-      >
-        {children}
-      </Modal>
-    </ModalOverlay>
+export function modalExSheetClassName<T>(
+  props?: VariantProps<typeof modalExSheetVariants>,
+  className?: string | ((renderProps: T) => string),
+) {
+  return Rac.composeRenderProps(className, (className) =>
+    twMerge(modalExSheetVariants(props), className),
   );
 }

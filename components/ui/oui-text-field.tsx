@@ -1,17 +1,27 @@
 "use client";
 
+import type { FieldStylesProps } from "@/components/ui/oui-field";
+import * as React from "react";
 import { composeTailwindRenderProps } from "@/components/ui/oui-base";
+import { fieldStyles } from "@/components/ui/oui-field";
 import * as Rac from "react-aria-components";
 
 /**
- * Derived styles from shadcn FormItem
+ * Derived from shadcn Field
  */
-export function TextField({ className, ...props }: Rac.TextFieldProps) {
+export function TextField({
+  className,
+  orientation = "vertical",
+  ...props
+}: React.ComponentProps<typeof Rac.TextField> & FieldStylesProps) {
   return (
     <Rac.TextField
+      data-slot="text-field"
+      data-slot-type="field"
+      data-orientation={orientation}
       className={composeTailwindRenderProps(
         className,
-        "group flex flex-col gap-2",
+        fieldStyles({ orientation }),
       )}
       {...props}
     />

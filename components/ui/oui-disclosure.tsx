@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import {
   composeTailwindRenderProps,
   disabledStyles,
@@ -7,6 +8,7 @@ import {
 } from "@/components/ui/oui-base";
 import { ChevronDown } from "lucide-react";
 import * as Rac from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 
 /**
  * Derived from shadcn AccordionItem
@@ -21,6 +23,16 @@ export function Disclosure({ className, ...props }: Rac.DisclosureProps) {
       {...props}
     />
   );
+}
+
+/**
+ * Derived from shadcn AccordionTrigger
+ */
+export function DisclosureHeading({
+  className,
+  ...props
+}: React.ComponentProps<typeof Rac.Heading>) {
+  return <Rac.Heading className={twMerge("flex", className)} {...props} />;
 }
 
 /**

@@ -51,22 +51,23 @@ function isPopoverVariantsPlacementKey(
   return typeof value === "string" && Object.keys(placement).includes(value);
 }
 
-export function Popover({ className, offset = 4, ...props }: Rac.PopoverProps) {
+export function Popover({ offset = 4, className, ...props }: Rac.PopoverProps) {
   return (
     <Rac.Popover
+      data-slot="popover"
       offset={offset}
       className={Rac.composeRenderProps(
         className,
         (className, { trigger, placement, ...renderProps }) =>
           twMerge(
             popoverVariants({
-              ...renderProps,
               trigger: isPopoverVariantsTriggerKey(trigger)
                 ? trigger
                 : undefined,
               placement: isPopoverVariantsPlacementKey(placement)
                 ? placement
                 : undefined,
+              ...renderProps,
               className,
             }),
           ),

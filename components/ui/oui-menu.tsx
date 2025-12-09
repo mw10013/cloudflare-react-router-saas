@@ -15,6 +15,7 @@ export function Menu<T extends object>({
 }: Rac.MenuProps<T>) {
   return (
     <Rac.Menu
+      data-slot="menu"
       className={composeTailwindRenderProps(
         className,
         "w-full min-w-32 overflow-x-hidden overflow-y-auto p-1",
@@ -64,14 +65,14 @@ export interface MenuItemProps<T extends object> extends Rac.MenuItemProps<T> {
  * Derived from shadcn DropdownMenuCheckboxItem and DropdownMenuRadioGroup
  */
 export function MenuItem<T extends object>({
-  className,
   variant,
+  className,
   children,
   ...props
 }: MenuItemProps<T>) {
   return (
     <Rac.MenuItem
-      {...props}
+      data-slot="menu-item"
       className={Rac.composeRenderProps(className, (className, renderProps) =>
         twMerge(
           menuItemVariants({
@@ -81,6 +82,7 @@ export function MenuItem<T extends object>({
           }),
         ),
       )}
+      {...props}
     >
       {({ isSelected, selectionMode, hasSubmenu, ...renderProps }) => {
         const isCheckboxItem = isSelected && selectionMode === "multiple";
@@ -111,5 +113,45 @@ export function MenuItem<T extends object>({
         );
       }}
     </Rac.MenuItem>
+  );
+}
+
+/**
+ * Derived from shadcn DropdownMenuLabel
+ */
+export function MenuHeader({
+  className,
+  inset,
+  ...props
+}: React.ComponentProps<typeof Rac.Header> & {
+  inset?: boolean;
+}) {
+  return (
+    <Rac.Header
+      data-slot="menu-header"
+      data-inset={inset}
+      className={twMerge(
+        "px-2 py-1.5 text-sm font-medium data-inset:pl-8",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+/**
+ * Derived from shadcn DropdownMenuSeparator
+ */
+export function MenuSeparator({
+  className,
+  ...props
+}: React.ComponentProps<typeof Rac.Separator>) {
+  return (
+    <Rac.Separator
+      data-slot="menu-separator"
+      orientation="horizontal"
+      className={twMerge("-mx-1 my-1 h-px bg-border", className)}
+      {...props}
+    />
   );
 }

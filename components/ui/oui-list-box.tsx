@@ -56,6 +56,7 @@ import {
 } from "@/components/ui/oui-base";
 import { Check } from "lucide-react";
 import * as Rac from "react-aria-components";
+import { twMerge } from "tailwind-merge";
 
 /** Styles derived from shadcn SelectItem.
  * https://github.com/adobe/react-spectrum/issues/7601
@@ -91,5 +92,24 @@ export function ListBoxItem<T extends object>({
         </>
       ))}
     </Rac.ListBoxItem>
+  );
+}
+
+/**
+ * Dervied from shadcn SelectLabel
+ */
+export function ListBoxHeader({
+  className,
+  ...props
+}: React.ComponentProps<typeof Rac.Header>) {
+  return (
+    <Rac.Header
+      data-slot="list-box-header"
+      className={twMerge(
+        "px-2 py-1.5 text-xs text-muted-foreground",
+        className,
+      )}
+      {...props}
+    />
   );
 }

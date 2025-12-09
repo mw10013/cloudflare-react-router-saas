@@ -6,8 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { buttonClassName } from "@/components/ui/oui-button";
-import { Link } from "@/components/ui/oui-link";
-import * as ReactRouter from "react-router"; 
+import * as Rac from "react-aria-components";
+import * as ReactRouter from "react-router";
 
 /**
  * Error Boundary for react router.
@@ -50,9 +50,12 @@ export function ReactRouterErrorBoundary({ error }: { error: unknown }) {
           )}
         </CardContent>
         <CardFooter className="justify-end">
-          <Link className={buttonClassName({ variant: "secondary" })} href="/">
+          <Rac.Link
+            className={buttonClassName({ variant: "secondary" })}
+            href="/"
+          >
             Go Home
-          </Link>
+          </Rac.Link>
         </CardFooter>
       </Card>
     </main>

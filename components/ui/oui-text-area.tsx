@@ -3,7 +3,6 @@
 import type { ComponentProps } from "react";
 import {
   composeTailwindRenderProps,
-  disabledStyles,
   focusVisibleStyles,
 } from "@/components/ui/oui-base";
 import * as Rac from "react-aria-components";
@@ -11,20 +10,21 @@ import * as Rac from "react-aria-components";
 /**
  * TextArea component for multi-line text input.
  * Derived from shadcn Textarea.
- * Can be nested inside TextFieldEx for label and description.
+ * Can be nested inside TextField for label and description.
  *
  * @example
  * ```tsx
- * <Oui.TextFieldEx
+ * <Oui.TextField
  *   name="bio"
- *   label="Bio"
- *   description="You can mention other users and organizations."
  * >
+ *   <Oui.FieldLabel>Bio</Oui.FieldLabel>
  *   <Oui.TextArea
  *     className="resize-none"
  *     placeholder="Tell us a little bit about yourself"
  *   />
- * </Oui.TextFieldEx>
+ *   <Oui.FieldDescription>You can mention other users and organizations.</Oui.FieldDescription>
+ *   <Oui.FieldError />
+ * </Oui.TextField>
  * ```
  */
 export function TextArea({
@@ -33,14 +33,14 @@ export function TextArea({
 }: ComponentProps<typeof Rac.TextArea>) {
   return (
     <Rac.TextArea
-      {...props}
-      className={composeTailwindRenderProps(className, [
-        focusVisibleStyles,
-        disabledStyles,
-        "flex field-sizing-content min-h-16 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] placeholder:text-muted-foreground md:text-sm dark:bg-input/30",
-        "data-invalid:border-destructive data-invalid:ring-destructive/20 dark:data-invalid:ring-destructive/40",
-        "data-disabled:cursor-not-allowed",
-      ])}
+    data-slot="text-area"
+    className={composeTailwindRenderProps(className, [
+      focusVisibleStyles,
+      "flex field-sizing-content min-h-16 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] placeholder:text-muted-foreground md:text-sm dark:bg-input/30",
+      "data-invalid:border-destructive data-invalid:ring-destructive/20 dark:data-invalid:ring-destructive/40",
+      "data-disabled:cursor-not-allowed data-disabled:opacity-50",
+    ])}
+    {...props}
     />
   );
 }
