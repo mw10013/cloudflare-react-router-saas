@@ -8,6 +8,11 @@
 
 - `crrs` (cloudflare-react-router-saas) is a saas project template.
 - `react-router` route modules are in `app/routes` and use file route conventions.
+- Oui UI components are in `components/ui` and `components` and their filenames are prefixed with `oui-`.
+- Shadcn UI components are in `components/ui` and their filenames are not prefixed with `oui-`.
+- `refs/oui` contains a read-only local reference copy of the Oui UI component library, downloaded via `pnpm refs:oui`. It is ignored by Git and used for LLM scanning/reference only.
+  - For guidance on using Oui and RAC compponents and its compositional patterns, scan files in `refs/oui/registry/default/components` that have filenames prefixed with `oui-` and have `demo`. Eg: `refs/oui/registry/default/components/oui-form-demo.tsx`.
+  - For guidance on translating shadcn compositional patterns to Oui and RAC patterns, scan files in `refs/oui/app/routes` that have filenames prefixed with `side-by-side.`. Eg: `refs/oui/app/routes/side-by-side.field.tsx`.
 
 ## TypeScript Guidelines
 

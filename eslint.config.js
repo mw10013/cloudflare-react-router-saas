@@ -10,6 +10,7 @@ export default defineConfig(
     ".wrangler/",
     "worker-configuration.d.ts",
     ".react-router/",
+    "refs/",
     "components/ui/carousel.tsx",
     "components/ui/chart.tsx",
     "components/ui/field.tsx",

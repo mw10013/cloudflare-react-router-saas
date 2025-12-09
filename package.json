@@ -31,7 +31,8 @@
     "d1:reset:int": "node scripts/d1-reset.ts --env int",
     "d1:reset:PRODUCTION": "node scripts/d1-reset.ts --env production",
     "stripe:listen": "stripe listen --project-name=crrs-int --load-from-webhooks-api --forward-to localhost:5173/",
-    "script": "node --env-file=.env"
+    "script": "node --env-file=.env",
+    "refs:oui": "rm -rf refs/oui && mkdir -p refs/oui && curl -L https://github.com/mw10013/oui/archive/refs/heads/main.tar.gz | tar -xz -C refs/oui --strip-components=1"
   },
   "dependencies": {
     "@better-auth/stripe": "1.3.32",
