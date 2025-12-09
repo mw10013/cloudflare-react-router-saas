@@ -109,18 +109,20 @@ export default function RouteComponent({
             validationErrors={actionData?.validationErrors}
             onSubmit={onSubmitReactRouter(submit)}
           >
-            <Oui.AlertExForm
-              success={actionData?.success}
-              message={actionData?.message}
-              details={actionData?.details}
-            />
-            <Oui.TextField name="email" type="email" isRequired>
-              <Oui.FieldLabel>Email</Oui.FieldLabel>
-              <Oui.Input placeholder="m@example.com" />
-            </Oui.TextField>
-            <Oui.Button type="submit" className="w-full">
-              Send magic link
-            </Oui.Button>
+            <Oui.FieldGroup>
+              <Oui.AlertExForm
+                success={actionData?.success}
+                message={actionData?.message}
+                details={actionData?.details}
+              />
+              <Oui.TextField name="email" type="email" isRequired>
+                <Oui.FieldLabel>Email</Oui.FieldLabel>
+                <Oui.Input placeholder="m@example.com" />
+              </Oui.TextField>
+              <Oui.Button type="submit" className="w-full">
+                Send magic link
+              </Oui.Button>
+            </Oui.FieldGroup>
           </Rac.Form>
         </CardContent>
       </Card>

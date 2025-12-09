@@ -323,38 +323,40 @@ function BanDialog({
       <Oui.Modal>
         <Oui.Dialog>
           <Oui.DialogHeader>
-            <Rac.Heading slot="title">Ban User</Rac.Heading>
+            <Oui.DialogTitle>Ban User</Oui.DialogTitle>
           </Oui.DialogHeader>
           <Rac.Form
             validationBehavior="aria"
             validationErrors={fetcher.data?.validationErrors}
             onSubmit={onSubmitReactRouter(fetcher.submit)}
           >
-            <Oui.AlertExForm
-              success={fetcher.data?.success}
-              message={fetcher.data?.message}
-              details={fetcher.data?.details}
-            />
-            <Oui.TextField name="banReason" defaultValue="" autoFocus>
-              <Oui.FieldLabel>Reason</Oui.FieldLabel>
-              <Oui.Input />
-              <Oui.FieldError />
-            </Oui.TextField>
-            <input type="hidden" name="userId" value={userId} />
-            <Oui.DialogFooter>
-              <Oui.Button variant="outline" slot="close">
-                Cancel
-              </Oui.Button>
-              {/* Do not set slot='close' — we keep the dialog open until the server confirms success. */}
-              <Oui.Button
-                type="submit"
-                name="intent"
-                value="ban"
-                isDisabled={fetcher.state !== "idle"}
-              >
-                Ban
-              </Oui.Button>
-            </Oui.DialogFooter>
+            <Oui.FieldGroup>
+              <Oui.AlertExForm
+                success={fetcher.data?.success}
+                message={fetcher.data?.message}
+                details={fetcher.data?.details}
+              />
+              <Oui.TextField name="banReason" defaultValue="" autoFocus>
+                <Oui.FieldLabel>Reason</Oui.FieldLabel>
+                <Oui.Input />
+                <Oui.FieldError />
+              </Oui.TextField>
+              <input type="hidden" name="userId" value={userId} />
+              <Oui.Field orientation="horizontal" className="justify-end">
+                <Oui.Button variant="outline" slot="close">
+                  Cancel
+                </Oui.Button>
+                {/* Do not set slot='close' — we keep the dialog open until the server confirms success. */}
+                <Oui.Button
+                  type="submit"
+                  name="intent"
+                  value="ban"
+                  isDisabled={fetcher.state !== "idle"}
+                >
+                  Ban
+                </Oui.Button>
+              </Oui.Field>
+            </Oui.FieldGroup>
           </Rac.Form>
         </Oui.Dialog>
       </Oui.Modal>
