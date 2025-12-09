@@ -172,46 +172,49 @@ export default function RouteComponent({
             onSubmit={onSubmitReactRouter(submit)}
             className="grid"
           >
-            <Oui.TextField name="emails" isDisabled={!canManageInvitations}>
-              <Oui.FieldLabel>Email Addresses</Oui.FieldLabel>
-              <Oui.Input
-                type="text"
-                placeholder="user1@example.com, user2@example.com"
-              />
-              <Oui.FieldError />
-            </Oui.TextField>
-            <Oui.Select
-              name="role"
-              isDisabled={!canManageInvitations}
-              defaultValue={"member"}
-            >
-              <Oui.FieldLabel>Role</Oui.FieldLabel>
-              <Oui.SelectButton>
-                <Oui.SelectValue />
-              </Oui.SelectButton>
-              <Oui.Popover>
-                <Rac.ListBox
-                  items={
-                    [
-                      { id: "member", name: "Member" },
-                      { id: "admin", name: "Admin" },
-                    ] as const
-                  }
-                >
-                  {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
-                </Rac.ListBox>
-              </Oui.Popover>
-            </Oui.Select>
-            <Oui.Button
-              type="submit"
-              name="intent"
-              value="invite"
-              variant="outline"
-              isDisabled={!canManageInvitations}
-              className="justify-self-end"
-            >
-              Invite
-            </Oui.Button>
+            <Oui.FieldGroup>
+              <Oui.TextField name="emails" isDisabled={!canManageInvitations}>
+                <Oui.FieldLabel>Email Addresses</Oui.FieldLabel>
+                <Oui.Input
+                  type="text"
+                  placeholder="user1@example.com, user2@example.com"
+                />
+                <Oui.FieldError />
+              </Oui.TextField>
+              <Oui.Select
+                name="role"
+                isDisabled={!canManageInvitations}
+                defaultValue={"member"}
+                className="w-fit"
+              >
+                <Oui.FieldLabel>Role</Oui.FieldLabel>
+                <Oui.SelectButton>
+                  <Oui.SelectValue />
+                </Oui.SelectButton>
+                <Oui.Popover>
+                  <Rac.ListBox
+                    items={
+                      [
+                        { id: "member", name: "Member" },
+                        { id: "admin", name: "Admin" },
+                      ] as const
+                    }
+                  >
+                    {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
+                  </Rac.ListBox>
+                </Oui.Popover>
+              </Oui.Select>
+              <Oui.Button
+                type="submit"
+                name="intent"
+                value="invite"
+                variant="outline"
+                isDisabled={!canManageInvitations}
+                className="self-end"
+              >
+                Invite
+              </Oui.Button>
+            </Oui.FieldGroup>
           </Rac.Form>
         </CardContent>
       </Card>
