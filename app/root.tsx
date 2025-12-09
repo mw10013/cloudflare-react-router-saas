@@ -5,7 +5,6 @@ import { themeSessionResolver } from "@/lib/theme.server";
 import * as ReactRouter from "react-router";
 import * as RemixThemes from "remix-themes";
 import "@/app/app.css";
-import { DialogExAlertProvider } from "@/components/oui-dialog-ex-alert";
 import { env } from "cloudflare:workers";
 
 declare module "react-aria-components" {
@@ -65,7 +64,7 @@ function Html({
       </head>
       <body className="font-sans antialiased">
         <OuiReactRouter.ReactRouterProvider>
-          <DialogExAlertProvider>{children}</DialogExAlertProvider>
+          {children}
           <ReactRouter.ScrollRestoration />
           <ReactRouter.Scripts />
           {isAnalyticsEnabled && (
