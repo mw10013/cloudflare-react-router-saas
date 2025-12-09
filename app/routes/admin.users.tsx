@@ -4,6 +4,7 @@ import * as Oui from "@/components/ui/oui-index";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import * as Rac from "react-aria-components";
 import * as ReactRouter from "react-router";
 import * as z from "zod";
 
@@ -133,15 +134,16 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
       </header>
 
       <div>
-        <Oui.SearchFieldEx
+        <Oui.SearchField
           aria-label="Filter by email"
-          placeholder="Filter by email..."
           defaultValue={loaderData.filter ?? ""}
           name="filter"
           onSubmit={(filter: string) =>
             void navigate(`./?filter=${encodeURIComponent(filter)}&page=1`)
           }
-        />
+        >
+          <Oui.Input placeholder="Filter by email..." />
+        </Oui.SearchField>
       </div>
 
       <Oui.Table aria-label="Users">
@@ -170,59 +172,61 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
               <Oui.Cell>{user.banReason ?? ""}</Oui.Cell>
               <Oui.Cell>{user.createdAt.toLocaleString()}</Oui.Cell>
               <Oui.Cell className="text-right">
-                <Oui.MenuEx
-                  triggerElement={
-                    <Oui.Button variant="ghost" className="size-8 p-0">
-                      <span className="sr-only">
-                        Open menu for {user.email}
-                      </span>
-                      ⋮
-                    </Oui.Button>
-                  }
-                >
-                  {user.banned ? (
-                    <Oui.MenuItem
-                      key="unban"
-                      id="unban"
-                      onAction={() => {
-                        void fetcher.submit(
-                          {
-                            intent: "unban",
-                            userId: user.id,
-                          },
-                          { method: "post" },
-                        );
-                      }}
-                    >
-                      Unban
-                    </Oui.MenuItem>
-                  ) : (
-                    <Oui.MenuItem
-                      key="ban"
-                      id="ban"
-                      onAction={() => {
-                        setBanDialog({ isOpen: true, userId: user.id });
-                      }}
-                    >
-                      Ban
-                    </Oui.MenuItem>
-                  )}
-                  <Oui.MenuItem
-                    key="impersonate"
-                    id="impersonate"
-                    onAction={() => {
-                      void fetcher.submit(
-                        {
-                          intent: "impersonate",
-                          userId: user.id,
-                        },
-                        { method: "post" },
-                      );
-                    }}
+                <Rac.MenuTrigger>
+                  <Oui.Button
+                    variant="ghost"
+                    className="size-8 p-0"
+                    aria-label={`Open menu for ${user.email}`}
                   >
-                    Impersonate
-                  </Oui.MenuItem>
-                </Oui.MenuEx>
+                    ⋮
+                  </Oui.Button>
+                  <Oui.Popover>
+                    <Oui.Menu>
+                      {user.banned ? (
+                        <Oui.MenuItem
+                          key="unban"
+                          id="unban"
+                          onAction={() => {
+                            void fetcher.submit(
+                              {
+                                intent: "unban",
+                                userId: user.id,
+                              },
+                              { method: "post" },
+                            );
+                          }}
+                        >
+                          Unban
+                        </Oui.MenuItem>
+                      ) : (
+                        <Oui.MenuItem
+                          key="ban"
+                          id="ban"
+                          onAction={() => {
+                            setBanDialog({ isOpen: true, userId: user.id });
+                          }}
+                        >
+                          Ban
+                        </Oui.MenuItem>
+                      )}
+                      <Oui.MenuItem
+                        key="impersonate"
+                        id="impersonate"
+                        onAction={() => {
+                          void fetcher.submit(
+                            {
+                              intent: "impersonate",
+                              userId: user.id,
+                            },
+                            { method: "post" },
+                          );
+                        }}
+                      >
+                        Impersonate
+                      </Oui.MenuItem>
+                    </Oui.Menu>
+                  </Oui.Popover>
+                </Rac.MenuTrigger>
               </Oui.Cell>
             </Oui.Row>
           )}
@@ -315,42 +319,45 @@ function BanDialog({
 
   if (!userId) return null; // After hooks per Rules of Hooks.
   return (
-    <Oui.DialogEx isOpen={isOpen} onOpenChange={onOpenChange}>
-      <Oui.DialogHeader>
-        <Oui.Heading slot="title">Ban User</Oui.Heading>
-      </Oui.DialogHeader>
-      <Oui.Form
-        validationBehavior="aria"
-        validationErrors={fetcher.data?.validationErrors}
-        onSubmit={onSubmitReactRouter(fetcher.submit)}
-      >
-        <Oui.AlertExForm
-          success={fetcher.data?.success}
-          message={fetcher.data?.message}
-          details={fetcher.data?.details}
-        />
-        <Oui.TextFieldEx
-          name="banReason"
-          label="Reason"
-          defaultValue=""
-          autoFocus
-        />
-        <input type="hidden" name="userId" value={userId} />
-        <Oui.DialogFooter>
-          <Oui.Button variant="outline" slot="close">
-            Cancel
-          </Oui.Button>
-          {/* Do not set slot='close' — we keep the dialog open until the server confirms success. */}
-          <Oui.Button
-            type="submit"
-            name="intent"
-            value="ban"
-            isDisabled={fetcher.state !== "idle"}
+    <Oui.ModalOverlay isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Oui.Modal>
+        <Oui.Dialog>
+          <Oui.DialogHeader>
+            <Rac.Heading slot="title">Ban User</Rac.Heading>
+          </Oui.DialogHeader>
+          <Rac.Form
+            validationBehavior="aria"
+            validationErrors={fetcher.data?.validationErrors}
+            onSubmit={onSubmitReactRouter(fetcher.submit)}
           >
-            Ban
-          </Oui.Button>
-        </Oui.DialogFooter>
-      </Oui.Form>
-    </Oui.DialogEx>
+            <Oui.AlertExForm
+              success={fetcher.data?.success}
+              message={fetcher.data?.message}
+              details={fetcher.data?.details}
+            />
+            <Oui.TextField name="banReason" defaultValue="" autoFocus>
+              <Oui.FieldLabel>Reason</Oui.FieldLabel>
+              <Oui.Input />
+              <Oui.FieldError />
+            </Oui.TextField>
+            <input type="hidden" name="userId" value={userId} />
+            <Oui.DialogFooter>
+              <Oui.Button variant="outline" slot="close">
+                Cancel
+              </Oui.Button>
+              {/* Do not set slot='close' — we keep the dialog open until the server confirms success. */}
+              <Oui.Button
+                type="submit"
+                name="intent"
+                value="ban"
+                isDisabled={fetcher.state !== "idle"}
+              >
+                Ban
+              </Oui.Button>
+            </Oui.DialogFooter>
+          </Rac.Form>
+        </Oui.Dialog>
+      </Oui.Modal>
+    </Oui.ModalOverlay>
   );
 }

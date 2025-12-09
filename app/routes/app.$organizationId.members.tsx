@@ -172,14 +172,9 @@ function MemberItem({
           <ItemTitle>{member.user.email}</ItemTitle>
           <ItemDescription>
             {member.role !== "owner" && canEdit ? (
-              <Oui.SelectEx
-                name="role"
-                defaultValue={member.role}
+              <Oui.Select
                 aria-label={`Change role for ${member.user.email}`}
-                items={[
-                  { id: "member", name: "Member" },
-                  { id: "admin", name: "Admin" },
-                ]}
+                value={member.role}
                 onChange={(key) =>
                   void fetcher.submit(
                     { intent: "change-role", memberId: member.id, role: key },
@@ -187,8 +182,22 @@ function MemberItem({
                   )
                 }
               >
-                {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
-              </Oui.SelectEx>
+                <Oui.SelectButton>
+                  <Oui.SelectValue />
+                </Oui.SelectButton>
+                <Oui.Popover>
+                  <Rac.ListBox
+                    items={
+                      [
+                        { id: "member", name: "Member" },
+                        { id: "admin", name: "Admin" },
+                      ] as const
+                    }
+                  >
+                    {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
+                  </Rac.ListBox>
+                </Oui.Popover>
+              </Oui.Select>
             ) : (
               member.role
             )}

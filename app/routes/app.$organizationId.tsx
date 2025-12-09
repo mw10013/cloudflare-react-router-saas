@@ -114,7 +114,11 @@ export function AppSidebar({
     <Sidebar>
       <SidebarHeader>
         <div className="flex w-full items-center gap-2 p-2">
-          <Rac.Link href="/" aria-label="Home" className={Oui.buttonClassName({ variant: "ghost", size: "icon" })}>
+          <Rac.Link
+            href="/"
+            aria-label="Home"
+            className={Oui.buttonClassName({ variant: "ghost", size: "icon" })}
+          >
             <AppLogoIcon className="text-primary size-7" />
           </Rac.Link>
           <OrganizationSwitcher
@@ -142,35 +146,37 @@ export function OrganizationSwitcher({
 }) {
   const navigate = ReactRouter.useNavigate();
   return (
-    <Oui.MenuEx
-      className="min-w-56 rounded-lg"
-      onAction={(key: React.Key) => void navigate(`/app/${String(key)}`)}
-      triggerElement={
-        <Oui.Button
-          variant="ghost"
-          className="h-auto flex-1 items-center justify-between p-0 text-left font-medium data-hovered:bg-transparent"
+    <Rac.MenuTrigger>
+      <Oui.Button
+        variant="ghost"
+        className="h-auto flex-1 items-center justify-between p-0 text-left font-medium data-hovered:bg-transparent"
+      >
+        <div className="grid leading-tight">
+          <span className="truncate font-medium">{organization.name}</span>
+        </div>
+        <ChevronsUpDown className="text-muted-foreground ml-2 size-4" />
+      </Oui.Button>
+      <Oui.Popover>
+        <Oui.Menu
+          className="min-w-56 rounded-lg"
+          onAction={(key: React.Key) => void navigate(`/app/${String(key)}`)}
         >
-          <div className="grid leading-tight">
-            <span className="truncate font-medium">{organization.name}</span>
-          </div>
-          <ChevronsUpDown className="text-muted-foreground ml-2 size-4" />
-        </Oui.Button>
-      }
-    >
-      <Rac.MenuSection>
-        <Oui.Header>Switch Organization</Oui.Header>
-        {organizations.map((org) => (
-          <Oui.MenuItem
-            key={org.id}
-            id={org.id}
-            textValue={org.name}
-            className="p-2"
-          >
-            {org.name}
-          </Oui.MenuItem>
-        ))}
-      </Rac.MenuSection>
-    </Oui.MenuEx>
+          <Rac.MenuSection>
+            <Oui.MenuHeader>Switch Organization</Oui.MenuHeader>
+            {organizations.map((org) => (
+              <Oui.MenuItem
+                key={org.id}
+                id={org.id}
+                textValue={org.name}
+                className="p-2"
+              >
+                {org.name}
+              </Oui.MenuItem>
+            ))}
+          </Rac.MenuSection>
+        </Oui.Menu>
+      </Oui.Popover>
+    </Rac.MenuTrigger>
   );
 }
 
@@ -183,36 +189,36 @@ export function NavUser({
 }) {
   const submit = ReactRouter.useSubmit();
   return (
-    <Oui.MenuEx
-      className="min-w-56 rounded-lg"
-      triggerElement={
-        <Oui.SidebarExButton>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-medium">{user.email}</span>
-          </div>
-          <ChevronsUpDown className="ml-auto size-4" />
-        </Oui.SidebarExButton>
-      }
-    >
-      <Rac.MenuSection>
-        <Rac.Header className="truncate px-1 py-1.5 text-center text-sm font-medium">
-          {user.email}
-        </Rac.Header>
-      </Rac.MenuSection>
-      <Oui.Separator variant="menu" />
-      <Oui.MenuItem
-        id="signOut"
-        textValue="Sign Out"
-        onAction={() =>
-          void submit(
-            {},
-            { method: "post", action: ReactRouter.href("/signout") },
-          )
-        }
-      >
-        <LogOut className="mr-2 size-4" />
-        Sign Out
-      </Oui.MenuItem>
-    </Oui.MenuEx>
+    <Rac.MenuTrigger>
+      <Oui.SidebarExButton>
+        <div className="grid flex-1 text-left text-sm leading-tight">
+          <span className="truncate font-medium">{user.email}</span>
+        </div>
+        <ChevronsUpDown className="ml-auto size-4" />
+      </Oui.SidebarExButton>
+      <Oui.Popover>
+        <Oui.Menu className="min-w-56 rounded-lg">
+          <Rac.MenuSection>
+            <Oui.MenuHeader className="truncate px-1 py-1.5 text-center text-sm font-medium">
+              {user.email}
+            </Oui.MenuHeader>
+          </Rac.MenuSection>
+          <Oui.MenuSeparator />
+          <Oui.MenuItem
+            id="signOut"
+            textValue="Sign Out"
+            onAction={() =>
+              void submit(
+                {},
+                { method: "post", action: ReactRouter.href("/signout") },
+              )
+            }
+          >
+            <LogOut className="mr-2 size-4" />
+            Sign Out
+          </Oui.MenuItem>
+        </Oui.Menu>
+      </Oui.Popover>
+    </Rac.MenuTrigger>
   );
 }

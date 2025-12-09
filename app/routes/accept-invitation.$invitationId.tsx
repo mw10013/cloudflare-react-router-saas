@@ -53,9 +53,7 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
   if (loaderData.needsAuth) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
-        <Oui.Text>
-          You need to sign in or sign up to accept this invitation.
-        </Oui.Text>
+        You need to sign in or sign up to accept this invitation.
         <Oui.Link href="/login" className="mt-4">
           Go to Login
         </Oui.Link>

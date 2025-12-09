@@ -114,10 +114,12 @@ function GitHubRepoLink({
       href="https://github.com/mw10013/cloudflare-react-router-saas"
       target="_blank"
       rel="noopener noreferrer"
-      className={Oui.buttonClassName({
-        variant: "ghost",
+      className={Oui.buttonClassName(
+        {
+          variant: "ghost",
+        },
         className,
-      })}
+      )}
     >
       <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
         <path d={siGithub.path} />

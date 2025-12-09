@@ -1,11 +1,11 @@
 import type { NavigateOptions } from "react-router";
 import type { Route } from "./+types/root";
 import * as OuiReactRouter from "@/components/oui-react-router-index";
-import * as Oui from "@/components/ui/oui-index";
 import { themeSessionResolver } from "@/lib/theme.server";
 import * as ReactRouter from "react-router";
 import * as RemixThemes from "remix-themes";
 import "@/app/app.css";
+import { DialogExAlertProvider } from "@/components/oui-dialog-ex-alert";
 import { env } from "cloudflare:workers";
 
 declare module "react-aria-components" {
@@ -65,7 +65,7 @@ function Html({
       </head>
       <body className="font-sans antialiased">
         <OuiReactRouter.ReactRouterProvider>
-          <Oui.DialogExAlertProvider>{children}</Oui.DialogExAlertProvider>
+          <DialogExAlertProvider>{children}</DialogExAlertProvider>
           <ReactRouter.ScrollRestoration />
           <ReactRouter.Scripts />
           {isAnalyticsEnabled && (

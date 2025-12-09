@@ -10,6 +10,7 @@ import * as Oui from "@/components/ui/oui-index";
 import { onSubmitReactRouter } from "@/lib/oui-on-submit-react-router";
 import { RequestContext } from "@/lib/request-context";
 import { invariant } from "@epic-web/invariant";
+import * as Rac from "react-aria-components";
 import { useSubmit } from "react-router";
 import * as z from "zod";
 
@@ -24,7 +25,9 @@ export function loader({ context }: Route.LoaderArgs) {
 export async function action({
   request,
   context,
-}: Route.ActionArgs): Promise<Oui.AlertExFormActionResult & { magicLink?: string }> {
+}: Route.ActionArgs): Promise<
+  Oui.AlertExFormActionResult & { magicLink?: string }
+> {
   const schema = z.object({
     email: z.email(),
   });
@@ -100,7 +103,7 @@ export default function RouteComponent({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Oui.Form
+          <Rac.Form
             method="post"
             validationBehavior="aria"
             validationErrors={actionData?.validationErrors}
@@ -111,17 +114,14 @@ export default function RouteComponent({
               message={actionData?.message}
               details={actionData?.details}
             />
-            <Oui.TextFieldEx
-              name="email"
-              type="email"
-              label="Email"
-              placeholder="m@example.com"
-              isRequired
-            />
+            <Oui.TextField name="email" type="email" isRequired>
+              <Oui.FieldLabel>Email</Oui.FieldLabel>
+              <Oui.Input placeholder="m@example.com" />
+            </Oui.TextField>
             <Oui.Button type="submit" className="w-full">
               Send magic link
             </Oui.Button>
-          </Oui.Form>
+          </Rac.Form>
         </CardContent>
       </Card>
     </div>

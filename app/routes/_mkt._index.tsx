@@ -40,20 +40,20 @@ export default function RouteComponent() {
                   ? "/admin"
                   : "/app"
               }
-              className={Oui.buttonClassName({
-                variant: "default",
-                className: "h-11 rounded-full! px-6 text-base! font-medium",
-              })}
+              className={Oui.buttonClassName(
+                { variant: "default" },
+                "h-11 rounded-full! px-6 text-base! font-medium",
+              )}
             >
               Go to Dashboard
             </Oui.Link>
           ) : (
             <Oui.Link
               href={ReactRouter.href("/login")}
-              className={Oui.buttonClassName({
-                variant: "default",
-                className: "h-11 rounded-full! px-6 text-base! font-medium",
-              })}
+              className={Oui.buttonClassName(
+                { variant: "default" },
+                "h-11 rounded-full! px-6 text-base! font-medium",
+              )}
             >
               Get Started
             </Oui.Link>
@@ -63,10 +63,10 @@ export default function RouteComponent() {
             href="https://github.com/mw10013/cloudflare-react-router-saas"
             target="_blank"
             rel="noopener noreferrer"
-            className={Oui.buttonClassName({
-              variant: "outline",
-              className: "h-11 rounded-full! text-base! font-medium",
-            })}
+            className={Oui.buttonClassName(
+              { variant: "outline" },
+              "h-11 rounded-full! text-base! font-medium",
+            )}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
               <path d={siGithub.path} />
@@ -364,7 +364,7 @@ export default function RouteComponent() {
       </div>
       <div className="relative flex min-h-[60vh] w-full flex-col items-center justify-center gap-6 overflow-hidden border border-t-0 p-6">
         <div className="absolute inset-0 isolate -z-10 overflow-hidden">
-          <div className="absolute inset-y-0 left-1/2 w-[1200px] -translate-x-1/2 mask-[linear-gradient(black,transparent_320px),linear-gradient(90deg,transparent,black_5%,black_95%,transparent)] [mask-composite:intersect]">
+          <div className="absolute inset-y-0 left-1/2 w-[1200px] -translate-x-1/2 mask-[linear-gradient(black,transparent_320px),linear-gradient(90deg,transparent,black_5%,black_95%,transparent)] mask-intersect">
             <svg
               className="text-primary/10 pointer-events-none absolute inset-0"
               width="100%"
@@ -411,10 +411,10 @@ export default function RouteComponent() {
               href="https://github.com/mw10013/cloudflare-react-router-saas"
               target="_blank"
               rel="noopener noreferrer"
-              className={Oui.buttonClassName({
-                variant: "outline",
-                className: "h-11 rounded-full! text-base! font-medium",
-              })}
+              className={Oui.buttonClassName(
+                { variant: "outline" },
+                "h-11 rounded-full! text-base! font-medium",
+              )}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
                 <path d={siGithub.path} />

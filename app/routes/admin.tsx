@@ -103,36 +103,36 @@ export function NavUser({
 }) {
   const submit = ReactRouter.useSubmit();
   return (
-    <Oui.MenuEx
-      className="min-w-56 rounded-lg"
-      triggerElement={
-        <Oui.SidebarExButton>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-medium">{user.email}</span>
-          </div>
-          <ChevronsUpDown className="ml-auto size-4" />
-        </Oui.SidebarExButton>
-      }
-    >
-      <Rac.MenuSection>
-        <Rac.Header className="truncate px-1 py-1.5 text-center text-sm font-medium">
-          {user.email}
-        </Rac.Header>
-      </Rac.MenuSection>
-      <Oui.Separator variant="menu" />
-      <Oui.MenuItem
-        id="signOut"
-        textValue="Sign Out"
-        onAction={() =>
-          void submit(
-            {},
-            { method: "post", action: ReactRouter.href("/signout") },
-          )
-        }
-      >
-        <LogOut className="mr-2 size-4" />
-        Sign Out
-      </Oui.MenuItem>
-    </Oui.MenuEx>
+    <Rac.MenuTrigger>
+      <Oui.SidebarExButton>
+        <div className="grid flex-1 text-left text-sm leading-tight">
+          <span className="truncate font-medium">{user.email}</span>
+        </div>
+        <ChevronsUpDown className="ml-auto size-4" />
+      </Oui.SidebarExButton>
+      <Oui.Popover>
+        <Oui.Menu className="min-w-56 rounded-lg">
+          <Rac.MenuSection>
+            <Rac.Header className="truncate px-1 py-1.5 text-center text-sm font-medium">
+              {user.email}
+            </Rac.Header>
+          </Rac.MenuSection>
+          <Oui.MenuSeparator />
+          <Oui.MenuItem
+            id="signOut"
+            textValue="Sign Out"
+            onAction={() =>
+              void submit(
+                {},
+                { method: "post", action: ReactRouter.href("/signout") },
+              )
+            }
+          >
+            <LogOut className="mr-2 size-4" />
+            Sign Out
+          </Oui.MenuItem>
+        </Oui.Menu>
+      </Oui.Popover>
+    </Rac.MenuTrigger>
   );
 }

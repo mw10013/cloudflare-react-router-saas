@@ -164,7 +164,7 @@ export default function RouteComponent({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Oui.Form
+          <Rac.Form
             ref={formRef}
             id="invite-form"
             method="post"
@@ -172,25 +172,36 @@ export default function RouteComponent({
             onSubmit={onSubmitReactRouter(submit)}
             className="grid"
           >
-            <Oui.TextFieldEx
-              name="emails"
-              label="Email Addresses"
-              type="text"
-              placeholder="user1@example.com, user2@example.com"
-              isDisabled={!canManageInvitations}
-            />
-            <Oui.SelectEx
+            <Oui.TextField name="emails" isDisabled={!canManageInvitations}>
+              <Oui.FieldLabel>Email Addresses</Oui.FieldLabel>
+              <Oui.Input
+                type="text"
+                placeholder="user1@example.com, user2@example.com"
+              />
+              <Oui.FieldError />
+            </Oui.TextField>
+            <Oui.Select
               name="role"
-              label="Role"
               isDisabled={!canManageInvitations}
               defaultValue={"member"}
-              items={[
-                { id: "member", name: "Member" },
-                { id: "admin", name: "Admin" },
-              ]}
             >
-              {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
-            </Oui.SelectEx>
+              <Oui.FieldLabel>Role</Oui.FieldLabel>
+              <Oui.SelectButton>
+                <Oui.SelectValue />
+              </Oui.SelectButton>
+              <Oui.Popover>
+                <Rac.ListBox
+                  items={
+                    [
+                      { id: "member", name: "Member" },
+                      { id: "admin", name: "Admin" },
+                    ] as const
+                  }
+                >
+                  {(item) => <Oui.ListBoxItem>{item.name}</Oui.ListBoxItem>}
+                </Rac.ListBox>
+              </Oui.Popover>
+            </Oui.Select>
             <Oui.Button
               type="submit"
               name="intent"
@@ -201,7 +212,7 @@ export default function RouteComponent({
             >
               Invite
             </Oui.Button>
-          </Oui.Form>
+          </Rac.Form>
         </CardContent>
       </Card>
       <Card className="gap-4">

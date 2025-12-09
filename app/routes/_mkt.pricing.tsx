@@ -92,7 +92,7 @@ export default function RouteComponent({
         <span className="bg-primary absolute right-0 -bottom-[9px] h-5 w-px animate-pulse opacity-80" />
         <span className="bg-primary absolute -right-[9px] bottom-0 h-px w-5 animate-pulse opacity-80" />
         <div className="absolute inset-0 isolate -z-10 overflow-hidden">
-          <div className="absolute inset-y-0 left-1/2 w-[1200px] -translate-x-1/2 mask-[linear-gradient(black,transparent_320px),linear-gradient(90deg,transparent,black_5%,black_95%,transparent)] [mask-composite:intersect]">
+          <div className="absolute inset-y-0 left-1/2 w-[1200px] -translate-x-1/2 mask-[linear-gradient(black,transparent_320px),linear-gradient(90deg,transparent,black_5%,black_95%,transparent)] mask-intersect">
             <svg
               className="text-primary/10 pointer-events-none absolute inset-0"
               width="100%"
@@ -142,7 +142,7 @@ export default function RouteComponent({
         />
         <div className="bg-secondary absolute -top-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-6 rounded-full p-2 px-3">
           <span className="text-sm font-medium">Monthly</span>
-          <Oui.SwitchEx
+          <Oui.Switch
             isSelected={isAnnual}
             onChange={setIsAnnual}
             aria-label="Annual pricing"
@@ -312,10 +312,10 @@ export default function RouteComponent({
               href="https://github.com/mw10013/cloudflare-react-router-saas"
               target="_blank"
               rel="noopener noreferrer"
-              className={Oui.buttonClassName({
-                variant: "outline",
-                className: "h-11 rounded-full! text-base! font-medium",
-              })}
+              className={Oui.buttonClassName(
+                { variant: "outline" },
+                "h-11 rounded-full! text-base! font-medium",
+              )}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
                 <path d={siGithub.path} />

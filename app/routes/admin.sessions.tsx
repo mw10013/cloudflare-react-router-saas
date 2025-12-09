@@ -49,15 +49,16 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
       </header>
 
       <div>
-        <Oui.SearchFieldEx
+        <Oui.SearchField
           aria-label="Filter by email"
-          placeholder="Filter by email..."
           defaultValue={loaderData.filter ?? ""}
           name="filter"
           onSubmit={(filter: string) =>
             void navigate(`./?filter=${encodeURIComponent(filter)}&page=1`)
           }
-        />
+        >
+          <Oui.Input placeholder="Filter by email..." />
+        </Oui.SearchField>
       </div>
 
       <Oui.Table aria-label="Sessions">
