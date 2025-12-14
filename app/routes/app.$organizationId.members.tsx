@@ -166,7 +166,7 @@ function MemberItem({
   const fetcher = useFetcher();
   const pending = fetcher.state !== "idle";
   return (
-    <Oui.CardExGridListItem textValue={member.user.email}>
+    <Oui.CardGridListItem textValue={member.user.email}>
       <Item size="sm" className="gap-4 px-0">
         <ItemContent>
           <ItemTitle>{member.user.email}</ItemTitle>
@@ -239,6 +239,6 @@ function MemberItem({
           </ItemActions>
         )}
       </Item>
-    </Oui.CardExGridListItem>
+    </Oui.CardGridListItem>
   );
 }

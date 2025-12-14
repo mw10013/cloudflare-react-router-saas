@@ -52,7 +52,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 export async function action({
   request,
   context,
-}: Route.ActionArgs): Promise<Oui.AlertExFormActionResult> {
+}: Route.ActionArgs): Promise<Oui.AlertFormActionResult> {
   const schema = z.discriminatedUnion("intent", [
     z.object({
       intent: z.literal("ban"),
@@ -234,8 +234,8 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
       </Oui.Table>
 
       {loaderData.pageCount > 1 && (
-        <Oui.ListBoxExPagination selectedKeys={[loaderData.page]}>
-          <Oui.ListBoxItemExPagination
+        <Oui.Pagination selectedKeys={[loaderData.page]}>
+          <Oui.PaginationItem
             id="prev"
             href={`/admin/users?page=${String(
               loaderData.page > 1 ? loaderData.page - 1 : 1,
@@ -247,9 +247,9 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
             isDisabled={loaderData.page <= 1}
           >
             Previous
-          </Oui.ListBoxItemExPagination>
+          </Oui.PaginationItem>
           {Array.from({ length: loaderData.pageCount }, (_, i) => (
-            <Oui.ListBoxItemExPagination
+            <Oui.PaginationItem
               key={i + 1}
               id={String(i + 1)}
               href={`/admin/users?page=${String(i + 1)}${
@@ -259,9 +259,9 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
               }`}
             >
               {i + 1}
-            </Oui.ListBoxItemExPagination>
+            </Oui.PaginationItem>
           ))}
-          <Oui.ListBoxItemExPagination
+          <Oui.PaginationItem
             id="next"
             href={`/admin/users?page=${String(
               loaderData.page < loaderData.pageCount
@@ -275,8 +275,8 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
             isDisabled={loaderData.page >= loaderData.pageCount}
           >
             Next
-          </Oui.ListBoxItemExPagination>
-        </Oui.ListBoxExPagination>
+          </Oui.PaginationItem>
+        </Oui.Pagination>
       )}
 
       <BanDialog
@@ -331,7 +331,7 @@ function BanDialog({
             onSubmit={onSubmitReactRouter(fetcher.submit)}
           >
             <Oui.FieldGroup>
-              <Oui.AlertExForm
+              <Oui.AlertForm
                 success={fetcher.data?.success}
                 message={fetcher.data?.message}
                 details={fetcher.data?.details}

@@ -83,7 +83,7 @@ function InvitationItem({
   const fetcher = useFetcher();
   const disabled = fetcher.state !== "idle";
   return (
-    <Oui.CardExGridListItem textValue={invitation.inviter.email}>
+    <Oui.CardGridListItem textValue={invitation.inviter.email}>
       <Item size="sm" className="gap-4 px-0">
         <ItemContent>
           <ItemTitle>{invitation.inviter.email}</ItemTitle>
@@ -125,7 +125,7 @@ function InvitationItem({
           </fetcher.Form>
         </ItemActions>
       </Item>
-    </Oui.CardExGridListItem>
+    </Oui.CardGridListItem>
   );
 }
 

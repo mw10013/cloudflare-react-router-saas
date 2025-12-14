@@ -1,13 +1,14 @@
 "use client";
 
 import type { VariantProps } from "class-variance-authority";
+import * as React from "react";
 import {
+  composeTailwindRenderProps,
   disabledStyles,
   focusVisibleStyles,
 } from "@/components/ui/oui-base";
 import { cva } from "class-variance-authority";
 import * as Rac from "react-aria-components";
-import { twMerge } from "tailwind-merge";
 
 /**
  * Derived from shadcn Toggle.
@@ -41,28 +42,35 @@ export const toggleButtonVariants = cva(
   },
 );
 
-export interface ToggleButtonProps
-  extends Rac.ToggleButtonProps,
-    VariantProps<typeof toggleButtonVariants> {}
-
+/**
+ * Derived from shadcn Toggle.
+ *
+ * Unlike standard RAC ToggleButton, this component supports string className overrides (not merge) via 
+ * ToggleButtonContext, allowing ToggleButtonGroup to control styles of child buttons.
+ */
 export function ToggleButton({
   className,
   variant,
   size,
   ...props
-}: ToggleButtonProps) {
+}: React.ComponentProps<typeof Rac.ToggleButton> &
+  VariantProps<typeof toggleButtonVariants>) {
+  const context = React.useContext(Rac.ToggleButtonContext);
+  const contextClassName =
+    context && "className" in context && typeof context.className === "string"
+      ? context.className
+      : undefined;
   return (
     <Rac.ToggleButton
       data-slot="toggle-button"
-      className={Rac.composeRenderProps(className, (className, renderProps) =>
-        twMerge(
+      className={composeTailwindRenderProps(
+        className,
+        // Override with context className string if provided (from ToggleButtonGroup)
+        contextClassName ??
           toggleButtonVariants({
-            ...renderProps,
             variant,
             size,
-            className,
           }),
-        ),
       )}
       {...props}
     />

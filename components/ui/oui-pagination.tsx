@@ -6,10 +6,11 @@ import * as Rac from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
 /**
- * Experimental ListBox reusable wrapper for pagination controls
+ * RAC ListBox with shadcn characteristics for pagination.
+ *
+ * Derived from shadcn Pagination component.
  */
-
-export function ListBoxExPagination<T extends object>({
+export function Pagination<T extends object>({
   className,
   "aria-label": ariaLabel = "Pagination",
   ...props
@@ -17,6 +18,7 @@ export function ListBoxExPagination<T extends object>({
   return (
     <nav aria-label="pagination" className="mx-auto flex w-full justify-center">
       <Rac.ListBox
+        data-slot="pagination"
         aria-label={ariaLabel}
         orientation="horizontal"
         selectionMode="single"
@@ -33,16 +35,16 @@ export function ListBoxExPagination<T extends object>({
 /**
  * Pagination item styled as a button. Selected items use outline variant, others use ghost.
  */
-export function ListBoxItemExPagination<T extends object>({
+export function PaginationItem<T extends object>({
+  textValue,
   className,
   children,
   ...props
 }: Rac.ListBoxItemProps<T>) {
   return (
     <Rac.ListBoxItem
-      {...props}
       textValue={
-        props.textValue ??
+        textValue ??
         (typeof children === "string"
           ? children
           : typeof children === "number"
@@ -59,6 +61,7 @@ export function ListBoxItemExPagination<T extends object>({
           }),
         ),
       )}
+      {...props}
     >
       {children}
     </Rac.ListBoxItem>

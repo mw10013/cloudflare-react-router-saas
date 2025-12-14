@@ -87,7 +87,8 @@ export function ButtonGroup({
   className,
   orientation,
   ...props
-}: Rac.GroupProps & VariantProps<typeof buttonGroupVariants>) {
+}: React.ComponentProps<typeof Rac.Group> &
+  VariantProps<typeof buttonGroupVariants>) {
   return (
     <Rac.Group
       data-slot="button-group"

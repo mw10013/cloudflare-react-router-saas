@@ -1,20 +1,20 @@
 "use client";
 
 /**
- * The `oui-sidebar-ex` module provides SidebarExTrigger, SidebarExTree, and SidebarExButton to use with shadcn Sidebar.
+ * The `oui-sidebar` module provides SidebarTrigger, SidebarTree, and SidebarButton to use with shadcn Sidebar.
  *
  * @example
  * ```tsx
  * import * as Oui from "@/components/ui/oui-index";
  *
  * <SidebarProvider>
- *   <Oui.SidebarExTrigger />
+ *   <Oui.SidebarTrigger />
  *   <Sidebar>
  *     <SidebarContent>
- *       <Oui.SidebarExTree aria-label="App Navigation" items={items} />
+ *       <Oui.SidebarTree aria-label="App Navigation" items={items} />
  *     </SidebarContent>
  *     <SidebarFooter>
- *       <Oui.SidebarExButton />
+ *       <Oui.SidebarButton />
  *     </SidebarFooter>
  *   </Sidebar>
  * </SidebarProvider>
@@ -28,7 +28,7 @@ import { ChevronRight, PanelLeftIcon } from "lucide-react";
 import * as Rac from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
-export function SidebarExTrigger({
+export function SidebarTrigger({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   className,
@@ -39,10 +39,10 @@ export function SidebarExTrigger({
 
   return (
     <Button
+      data-slot="sidebar-trigger"
       aria-label={!ariaLabel && !ariaLabelledBy ? "Toggle sidebar" : ariaLabel}
       aria-labelledby={ariaLabelledBy}
       data-sidebar="trigger"
-      data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
       className={composeTailwindRenderProps(className, "m-2 size-7")}
@@ -57,26 +57,21 @@ export function SidebarExTrigger({
   );
 }
 
-export interface SidebarExTreeNode {
+export interface SidebarTreeNode {
   id: string;
   title?: string;
   href?: string;
   "data-testid"?: string;
-  children?: SidebarExTreeNode[];
+  children?: SidebarTreeNode[];
 }
 
-export interface SidebarExTreeItemContentProps
-  extends Rac.TreeItemContentProps {
-  href?: string;
-}
-
-export function SidebarExTreeItemContent({
+export function SidebarTreeItemContent({
   children,
   href,
   ...props
-}: SidebarExTreeItemContentProps) {
+}: Rac.TreeItemContentProps & { href?: string }) {
   return (
-    <Rac.TreeItemContent {...props}>
+    <Rac.TreeItemContent data-slot="sidebar-tree-item-content" {...props}>
       {(renderProps) => {
         return (
           <div
@@ -113,20 +108,16 @@ export function SidebarExTreeItemContent({
   );
 }
 
-export interface SidebarExTreeItemProps extends Partial<Rac.TreeItemProps> {
-  title: string;
-}
-
-export function SidebarExTreeItem({
+export function SidebarTreeItem({
   title,
   className,
   children,
   ...props
-}: SidebarExTreeItemProps) {
+}: Partial<Rac.TreeItemProps> & { title: string }) {
   return (
     <Rac.TreeItem
+      data-slot="sidebar-tree-item"
       textValue={title}
-      {...props}
       className={Rac.composeRenderProps(className, (className, renderProps) =>
         twMerge(
           "outline-none",
@@ -135,10 +126,9 @@ export function SidebarExTreeItem({
           className,
         ),
       )}
+      {...props}
     >
-      <SidebarExTreeItemContent href={props.href}>
-        {title}
-      </SidebarExTreeItemContent>
+      <SidebarTreeItemContent href={props.href}>{title}</SidebarTreeItemContent>
       {children}
     </Rac.TreeItem>
   );
@@ -147,12 +137,12 @@ export function SidebarExTreeItem({
 /**
  * Derived from SidebarGroup
  */
-export function SidebarExTree(props: Rac.TreeProps<SidebarExTreeNode>) {
+export function SidebarTree(props: Rac.TreeProps<SidebarTreeNode>) {
   return (
     <Rac.Tree {...props} className="relative flex w-full min-w-0 flex-col p-2">
-      {function renderSidebarTreeNodeEx(item) {
+      {function renderSidebarTreeNode(item) {
         return (
-          <SidebarExTreeItem
+          <SidebarTreeItem
             key={item.id}
             id={item.id}
             title={item.title ?? item.id}
@@ -160,22 +150,23 @@ export function SidebarExTree(props: Rac.TreeProps<SidebarExTreeNode>) {
             data-testid={item["data-testid"]}
           >
             <Rac.Collection items={item.children}>
-              {renderSidebarTreeNodeEx}
+              {renderSidebarTreeNode}
             </Rac.Collection>
-          </SidebarExTreeItem>
+          </SidebarTreeItem>
         );
       }}
     </Rac.Tree>
   );
 }
 
-export function SidebarExButton({
+export function SidebarButton({
   variant = "ghost",
   className,
   ...props
 }: React.ComponentProps<typeof Button>) {
   return (
     <Button
+      data-slot="sidebar-button"
       variant={variant}
       className={composeTailwindRenderProps(
         className,

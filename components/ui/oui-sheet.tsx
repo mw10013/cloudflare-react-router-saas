@@ -1,15 +1,14 @@
 "use client";
 
 import type { VariantProps } from "class-variance-authority";
+import { composeTailwindRenderProps } from "@/components/ui/oui-base";
 import { cva } from "class-variance-authority";
-import * as Rac from "react-aria-components";
-import { twMerge } from "tailwind-merge";
 
 /**
  * Derived from shadcn SheetContent.
  * Merges with modalStyles so resets zoom and positioning.
  */
-export const modalExSheetVariants = cva(
+export const sheetModalVariants = cva(
   [
     "fixed top-auto left-auto z-50 flex max-w-none translate-x-0 translate-y-0 flex-col gap-4 rounded-none bg-background shadow-lg transition ease-in-out sm:max-w-none",
     "data-entering:animate-in data-entering:duration-500 data-entering:zoom-in-100",
@@ -34,13 +33,10 @@ export const modalExSheetVariants = cva(
 
 /**
  * Returns a className function to style a Modal as a sheet that slides in from an edge of the screen.
- *
  */
-export function modalExSheetClassName<T>(
-  props?: VariantProps<typeof modalExSheetVariants>,
+export function sheetModalClassName<T>(
+  props?: VariantProps<typeof sheetModalVariants>,
   className?: string | ((renderProps: T) => string),
 ) {
-  return Rac.composeRenderProps(className, (className) =>
-    twMerge(modalExSheetVariants(props), className),
-  );
+  return composeTailwindRenderProps(className, sheetModalVariants(props));
 }

@@ -26,7 +26,7 @@ export async function action({
   request,
   context,
 }: Route.ActionArgs): Promise<
-  Oui.AlertExFormActionResult & { magicLink?: string }
+  Oui.AlertFormActionResult & { magicLink?: string }
 > {
   const schema = z.object({
     email: z.email(),
@@ -41,7 +41,7 @@ export async function action({
       success: false,
       details,
       validationErrors,
-    } satisfies Oui.AlertExFormActionResult;
+    } satisfies Oui.AlertFormActionResult;
   }
   const requestContext = context.get(RequestContext);
   invariant(requestContext, "Missing request context.");
@@ -110,7 +110,7 @@ export default function RouteComponent({
             onSubmit={onSubmitReactRouter(submit)}
           >
             <Oui.FieldGroup>
-              <Oui.AlertExForm
+              <Oui.AlertForm
                 success={actionData?.success}
                 message={actionData?.message}
                 details={actionData?.details}

@@ -99,8 +99,8 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
       </Oui.Table>
 
       {loaderData.pageCount > 1 && (
-        <Oui.ListBoxExPagination selectedKeys={[loaderData.page]}>
-          <Oui.ListBoxItemExPagination
+        <Oui.Pagination selectedKeys={[loaderData.page]}>
+          <Oui.PaginationItem
             id="prev"
             href={`/admin/subscriptions?page=${String(
               loaderData.page > 1 ? loaderData.page - 1 : 1,
@@ -112,9 +112,9 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
             isDisabled={loaderData.page <= 1}
           >
             Previous
-          </Oui.ListBoxItemExPagination>
+          </Oui.PaginationItem>
           {Array.from({ length: loaderData.pageCount }, (_, i) => (
-            <Oui.ListBoxItemExPagination
+            <Oui.PaginationItem
               key={i + 1}
               id={String(i + 1)}
               href={`/admin/subscriptions?page=${String(i + 1)}${
@@ -124,9 +124,9 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
               }`}
             >
               {i + 1}
-            </Oui.ListBoxItemExPagination>
+            </Oui.PaginationItem>
           ))}
-          <Oui.ListBoxItemExPagination
+          <Oui.PaginationItem
             id="next"
             href={`/admin/subscriptions?page=${String(
               loaderData.page < loaderData.pageCount
@@ -140,8 +140,8 @@ export default function RouteComponent({ loaderData }: Route.ComponentProps) {
             isDisabled={loaderData.page >= loaderData.pageCount}
           >
             Next
-          </Oui.ListBoxItemExPagination>
-        </Oui.ListBoxExPagination>
+          </Oui.PaginationItem>
+        </Oui.Pagination>
       )}
     </div>
   );

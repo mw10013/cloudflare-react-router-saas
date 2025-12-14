@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/alert";
 import * as Rac from "react-aria-components";
 
-export interface AlertExFormActionResult {
+export interface AlertFormActionResult {
   success: boolean;
   message?: string;
   details?: string | string[];
@@ -13,17 +13,17 @@ export interface AlertExFormActionResult {
 }
 
 /**
- * Reusable wrapper for shadcn Alert that displays an alert based on form action result.
+ * A shadcn Alert for a form displaying form action result.
  * @param props - Component props including success, message, details.
  */
-export function AlertExForm({
+export function AlertForm({
   success,
   message,
   details,
   className,
   ...props
 }: React.ComponentProps<typeof Alert> &
-  Partial<Pick<AlertExFormActionResult, "success" | "message" | "details">>) {
+  Partial<Pick<AlertFormActionResult, "success" | "message" | "details">>) {
   const detailsArray = Array.isArray(details)
     ? details
     : details
@@ -34,6 +34,7 @@ export function AlertExForm({
 
   return (
     <Alert
+      data-slot="alert-form"
       variant={success ? "default" : "destructive"}
       className={className}
       {...props}

@@ -57,7 +57,7 @@ export async function action({
   request,
   context,
   params: { organizationId },
-}: Route.ActionArgs): Promise<Oui.AlertExFormActionResult> {
+}: Route.ActionArgs): Promise<Oui.AlertFormActionResult> {
   const schema = z.discriminatedUnion("intent", [
     z.object({
       intent: z.literal("cancel"),
@@ -260,7 +260,7 @@ function InvitationItem({
   const fetcher = ReactRouter.useFetcher<Route.ComponentProps["actionData"]>();
   const pending = fetcher.state !== "idle";
   return (
-    <Oui.CardExGridListItem textValue={invitation.email}>
+    <Oui.CardGridListItem textValue={invitation.email}>
       <Item size="sm" className="gap-4 px-0">
         <ItemContent>
           <ItemTitle>{invitation.email}</ItemTitle>
@@ -300,6 +300,6 @@ function InvitationItem({
           </ItemActions>
         )}
       </Item>
-    </Oui.CardExGridListItem>
+    </Oui.CardGridListItem>
   );
 }

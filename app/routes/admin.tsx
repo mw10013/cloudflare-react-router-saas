@@ -42,7 +42,7 @@ export default function RouteComponent({
     <SidebarProvider>
       <AppSidebar user={user} />
       <main className="flex h-svh w-full flex-col overflow-x-hidden">
-        <Oui.SidebarExTrigger />
+        <Oui.SidebarTrigger />
         <ReactRouter.Outlet />
       </main>
     </SidebarProvider>
@@ -85,7 +85,7 @@ export function AppSidebar({ user }: { user: { email: string } }) {
         </Rac.Link>
       </SidebarHeader>
       <SidebarContent>
-        <Oui.SidebarExTree aria-label="Admin Navigation" items={items} />
+        <Oui.SidebarTree aria-label="Admin Navigation" items={items} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
@@ -104,12 +104,12 @@ export function NavUser({
   const submit = ReactRouter.useSubmit();
   return (
     <Rac.MenuTrigger>
-      <Oui.SidebarExButton>
+      <Oui.SidebarButton>
         <div className="grid flex-1 text-left text-sm leading-tight">
           <span className="truncate font-medium">{user.email}</span>
         </div>
         <ChevronsUpDown className="ml-auto size-4" />
-      </Oui.SidebarExButton>
+      </Oui.SidebarButton>
       <Oui.Popover>
         <Oui.Menu className="min-w-56 rounded-lg">
           <Rac.MenuSection>
